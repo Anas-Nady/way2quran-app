@@ -1,0 +1,118 @@
+{
+  "titleHome": "الطريق الي القرآن",
+  "wayTo": "الطريق إلي",
+  "quran": "القرآن",
+  "downloadQuranPdf": "تحميل المصحف",
+  "mushaf": "المصحف الشريف",
+  "search": "بحث...",
+  "noResultsFound": "لا يوجد نتائج",
+  "chooseTypeOfRecitation": "عرض حسب التلاوة",
+
+  "Welcome": {
+    "title": "الطريق الي القرآن",
+    "part1": "تلاوات ",
+    "part2": "للقرآن الكريم ",
+    "part3": "من أنحاء العالم الإسلامى",
+    "contactTitle": "تواصل معنا",
+    "aboutTitle": "من نحن"
+  },
+
+  "SearchScreen": {
+    "fetchError": "فشل في جلب النتائج",
+    "emptyState": "لا يوجد نتائج حتي الأن"
+  },
+
+  "TopBarMenu": {
+    "home": "الطريق الي القرآن",
+    "fullQuran": "المصحف الكامل",
+    "frequentRecitations": "القراءات المتواترة",
+    "variousRecitations": "التلاوات المنوعة",
+    "downloadQuran": "تحميل المصحف"
+  },
+
+  "fullQuran": "المصحف الكامل",
+  "frequentRecitations": "القراءات المتواترة",
+  "variousRecitations": "التلاوات المنوعة",
+  "downloadQuran": "تحميل المصحف",
+
+  "ReciterScreen": {
+    "download": " تحميل",
+    "listening": "استماع",
+    "downloadAll": "تحميل الكل",
+    "topReciters": "الأكثر استماعا",
+    "playingThePlaylist": "تشغيل القائمة",
+    "addedToFavorites": "تمت الإضافة إلى المفضلة",
+    "removedFromFavorites": "تمت الإزالة من المفضلة"
+  },
+
+  "SurahScreen": {
+    "listening": "استماع",
+    "download": " تحميل",
+    "topReciters": "الأكثر استماعا"
+  },
+
+  "AboutScreen": {
+    "aboutTitle": "من نحن",
+    "about_1": "تطبيق  يوفر تجربة سلسة لاستماع وتحميل تلاوات للقراء المفضلين بسهولة",
+    "about_2": "يهدف التطبيق إلى تسهيل وصول المستخدمين إلى تلاوات القرآن الكريم بسهولة ويسر.",
+    "about_3": "يعتبر التطبيق مصدرًا قيمًا للمهتمين بالقرآن الكريم."
+  },
+
+  "ContactUsScreen": {
+    "contactTitle": "تواصل معنا",
+    "contactDescription": "للتواصل والاقتراحات يرجي مراسلتنا",
+    "name": "اسمك",
+    "email": "البريد الالكتروني",
+    "textarea": "رسالتك",
+    "sendMessageBtn": "إرسال",
+    "successCreatedMessage": "تم ارسال رسالتك لنا بنجاح",
+    "errorNameRequired": "الاسم مطلوب",
+    "errorInvalidEmail": "يرجى إدخال عنوان بريد إلكتروني صحيح",
+    "errorMessageRequired": "الرسالة مطلوبة",
+    "sending": "جاري الإرسال..."
+  },
+
+  "TabBar": {
+    "home": "الرئيسية",
+    "playlist": "قائمتك",
+    "favorites": "المفضلة",
+    "mushaf": "المصحف",
+    "prayerTimes": "صلاتي"
+  },
+
+  "PlaylistScreen": {
+    "playlists": "قوائم التشغيل",
+    "emptyState": "لم تضف أي قائمة تشغيل حتى الآن",
+    "deleteConfirmation": "هل أنت متأكد أنك تريد حذف هذه القائمة؟"
+  },
+
+  "FavoritesScreen": {
+    "favorites": "المفضلة",
+    "emptyState": "لم تضف أي قراء مفضلين حتى الآن",
+    "deleteConfirmation": "هل أنت متأكد أنك تريد حذف هذا القارئ؟"
+  },
+
+  "SurahCard": {
+    "addedToPlaylist": "تمت الإضافة إلى قائمة التشغيل",
+    "removedFromPlaylist": "تمت الإزالة من قائمة التشغيل"
+  },
+
+  "cancel": "إلغاء",
+  "confirm": "تأكيد",
+
+  "EmptyState": {
+    "title": "لا توجد عناصر"
+  },
+
+  "PrayerTimes": {
+    "title": "مواقيت الصلاة",
+    "fajr": "الفجر",
+    "dhuhr": "الظهر",
+    "asr": "العصر",
+    "maghrib": "المغرب",
+    "isha": "العشاء",
+    "locationPermissionError": "لم يتم منح إذن الموقع",
+    "fetchError": "فشل في جلب مواقيت الصلاة",
+    "remainingTime": "باقي من الوقت لصلاة"
+  }
+}
