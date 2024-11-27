@@ -15,7 +15,8 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "UIBackgroundModes": ["audio"]
+        "UIBackgroundModes": ["audio"],
+        "NSLocationWhenInUseUsageDescription": "We need your location to determine your city and country."
       },
       "config": {
         "usesNonExemptEncryption": false
