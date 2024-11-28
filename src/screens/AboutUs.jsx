@@ -65,6 +65,7 @@ const AboutUsList = () => {
       className="w-full bg-gray-800"
       contentContainerStyle={{ flexGrow: 1, paddingBottom: 20 }}
       showsVerticalScrollIndicator={false}
+      nestedScrollEnabled={true}
     >
       <View>
         <GoBackButton />
