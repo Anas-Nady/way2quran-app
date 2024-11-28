@@ -5,14 +5,12 @@ export async function getPrayerTimes({ latitude, longitude }) {
     const today = format(new Date(), "yyyy-MM-dd");
 
     const response = await fetch(
-      `https://api.aladhan.com/v1/timings?latitude=${latitude}&longitude=${longitude}&method=2`
+      `https://api.aladhan.com/v1/timings?latitude=${latitude}&longitude=${longitude}`
     );
 
     if (!response.ok) {
       const errorData = await response.json();
-      setError(errorData?.data || translate("fetchError"));
-      setLoading(false);
-      return;
+      throw errorData?.data;
     }
 
     const data = await response.json();
