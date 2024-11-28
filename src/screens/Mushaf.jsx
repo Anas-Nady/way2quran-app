@@ -1,15 +1,13 @@
-import { useContext, useMemo } from "react";
+import { useMemo } from "react";
 import { View, FlatList } from "react-native";
 import HeadingScreen from "../components/HeadingScreen";
 import { useTranslation } from "react-i18next";
 import GoBackButton from "../components/ui/GoBackButton";
 import SurahsList from "../constants/surahsList";
 import SurahCard from "../components/Surah/SurahCard";
-import { ScreenDimensionsContext } from "../contexts/ScreenDimensionsProvider";
 
 export default function Mushaf() {
   const { t } = useTranslation();
-  const { screenWidth: width } = useContext(ScreenDimensionsContext);
 
   const renderHeader = useMemo(() => {
     return (
@@ -20,7 +18,6 @@ export default function Mushaf() {
     );
   }, []);
 
-  const numColumns = width > 600 ? 2 : 1;
   return (
     <View className="flex-1 w-full bg-gray-800">
       <FlatList
@@ -35,8 +32,6 @@ export default function Mushaf() {
           width: "100%",
         }}
         showsVerticalScrollIndicator={false}
-        key={numColumns}
-        numColumns={numColumns}
       />
     </View>
   );
