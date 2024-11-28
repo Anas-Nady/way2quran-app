@@ -25,6 +25,7 @@ export default function Surah() {
   const fadeAnim = useRef(new Animated.Value(1)).current;
   const leftArrowAnim = useRef(new Animated.Value(0)).current;
   const rightArrowAnim = useRef(new Animated.Value(0)).current;
+  const fitScreenAnim = useRef(new Animated.Value(0.8)).current;
   const [currentZoom, setCurrentZoom] = useState(1);
   const [maxZoom, setMaxZoom] = useState(1.5);
 
@@ -148,11 +149,29 @@ export default function Surah() {
     ).start();
   };
 
+  const startAnimation = () => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(fitScreenAnim, {
+          toValue: 1, // Scale to 1
+          duration: 500, // 500ms for scaling up
+          useNativeDriver: true, // Use native driver for better performance
+        }),
+        Animated.timing(fitScreenAnim, {
+          toValue: 0.8, // Scale back to 0.8
+          duration: 500, // 500ms for scaling down
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
+  };
+
   const surahPage = `https://storage.googleapis.com/way2quran_storage/quran-pages/${currentPage}.jpg`;
 
   const handleZoomChange = () => {
     const zoomValue = zoomableViewRef.current.zoomAnim;
     setCurrentZoom(zoomValue);
+    startAnimation();
   };
 
   const zoomableViewRef = useRef(null);
@@ -205,7 +224,7 @@ export default function Surah() {
               ]}
             >
               <View style={styles.arrowShape}>
-                <AntDesign name="arrowright" size={24} color="white" />
+                <AntDesign name="arrowright" size={30} color="white" />
               </View>
             </Animated.View>
           </View>
@@ -213,16 +232,20 @@ export default function Surah() {
 
         {/* Add Reset Zoom Button */}
         {currentZoom !== 1 && (
-          <TouchableOpacity
-            style={styles.resetZoomButton}
-            onPress={handleResetZoom}
+          <Animated.View
+            style={[
+              styles.resetZoomButton,
+              { transform: [{ scale: fitScreenAnim }] },
+            ]}
           >
-            <MaterialCommunityIcons
-              name="fit-to-screen"
-              size={14}
-              color="white"
-            />
-          </TouchableOpacity>
+            <TouchableOpacity onPress={handleResetZoom}>
+              <MaterialCommunityIcons
+                name="fit-to-screen"
+                size={14}
+                color="white"
+              />
+            </TouchableOpacity>
+          </Animated.View>
         )}
 
         <Image
