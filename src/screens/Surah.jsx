@@ -170,7 +170,11 @@ export default function Surah() {
 
   const handleZoomChange = () => {
     const zoomValue = zoomableViewRef.current.zoomAnim;
-    setCurrentZoom(zoomValue);
+    if (zoomValue > 1) {
+      zoomValue(1);
+    } else {
+      setCurrentZoom(zoomValue);
+    }
     startAnimation();
   };
 
@@ -185,7 +189,7 @@ export default function Surah() {
     <ReactNativeZoomableView
       ref={zoomableViewRef}
       maxZoom={maxZoom}
-      minZoom={0.5}
+      minZoom={1}
       zoomStep={0.5}
       initialZoom={1}
       bindToBorders={true}
@@ -241,7 +245,7 @@ export default function Surah() {
             <TouchableOpacity onPress={handleResetZoom}>
               <MaterialCommunityIcons
                 name="fit-to-screen"
-                size={14}
+                size={26}
                 color="white"
               />
             </TouchableOpacity>
@@ -297,8 +301,13 @@ const styles = StyleSheet.create({
   },
   resetZoomButton: {
     position: "absolute",
+    width: 50,
+    height: 50,
+    borderRadius: 30,
+    justifyContent: "center",
+    alignItems: "center",
     bottom: 10,
-    left: 10,
+    right: 10,
     backgroundColor: "rgba(0, 0, 0, 0.6)",
     borderRadius: 30,
     padding: 10,
