@@ -170,8 +170,8 @@ export default function Surah() {
 
   const handleZoomChange = () => {
     const zoomValue = zoomableViewRef.current.zoomAnim;
-    if (zoomValue > 1) {
-      zoomValue(1);
+    if (zoomValue <= 1) {
+      setCurrentZoom(1);
     } else {
       setCurrentZoom(zoomValue);
     }
@@ -241,14 +241,13 @@ export default function Surah() {
               styles.resetZoomButton,
               { transform: [{ scale: fitScreenAnim }] },
             ]}
+            onTouchEnd={handleResetZoom}
           >
-            <TouchableOpacity onPress={handleResetZoom}>
-              <MaterialCommunityIcons
-                name="fit-to-screen"
-                size={26}
-                color="white"
-              />
-            </TouchableOpacity>
+            <MaterialCommunityIcons
+              name="fit-to-screen"
+              size={26}
+              color="white"
+            />
           </Animated.View>
         )}
 
