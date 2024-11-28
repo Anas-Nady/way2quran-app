@@ -7,8 +7,8 @@ const SplashScreen = () => {
     <View style={styles.container}>
       <Image
         source={splashScreen}
-        style={{ width: 500, height: 500 }}
         resizeMode="contain"
+        style={{ width: "100%", height: "100%", flex: 1 }}
       />
     </View>
   );
