@@ -17,7 +17,7 @@ import { ReactNativeZoomableView } from "@openspacelabs/react-native-zoomable-vi
 export default function Surah() {
   const { screenWidth, screenHeight } = useContext(ScreenDimensionsContext);
   const route = useRoute();
-  const [contentFit, setContentFit] = useState("fill"); // Initial contentFit
+  const [contentFit, setContentFit] = useState("fill");
   const [currentPage, setCurrentPage] = useState(
     parseInt(route.params.pageNumber)
   );
@@ -26,6 +26,7 @@ export default function Surah() {
   const leftArrowAnim = useRef(new Animated.Value(0)).current;
   const rightArrowAnim = useRef(new Animated.Value(0)).current;
   const [currentZoom, setCurrentZoom] = useState(1);
+  const [maxZoom, setMaxZoom] = useState(1.5);
 
   useEffect(() => {
     const checkFirstTime = async () => {
@@ -45,6 +46,7 @@ export default function Surah() {
     const updateContentFit = () => {
       const { width, height } = Dimensions.get("window");
       setContentFit(width > height ? "contain" : "fill");
+      setMaxZoom(width > height ? 3 : 1.5);
     };
 
     const subscription = Dimensions.addEventListener(
@@ -163,7 +165,7 @@ export default function Surah() {
   return (
     <ReactNativeZoomableView
       ref={zoomableViewRef}
-      maxZoom={1.5}
+      maxZoom={maxZoom}
       minZoom={0.5}
       zoomStep={0.5}
       initialZoom={1}
