@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, FlatList } from "react-native";
 import * as Location from "expo-location";
 import LoadingSpinner from "./../components/States/LoadingSpinner";
 import Error from "./../components/States/Error";
@@ -71,6 +71,69 @@ const PrayerTimes = () => {
     return () => clearInterval(timer);
   }, [prayerTimes, nextPrayer]);
 
+  const renderHeader = () => {
+    return (
+      <View>
+        <GoBackButton />
+        <View className="mt-8">
+          <Text className="text-4xl font-bold text-center text-white">
+            {translate("title")}
+          </Text>
+          <Text className="text-lg text-center text-green-500">{address}</Text>
+          {remainingTime && (
+            <Text className="px-2 py-1 mb-2 text-lg text-center text-white">
+              {translate("remainingTime")}{" "}
+              {translate(nextPrayer.name.toLowerCase())}: {remainingTime.hours}:
+              {String(remainingTime.minutes).padStart(2, "0")}:
+              {String(remainingTime.seconds).padStart(2, "0")}
+            </Text>
+          )}
+        </View>
+      </View>
+    );
+  };
+
+  const renderPrayerItem = ({ item }) => {
+    const [prayer, time] = item;
+    const isPassed =
+      prayer !== nextPrayer?.name.toLowerCase() &&
+      getNextPrayer(prayerTimes)?.name.toLowerCase() !== prayer;
+
+    return (
+      <View
+        className={`${flexDirection()} w-[90%] mx-auto items-center justify-between border border-gray-500 p-3 rounded
+          ${isPassed ? "bg-gray-700" : ""} 
+          ${
+            prayer === nextPrayer?.name.toLowerCase()
+              ? "bg-green-500 border-none"
+              : ""
+          }`}
+      >
+        <View>
+          <Text
+            className={`text-xl font-semibold ${
+              prayer === nextPrayer?.name.toLowerCase()
+                ? "font-bold text-white"
+                : "text-gray-300"
+            }`}
+          >
+            {translate(prayer)}
+            {":"}
+          </Text>
+        </View>
+        <Text
+          className={`text-xl font-semibold ${
+            prayer === nextPrayer?.name.toLowerCase()
+              ? "font-bold text-white"
+              : "text-gray-300"
+          }`}
+        >
+          {time}
+        </Text>
+      </View>
+    );
+  };
+
   if (loading) {
     return <LoadingSpinner />;
   }
@@ -80,76 +143,24 @@ const PrayerTimes = () => {
   }
 
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      contentContainerStyle={{ flexGrow: 1 }}
-      className="flex-1 w-full p-4 bg-gray-800"
-      alwaysBounceVertical={false}
-    >
-      <View>
-        <GoBackButton />
-        <View className="mt-5">
-          <Text className="text-4xl font-bold text-center text-white">
-            {translate("title")}
-          </Text>
-          <Text className="px-2 py-1 text-lg text-center text-green-500 rounded-xl">
-            {address}
-          </Text>
-
-          {remainingTime && (
-            <Text className="px-2 py-1 mb-6 text-lg text-center text-white rounded-xl">
-              {translate("remainingTime")}{" "}
-              {translate(nextPrayer.name.toLowerCase())}: {remainingTime.hours}:
-              {String(remainingTime.minutes).padStart(2, "0")}:
-              {String(remainingTime.seconds).padStart(2, "0")}
-            </Text>
-          )}
-        </View>
-      </View>
-
-      <View className="p-6 border border-green-500 rounded-lg">
-        {Object.entries(prayerTimes).map(([prayer, time]) => {
-          const isPassed =
-            prayer !== nextPrayer?.name.toLowerCase() &&
-            getNextPrayer(prayerTimes)?.name.toLowerCase() !== prayer;
-
-          return (
-            <View
-              key={prayer}
-              className={`${flexDirection()} items-center justify-between gap-3 border border-gray-500 px-3 py-1 pb-4 my-3 rounded
-                  ${isPassed ? "bg-gray-700" : ""} 
-                  ${
-                    prayer === nextPrayer?.name.toLowerCase()
-                      ? "bg-green-500 border-none"
-                      : ""
-                  }`}
-            >
-              <View>
-                <Text
-                  className={`text-xl font-semibold ${
-                    prayer === nextPrayer?.name.toLowerCase()
-                      ? "font-bold text-white"
-                      : "text-gray-300"
-                  }`}
-                >
-                  {translate(prayer)}
-                  {":"}
-                </Text>
-              </View>
-              <Text
-                className={`text-xl font-semibold ${
-                  prayer === nextPrayer?.name.toLowerCase()
-                    ? "font-bold text-white"
-                    : "text-gray-300"
-                }`}
-              >
-                {time}
-              </Text>
-            </View>
-          );
-        })}
-      </View>
-    </ScrollView>
+    <View className="flex-1 w-full mx-auto bg-gray-800">
+      <FlatList
+        data={Object.entries(prayerTimes)}
+        keyExtractor={([prayer]) => prayer}
+        renderItem={renderPrayerItem}
+        ListHeaderComponent={renderHeader}
+        nestedScrollEnabled={true}
+        contentContainerStyle={{
+          flexGrow: 1,
+          paddingBottom: 16,
+          gap: 14,
+          width: "100%",
+        }}
+        style={{ flex: 1 }}
+        className="flex-1 w-full bg-gray-800"
+        showsVerticalScrollIndicator={false}
+      />
+    </View>
   );
 };
 
