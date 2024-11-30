@@ -85,7 +85,7 @@ function Layout({ playerState }) {
             <View
               style={{ position: "absolute", bottom: 0, left: 0, right: 0 }}
             >
-              <TabBar />
+              <TabBar closeMenu={closeMenu} />
             </View>
           </View>
         </TouchableWithoutFeedback>

@@ -5,7 +5,7 @@ import { useTranslate } from "../../helpers/i18nHelper.js";
 import { flexDirection } from "../../helpers/flexDirection.js";
 import prayerTimesIcon from "./../../assets/images/mosqueIcon.png";
 
-export default function TabBar() {
+export default function TabBar({ closeMenu }) {
   const navigation = useNavigation();
   const translate = useTranslate("TabBar");
 
@@ -27,6 +27,10 @@ export default function TabBar() {
       icon: "menu-book",
     },
   ];
+  const handleMenuPress = (routeName) => {
+    closeMenu();
+    navigation.navigate(routeName);
+  };
 
   return (
     <View className="w-[95%] bg-gray-700 rounded-full mx-auto py-1 px-4">
@@ -34,7 +38,7 @@ export default function TabBar() {
         {tabsLinks.map((tab, i) => (
           <TouchableOpacity
             key={i}
-            onPress={() => navigation.navigate(tab.routeName)}
+            onPress={() => handleMenuPress(tab.routeName)}
           >
             <View className="flex-col items-center justify-center">
               <MaterialIcons name={tab.icon} size={24} color="#22c55e" />
