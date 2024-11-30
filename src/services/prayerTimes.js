@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import { isRTL } from "../helpers/flexDirection";
 
 export async function getPrayerTimes({ latitude, longitude }) {
   try {
@@ -17,13 +18,19 @@ export async function getPrayerTimes({ latitude, longitude }) {
 
     const timings = data.data.timings;
 
-    // Format the times to HH:mm format
+    const formatTime = (time) => {
+      const formatted = format(new Date(`${today} ${time}`), "hh:mm a");
+      return isRTL
+        ? formatted.replace("AM", "ص").replace("PM", "م")
+        : formatted;
+    };
+
     const prayerTimes = {
-      fajr: format(new Date(`${today} ${timings.Fajr}`), "HH:mm"),
-      dhuhr: format(new Date(`${today} ${timings.Dhuhr}`), "HH:mm"),
-      asr: format(new Date(`${today} ${timings.Asr}`), "HH:mm"),
-      maghrib: format(new Date(`${today} ${timings.Maghrib}`), "HH:mm"),
-      isha: format(new Date(`${today} ${timings.Isha}`), "HH:mm"),
+      fajr: formatTime(timings.Fajr),
+      dhuhr: formatTime(timings.Dhuhr),
+      asr: formatTime(timings.Asr),
+      maghrib: formatTime(timings.Maghrib),
+      isha: formatTime(timings.Isha),
     };
 
     return prayerTimes;
@@ -60,16 +67,31 @@ export function calculateRemainingTime(times, nextPrayer) {
   if (!times || !nextPrayer) return null;
 
   const now = new Date();
-  const [hours, minutes] = times[nextPrayer.name.toLowerCase()]
-    .split(":")
-    .map(Number);
+
+  const prayerTimeStr = times[nextPrayer.name.toLowerCase()];
+  const isPM = isRTL
+    ? prayerTimeStr.includes("م")
+    : prayerTimeStr.includes("PM");
+  const [timePart] = prayerTimeStr.split(" ");
+  const [hours, minutes] = timePart.split(":").map(Number);
+
+  // Convert to 24-hour format
+  let prayerHours = hours;
+  if (isPM && hours !== 12) {
+    prayerHours += 12;
+  }
+  if (!isPM && hours === 12) {
+    prayerHours = 0;
+  }
+
   const prayerTime = new Date();
-  prayerTime.setHours(hours, minutes, 0);
+  prayerTime.setHours(prayerHours, minutes, 0);
 
   if (prayerTime < now) {
     prayerTime.setDate(prayerTime.getDate() + 1);
   }
 
+  // Calculate the remaining time
   const diff = prayerTime - now;
   const hours_remaining = Math.floor(diff / (1000 * 60 * 60));
   const minutes_remaining = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
