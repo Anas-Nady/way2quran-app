@@ -20,7 +20,7 @@ export default function SearchResult({ results, loading, error }) {
       } else if (params.recitationSlug) {
         dynamicParams.recitationSlug = item.slug;
       } else if (params.surahNumber) {
-        dynamicParams.surahNumber = item.number;
+        dynamicParams.pageNumber = item.pageNumber;
       }
 
       return (
