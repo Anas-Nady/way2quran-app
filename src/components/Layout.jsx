@@ -1,4 +1,4 @@
-import { StatusBar, View, TouchableWithoutFeedback } from "react-native";
+import { View, TouchableWithoutFeedback } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import TabBar from "../components/Navigation/TabBar";
 import AudioPlayerModal from "../components/Reciter/AudioPlayerModal";
@@ -8,6 +8,7 @@ import { currentLanguage } from "../helpers/flexDirection";
 import SplashScreen from "../screens/SplashScreen";
 import TopBar from "./Navigation/TopBar";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { StatusBar } from "expo-status-bar";
 
 function getPlayerModalHeight(playerState) {
   if (playerState.isModalVisible) {
@@ -50,7 +51,7 @@ function Layout({ playerState }) {
             currentLanguage === "ar" ? "font-arabic" : "font-english"
           } flex-1 bg-gray-800`}
         >
-          <StatusBar backgroundColor="#22c55e" barStyle="light-content" />
+          <StatusBar style="auto" />
 
           <TouchableWithoutFeedback onPress={closeMenu}>
             <View style={{ flex: 1 }}>
