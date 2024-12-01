@@ -173,35 +173,33 @@ const ReciterScreen = () => {
         <Error message={state.error} />
       ) : (
         <>
-          <>
-            {isChangingRecitation ? (
-              <View className="flex items-center justify-center py-10">
-                <ActivityIndicator size="large" color="#22c55e" />
-              </View>
-            ) : (
-              <FlatList
-                data={currentRecitation?.audioFiles}
-                keyExtractor={(item) => item?.surahInfo?.slug}
-                ListHeaderComponent={
-                  <ReciterHeader
-                    reciter={state.reciter}
-                    currentRecitation={currentRecitation}
-                    favouriteState={favouriteState}
-                    downloadRecitation={downloadRecitation}
-                    handleRecitationChange={handleRecitationChange}
-                    handleFavoriteToggle={handleFavoriteToggle}
-                    downloadTranslate={translate("downloadAll")}
-                  />
-                }
-                renderItem={renderSurahItem}
-                showsVerticalScrollIndicator={false}
-                contentContainerStyle={{
-                  backgroundColor: "#1e293b",
-                  width: "100%",
-                }}
-              />
-            )}
-          </>
+          {isChangingRecitation ? (
+            <View className="flex items-center justify-center py-10">
+              <ActivityIndicator size="large" color="#22c55e" />
+            </View>
+          ) : (
+            <FlatList
+              data={currentRecitation?.audioFiles}
+              keyExtractor={(item) => item?.surahInfo?.slug}
+              ListHeaderComponent={
+                <ReciterHeader
+                  reciter={state.reciter}
+                  currentRecitation={currentRecitation}
+                  favouriteState={favouriteState}
+                  downloadRecitation={downloadRecitation}
+                  handleRecitationChange={handleRecitationChange}
+                  handleFavoriteToggle={handleFavoriteToggle}
+                  downloadTranslate={translate("downloadAll")}
+                />
+              }
+              renderItem={renderSurahItem}
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{
+                backgroundColor: "#1e293b",
+                width: "100%",
+              }}
+            />
+          )}
         </>
       )}
     </View>
