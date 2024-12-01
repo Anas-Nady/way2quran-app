@@ -108,7 +108,7 @@ export default function Reciters() {
       ) : (
         <FlatList
           nestedScrollEnabled={true}
-          style={{ flexGrow: 1, backgroundColor: "#1a1a1a" }}
+          style={{ flex: 1 }}
           data={state.reciters}
           renderItem={renderReciter}
           keyExtractor={(item) => item.slug}
