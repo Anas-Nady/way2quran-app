@@ -23,6 +23,7 @@ export const AudioPlayerProvider = ({ children }) => {
     modalHeight: 80,
     playLoading: false,
     loadingNextPrev: false,
+    isPlaylist: false,
   });
 
   useTrackPlayerEvents(

@@ -54,6 +54,7 @@ const SurahCardDetails = ({ surah, surahIndex, reciter, recitation }) => {
           surahIndex,
           reciter,
           recitation,
+          isPlaylist: false,
         };
 
         setPlayerState(updatedPlayerState);
@@ -61,7 +62,10 @@ const SurahCardDetails = ({ surah, surahIndex, reciter, recitation }) => {
         return;
       }
 
-      if (playerState.surahIndex == currentSurahIndex) {
+      if (
+        !playerState.isPlaylist &&
+        playerState.surahIndex == currentSurahIndex
+      ) {
         let updatedPlayerState = {
           ...playerState,
           playLoading: false,
@@ -98,6 +102,7 @@ const SurahCardDetails = ({ surah, surahIndex, reciter, recitation }) => {
         surahIndex,
         reciter,
         recitation,
+        isPlaylist: false,
       };
 
       setPlayerState(updatedPlayerState);
@@ -115,7 +120,8 @@ const SurahCardDetails = ({ surah, surahIndex, reciter, recitation }) => {
       playerState.reciter?.slug === reciter?.slug &&
       playerState.recitation?.recitationInfo?.slug ===
         recitation?.recitationInfo?.slug &&
-      playerState?.surahIndex === currentSurahIndex
+      playerState.surahIndex === currentSurahIndex &&
+      !playerState.isPlaylist
     );
   };
 

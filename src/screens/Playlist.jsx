@@ -164,6 +164,7 @@ export default function Playlist() {
           isAutoPlayEnabled: true,
           isPlaying: true,
           isModalVisible: true,
+          isPlaylist: true,
         };
 
         setPlayerState(updatedPlayerState);
@@ -171,7 +172,9 @@ export default function Playlist() {
         return;
       }
 
+      // Check if this playlist is already playing
       const isCurrentPlaylist =
+        playerState.isPlaylist &&
         playerState.reciter?.slug === playlist?.reciter?.slug;
 
       // If this playlist is already playing - handle play/pause
@@ -215,6 +218,7 @@ export default function Playlist() {
         isAutoPlayEnabled: true,
         isPlaying: true,
         isModalVisible: true,
+        isPlaylist: true,
       };
 
       setPlayerState(updatedPlayerState);
@@ -231,7 +235,8 @@ export default function Playlist() {
       playerState.isPlaying &&
       playerState.reciter?.slug === playlist.reciter.slug &&
       playerState.recitation?.recitationInfo?.slug ===
-        playlist.recitation.recitationInfo.slug
+        playlist.recitation.recitationInfo.slug &&
+      playerState.isPlaylist
     );
   };
 
