@@ -22,21 +22,24 @@ const AudioPlayerModal = () => {
   useEffect(() => {
     const handleAppStateChange = async (nextAppState) => {
       if (nextAppState === "active") {
-        const activeTrackIndex = await TrackPlayer.getActiveTrackIndex();
-
         try {
+          const activeTrackIndex = await TrackPlayer.getActiveTrackIndex();
           const getPlayerState = await AsyncStorage.getItem("playerState");
+
           if (getPlayerState && activeTrackIndex !== undefined) {
             const savedPlayerState = JSON.parse(getPlayerState);
+
             setPlayerState(savedPlayerState);
-            if (savedPlayerState?.reciter?.slug) {
+            if (savedPlayerState.reciter?.slug) {
               navigation.navigate("Reciter", {
                 reciterSlug: savedPlayerState.reciter.slug,
               });
             }
+          } else {
+            await AsyncStorage.removeItem("playerState");
           }
         } catch (error) {
-          console.error("Error saving player state:", error);
+          console.error("Error while restoring player state:", error);
         }
       }
     };
