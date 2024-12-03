@@ -12,10 +12,10 @@ const TextAreaInput = ({ id, value, onChangeText, label }) => {
         name={id}
         testID={label}
         multiline
-        numberOfLines={3}
         value={value}
         onChangeText={onChangeText}
-        className={`${textDirection()} w-full p-1 text-lg  text-slate-200 placeholder-gray-400 bg-gray-700 border border-gray-600 rounded-lg`}
+        className={`${textDirection()} w-full p-2 text-lg  text-slate-200 placeholder-gray-400 bg-gray-700 border border-gray-600 rounded-lg`}
+        style={{ height: 80 }}
       />
     </View>
   );
