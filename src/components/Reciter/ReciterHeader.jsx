@@ -24,16 +24,16 @@ const ReciterHeader = ({
         <TouchableOpacity
           disabled={favouriteState.loading}
           onPress={handleFavoriteToggle}
-          className="absolute z-10 top-2 right-3"
+          className="px-3 pt-3"
         >
           <AntDesign
             name="heart"
-            size={40}
+            size={35}
             color={favouriteState.isFavourite ? "#22c55e" : "#9ca3af"}
           />
         </TouchableOpacity>
       </View>
-      <View className="mt-5 reciter">
+      <View className="reciter">
         {/* Reciter Info */}
         <View className="flex-col items-center w-full">
           <ReciterImg uri={reciter?.photo} />

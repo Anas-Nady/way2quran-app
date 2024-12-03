@@ -23,7 +23,7 @@ export default function ContactUs() {
       <ScrollView
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
-        className="w-full p-2 bg-slate-800"
+        className="w-full bg-slate-800"
         nestedScrollEnabled={true}
         style={{ flex: 1 }}
       >

@@ -75,7 +75,7 @@ const PrayerTimes = () => {
     return (
       <View>
         <GoBackButton />
-        <View className="mt-8">
+        <View>
           <Text className="text-4xl font-bold text-center text-white">
             {translate("title")}
           </Text>

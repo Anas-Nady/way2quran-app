@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { ScrollView } from "react-native";
+import { ScrollView, View } from "react-native";
 import { searchItems } from "../services/api";
 import SearchInput from "../components/Search/SearchInput";
 import SearchResult from "../components/Search/SearchResult";
@@ -61,9 +61,11 @@ export default function Search() {
       contentContainerStyle={{ flexGrow: 1 }}
       className="flex-1 w-full bg-gray-800"
     >
-      <GoBackButton />
-      <SearchInput handleTextDebounce={handleTextDebounce} />
-      <SearchResult results={results} loading={loading} error={error} />
+      <View>
+        <GoBackButton />
+        <SearchInput handleTextDebounce={handleTextDebounce} />
+        <SearchResult results={results} loading={loading} error={error} />
+      </View>
     </ScrollView>
   );
 }

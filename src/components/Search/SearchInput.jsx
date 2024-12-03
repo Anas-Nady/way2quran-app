@@ -9,7 +9,7 @@ export default function SearchInput({ handleTextDebounce }) {
 
   return (
     <View
-      className={`w-[70%] ${flexDirection()} items-center justify-between mx-auto my-3 pt-5`}
+      className={`w-[70%] ${flexDirection()} items-center justify-between mx-auto`}
     >
       <TextInput
         ref={textInputRef}
