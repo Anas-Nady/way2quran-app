@@ -105,6 +105,8 @@ const PlaylistCard = ({
               scrollEnabled={false}
               contentContainerStyle={{
                 flexGrow: 1,
+              }}
+              columnWrapperStyle={{
                 flexDirection: rowDirection(),
               }}
               showsVerticalScrollIndicator={false}
