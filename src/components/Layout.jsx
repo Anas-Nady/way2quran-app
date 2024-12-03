@@ -1,4 +1,4 @@
-import { View, TouchableWithoutFeedback } from "react-native";
+import { View, TouchableWithoutFeedback, I18nManager } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import TabBar from "../components/Navigation/TabBar";
 import AudioPlayerModal from "../components/Reciter/AudioPlayerModal";
@@ -15,6 +15,12 @@ function getPlayerModalHeight(playerState) {
     return playerState.isModalExpanded ? 165 : 80;
   }
   return 0;
+}
+
+if (I18nManager.isRTL) {
+  I18nManager.forceRTL(true);
+} else {
+  I18nManager.forceRTL(false);
 }
 
 function Layout({ playerState }) {
@@ -55,7 +61,11 @@ function Layout({ playerState }) {
 
           <TouchableWithoutFeedback onPress={closeMenu}>
             <View style={{ flex: 1 }}>
-              <TopBar isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
+              <TopBar
+                isMenuOpen={isMenuOpen}
+                closeMenu={closeMenu}
+                toggleMenu={toggleMenu}
+              />
               <View
                 style={{
                   flex: 1,
