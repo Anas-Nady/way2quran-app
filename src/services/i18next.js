@@ -9,19 +9,17 @@ const languageResources = {
   ar: { translation: ar },
 };
 
-const getDefaultLanguage = () => {
+export const getDefaultLanguage = () => {
   const getLocales = Localization.getLocales();
   const deviceLanguage = getLocales[0].languageCode;
 
   return deviceLanguage === "ar" ? "ar" : "en";
 };
 
-export const getCurrentLanguage = () => i18n.language;
-
 const intiInfo = {
   compatibilityJSON: "v3",
   lng: getDefaultLanguage(),
-  fallbackLng: "ar",
+  fallbackLng: ["en", "ar"],
   debug: false,
   resources: languageResources,
   interpolation: {
