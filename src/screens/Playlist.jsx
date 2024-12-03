@@ -10,7 +10,7 @@ import TrackPlayer from "react-native-track-player";
 import ConfirmationDialog from "../components/ui/ConfirmationDialog";
 import { useTranslate } from "../helpers/i18nHelper";
 import getName from "../helpers/getName";
-import { flexDirection, isRTL } from "../helpers/flexDirection";
+import { flexDirection, isRTL, rowDirection } from "../helpers/flexDirection";
 import { savePlayerState } from "../helpers/playerStateStorage";
 import { setupTrackPlayback } from "../helpers/setupTrackPlayback";
 
@@ -45,7 +45,7 @@ const PlaylistCard = ({
           source={{ uri: data.reciter.photo }}
           className="w-20 h-20 rounded-full"
         />
-        <View className="flex-1 mx-2">
+        <View className={`flex-1 flex-col justify-start mx-2`}>
           <Text
             className={`${
               isRTL ? "text-xl" : "text-[16px]"
@@ -53,7 +53,7 @@ const PlaylistCard = ({
           >
             {getName(data.reciter)}
           </Text>
-          <Text className="text-sm text-gray-200">
+          <Text className={`text-sm text-gray-200`}>
             {getName(data.recitation?.recitationInfo)}
           </Text>
         </View>
@@ -92,7 +92,10 @@ const PlaylistCard = ({
               keyExtractor={(item) => item?.surahNumber.toString()}
               numColumns={numColumns}
               scrollEnabled={false}
-              contentContainerStyle={{ flexGrow: 1 }}
+              contentContainerStyle={{
+                flexGrow: 1,
+                flexDirection: rowDirection(),
+              }}
               showsVerticalScrollIndicator={false}
               style={{ flex: 1, gap: 10 }}
             />
@@ -145,6 +148,14 @@ export default function Playlist() {
 
       // If no track is playing, start new playlist
       if (playerState.surahIndex === -1) {
+        try {
+          await TrackPlayer.getPlaybackState();
+        } catch (error) {
+          await TrackPlayer.setupPlayer({
+            autoHandleInterruptions: true,
+          });
+        }
+
         await setupTrackPlayback({
           id: sortedSurahs[0].surahNumber.toString(),
           url: sortedSurahs[0].url,

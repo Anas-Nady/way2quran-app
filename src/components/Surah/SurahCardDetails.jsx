@@ -36,6 +36,14 @@ const SurahCardDetails = ({ surah, surahIndex, reciter, recitation }) => {
 
       // If no track is loaded yet
       if (playerState.surahIndex === -1) {
+        try {
+          await TrackPlayer.getPlaybackState();
+        } catch (error) {
+          await TrackPlayer.setupPlayer({
+            autoHandleInterruptions: true,
+          });
+        }
+
         await setupTrackPlayback({
           id: surah.surahNumber.toString(),
           url: surah.url,
@@ -64,7 +72,10 @@ const SurahCardDetails = ({ surah, surahIndex, reciter, recitation }) => {
 
       if (
         !playerState.isPlaylist &&
-        playerState.surahIndex == currentSurahIndex
+        playerState.surahIndex == currentSurahIndex &&
+        playerState.reciter?.slug === reciter?.slug &&
+        playerState.recitation?.recitationInfo?.slug ===
+          recitation?.recitationInfo?.slug
       ) {
         let updatedPlayerState = {
           ...playerState,
