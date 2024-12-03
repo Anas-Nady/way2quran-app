@@ -3,6 +3,7 @@ import { View } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 import getName from "../../helpers/getName";
 import { rowDirection } from "../../helpers/flexDirection";
+import { AntDesign } from "@expo/vector-icons";
 
 export default function SelectOptions({
   setRecitation,
@@ -35,6 +36,7 @@ export default function SelectOptions({
       paddingVertical: 10,
       borderBottomWidth: 1,
       borderBottomColor: "#4B5563",
+      flexDirection: rowDirection(),
     },
     dropdownTextStyles: {
       color: "#E5E7EB",
@@ -57,6 +59,7 @@ export default function SelectOptions({
         save="key"
         placeholder={recitationName || t("chooseTypeOfRecitation")}
         {...selectListStyles}
+        arrowicon={<AntDesign name="arrowdown" size={24} color="white" />}
       />
     </View>
   );
