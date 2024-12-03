@@ -249,15 +249,18 @@ const AudioPlayerModal = () => {
 
           {/* Playback Controls */}
           <View
-            style={{ marginTop: -4 }}
+            style={{ marginTop: playerState.isModalExpanded ? 0 : -4 }}
             className={`${flexDirection()} items-center justify-between w-full`}
           >
             <Text className="text-sm font-notoKufi text-white w-[48px] text-center">
               {formatTime(position)}
             </Text>
             <View
-              style={{ flexDirection: !isRTL ? "row" : "row-reverse" }}
-              className={`items-center justify-center gap-2`}
+              style={{
+                flexDirection: !isRTL ? "row" : "row-reverse",
+                marginTop: playerState.isModalExpanded ? 0 : -8,
+              }}
+              className={`items-center justify-center`}
             >
               <TouchableOpacity
                 onPress={handlePrevSurah}
