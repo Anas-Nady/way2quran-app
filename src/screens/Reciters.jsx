@@ -13,6 +13,7 @@ import Error from "../components/States/Error";
 import getRecitationType from "./../helpers/getRecitationType";
 import getName from "../helpers/getName";
 import { ScreenDimensionsContext } from "../contexts/ScreenDimensionsProvider";
+import { rowDirection } from "../helpers/flexDirection";
 
 export default function Reciters() {
   const { screenWidth: width } = useContext(ScreenDimensionsContext);
@@ -125,6 +126,7 @@ export default function Reciters() {
           columnWrapperStyle={{
             justifyContent: "space-between",
             alignItems: "center",
+            flexDirection: rowDirection(),
             flex: 1,
           }}
         />
