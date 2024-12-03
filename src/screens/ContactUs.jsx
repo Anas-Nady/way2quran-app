@@ -32,7 +32,7 @@ export default function ContactUs() {
           <HeadingScreen headingTxt={translate("contactTitle")} />
         </View>
         <View className="w-full mx-auto">
-          <Text className="mb-1 text-base text-center text-gray-400">
+          <Text className="px-2 mb-1 text-base text-center text-gray-400">
             {translate("contactDescription")}
           </Text>
           <ContactUsForm />
