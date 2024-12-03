@@ -13,6 +13,7 @@ import getName from "../helpers/getName";
 import { flexDirection, isRTL, rowDirection } from "../helpers/flexDirection";
 import { savePlayerState } from "../helpers/playerStateStorage";
 import { setupTrackPlayback } from "../helpers/setupTrackPlayback";
+import trackPlayerService from "../services/trackPlayer";
 
 const PlaylistCard = ({
   data,
@@ -27,7 +28,10 @@ const PlaylistCard = ({
   }, [data.surahs]);
 
   const renderSurah = ({ item }) => (
-    <Text className="flex-grow p-1 font-semibold text-center border border-gray-500 rounded text-md text-gray-50">
+    <Text
+      style={{ borderWidth: 1, borderRadius: 5, borderColor: "#6b7280" }}
+      className="flex-grow p-1 font-semibold text-center text-md text-gray-50"
+    >
       {getName(item?.surahInfo)}
     </Text>
   );
@@ -49,11 +53,11 @@ const PlaylistCard = ({
           <Text
             className={`${
               isRTL ? "text-xl" : "text-[16px]"
-            } font-bold text-gray-200`}
+            } font-bold text-center text-gray-200`}
           >
             {getName(data.reciter)}
           </Text>
-          <Text className={`text-sm text-gray-200`}>
+          <Text className={`text-sm text-center text-gray-200`}>
             {getName(data.recitation?.recitationInfo)}
           </Text>
         </View>
@@ -82,7 +86,14 @@ const PlaylistCard = ({
       </View>
       {expanded && (
         <View className="border-t border-gray-600">
-          <Text className="p-1 px-2 mx-auto -mt-3 font-bold text-white border border-gray-500 rounded-full text-md">
+          <Text
+            style={{
+              borderWidth: 1,
+              borderRadius: 10,
+              borderColor: "#6b7280",
+            }}
+            className="p-1 px-2 mx-auto -mt-3 font-bold text-white text-md"
+          >
             {sortedSurahs.length}
           </Text>
           <View className={`p-4`}>
@@ -154,6 +165,7 @@ export default function Playlist() {
           await TrackPlayer.setupPlayer({
             autoHandleInterruptions: true,
           });
+          await trackPlayerService();
         }
 
         await setupTrackPlayback({

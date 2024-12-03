@@ -12,6 +12,7 @@ import { flexDirection } from "../../helpers/flexDirection.js";
 import TrackPlayer from "react-native-track-player";
 import { savePlayerState } from "../../helpers/playerStateStorage";
 import { setupTrackPlayback } from "../../helpers/setupTrackPlayback.js";
+import trackPlayerService from "../../services/trackPlayer.js";
 
 const SurahCardDetails = ({ surah, surahIndex, reciter, recitation }) => {
   const [isBookmarked, setIsBookmarked] = useState(false);
@@ -42,6 +43,7 @@ const SurahCardDetails = ({ surah, surahIndex, reciter, recitation }) => {
           await TrackPlayer.setupPlayer({
             autoHandleInterruptions: true,
           });
+          await trackPlayerService();
         }
 
         await setupTrackPlayback({
