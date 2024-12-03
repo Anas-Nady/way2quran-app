@@ -8,7 +8,7 @@ import { getAllBookmarks, removeBookmark } from "../helpers/bookmarkHandlers";
 import EmptyState from "../components/States/EmptyState";
 import ConfirmationDialog from "../components/ui/ConfirmationDialog";
 import { useTranslate } from "../helpers/i18nHelper";
-import { flexDirection } from "../helpers/flexDirection";
+import { flexDirection, rowDirection } from "../helpers/flexDirection";
 import getName from "../helpers/getName";
 
 export default function Favorites() {
@@ -72,7 +72,9 @@ export default function Favorites() {
           }}
           alt={getName(bookmark)}
         />
-        <Text className="flex-1 mx-3 mt-2 text-lg font-semibold text-white">
+        <Text
+          className={`flex-1 justify-start mt-2 text-lg font-semibold text-white`}
+        >
           {getName(bookmark)}
         </Text>
       </TouchableOpacity>
@@ -96,6 +98,7 @@ export default function Favorites() {
       <FlatList
         data={bookmarks}
         renderItem={renderItem}
+        style={{ flexDirection: rowDirection() }}
         keyExtractor={(item) => item.reciterSlug}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ flexGrow: 1, backgroundColor: "#1f2937" }}

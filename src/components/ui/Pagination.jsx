@@ -1,4 +1,5 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { rowDirection } from "../../helpers/flexDirection";
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   const pageLimit = 6;
@@ -54,7 +55,7 @@ const PaginationButton = ({ text, onPress, isActive }) => {
 
 const styles = StyleSheet.create({
   paginationContainer: {
-    flexDirection: "row-reverse",
+    flexDirection: rowDirection(),
     justifyContent: "center",
     flexWrap: "wrap",
     marginBottom: 10,

@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import { View, Text, TouchableOpacity, AppState } from "react-native";
+import { View, Text, TouchableOpacity, AppState, Platform } from "react-native";
 import { AntDesign, Feather, Ionicons } from "@expo/vector-icons";
 import Slider from "@react-native-community/slider";
 import { useAudioPlayer } from "../../contexts/AudioPlayerContext";
 import formatTime from "../../helpers/formatTime";
 import getName from "../../helpers/getName";
-import { flexDirection } from "../../helpers/flexDirection";
+import { flexDirection, isRTL } from "../../helpers/flexDirection";
 import TrackPlayer, { State, useProgress } from "react-native-track-player";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -23,12 +23,11 @@ const AudioPlayerModal = () => {
     const handleAppStateChange = async (nextAppState) => {
       if (nextAppState === "active") {
         try {
-          const activeTrackIndex = await TrackPlayer.getActiveTrackIndex();
+          const playbackState = await TrackPlayer.getPlaybackState();
           const getPlayerState = await AsyncStorage.getItem("playerState");
 
-          if (getPlayerState && activeTrackIndex !== undefined) {
+          if (getPlayerState && playbackState !== State.None) {
             const savedPlayerState = JSON.parse(getPlayerState);
-
             setPlayerState(savedPlayerState);
             if (savedPlayerState.reciter?.slug) {
               navigation.navigate("Reciter", {
@@ -39,7 +38,7 @@ const AudioPlayerModal = () => {
             await AsyncStorage.removeItem("playerState");
           }
         } catch (error) {
-          console.error("Error while restoring player state:", error);
+          await TrackPlayer.setupPlayer();
         }
       }
     };
@@ -141,7 +140,6 @@ const AudioPlayerModal = () => {
   };
 
   const closeModal = async () => {
-    await TrackPlayer.reset();
     const updatedState = {
       ...playerState,
       audioFiles: [],
@@ -157,6 +155,7 @@ const AudioPlayerModal = () => {
     };
 
     setPlayerState(updatedState);
+    await TrackPlayer.reset();
     await savePlayerState(updatedState);
   };
 
@@ -175,34 +174,32 @@ const AudioPlayerModal = () => {
       }`}
     >
       {/* Modal Toggle Button */}
-      <TouchableOpacity
-        className={`absolute z-10 rounded-full top-2 left-3`}
-        onPress={toggleModalExpansion}
-      >
-        <Feather
-          name={
-            playerState?.isModalExpanded
-              ? "arrow-down-circle"
-              : "arrow-up-circle"
-          }
-          size={28}
-          color={iconColor}
-        />
-      </TouchableOpacity>
+      <View className="flex-row-reverse items-center justify-between">
+        <TouchableOpacity onPress={toggleModalExpansion}>
+          <Feather
+            name={
+              playerState?.isModalExpanded
+                ? "arrow-down-circle"
+                : "arrow-up-circle"
+            }
+            size={28}
+            color={iconColor}
+          />
+        </TouchableOpacity>
 
-      {/* Close Modal Button */}
-      <TouchableOpacity
-        className={`absolute z-10 top-2 right-3`}
-        onPress={closeModal}
-      >
-        <AntDesign name="closecircleo" size={25} color={iconColor} />
-      </TouchableOpacity>
+        {/* Close Modal Button */}
+        <TouchableOpacity onPress={closeModal}>
+          <AntDesign name="closecircleo" size={28} color={iconColor} />
+        </TouchableOpacity>
+      </View>
 
       {/* Expanded View */}
-      {playerState?.isModalExpanded ? (
+      {playerState?.isModalExpanded && (
         <>
           {/* Audio Details */}
-          <View className={`${flexDirection()} items-center justify-end mx-4`}>
+          <View
+            className={`${flexDirection()} items-center justify-end mx-2 -mt-7`}
+          >
             <View className={`${flexDirection()} items-center flex-1 gap-2`}>
               <View className="flex-1">
                 <TouchableOpacity
@@ -224,87 +221,19 @@ const AudioPlayerModal = () => {
               </View>
             </View>
           </View>
-
-          {/* Slider */}
-          <Slider
-            style={{
-              width: "100%",
-              height: 25,
-              marginVertical: 10,
-              transform: [{ scaleX: -1 }],
-            }}
-            minimumValue={0}
-            maximumValue={duration}
-            value={position}
-            onSlidingComplete={handleSeek}
-            minimumTrackTintColor="#22c55e"
-            maximumTrackTintColor="#9ca3af"
-            thumbTintColor="#22c55e"
-          />
-
-          {/* Playback Controls */}
-          <View
-            className={`${flexDirection()} items-center justify-between w-full`}
-          >
-            <Text className="text-sm text-white w-[48px] text-center">
-              {formatTime(position)}
-            </Text>
-            <View
-              className={`${flexDirection()} items-center justify-center gap-2`}
-            >
-              <TouchableOpacity
-                onPress={handlePrevSurah}
-                disabled={
-                  playerState.surahIndex === 0 || playerState.loadingNextPrev
-                }
-              >
-                <Ionicons
-                  name="play-skip-forward"
-                  size={24}
-                  color={playerState.surahIndex === 0 ? "#9ca3af" : "#22c55e"}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={togglePlayPause}>
-                <Ionicons
-                  name={playerState.isPlaying ? "pause-circle" : "play-circle"}
-                  size={33}
-                  color="#22c55e"
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={handleNextSurah}
-                disabled={
-                  playerState.surahIndex ===
-                    playerState.recitation?.audioFiles.length - 1 ||
-                  playerState.loadingNextPrev
-                }
-              >
-                <Ionicons
-                  name="play-skip-back"
-                  size={24}
-                  color={
-                    playerState.surahIndex ===
-                    playerState.recitation?.audioFiles.length - 1
-                      ? "#9ca3af"
-                      : "#22c55e"
-                  }
-                />
-              </TouchableOpacity>
-            </View>
-            <Text className="text-sm text-white w-[48px]">
-              {formatTime(duration)}
-            </Text>
-          </View>
         </>
-      ) : (
-        // Collapsed view content
-        <View className="px-7">
+      )}
+      <>
+        <View className={`${!playerState.isModalExpanded && "px-7 -mt-7"}`}>
           <Slider
             style={{
               width: "100%",
               height: 25,
               marginVertical: 10,
-              transform: [{ scaleX: -1 }],
+              transform:
+                (Platform.OS === "ios" && !isRTL) || !isRTL
+                  ? [{ scaleX: 1 }]
+                  : [{ scaleX: -1 }],
             }}
             minimumValue={0}
             maximumValue={duration}
@@ -319,11 +248,12 @@ const AudioPlayerModal = () => {
           <View
             className={`${flexDirection()} items-center justify-between w-full -mt-2`}
           >
-            <Text className="text-sm text-white w-[48px] text-center">
+            <Text className="text-sm font-notoKufi text-white w-[48px] text-center">
               {formatTime(position)}
             </Text>
             <View
-              className={`${flexDirection()} items-center justify-center gap-2`}
+              style={{ flexDirection: !isRTL ? "row" : "row-reverse" }}
+              className={`items-center justify-center gap-2`}
             >
               <TouchableOpacity
                 onPress={handlePrevSurah}
@@ -332,7 +262,8 @@ const AudioPlayerModal = () => {
                 }
               >
                 <Ionicons
-                  name="play-skip-forward"
+                  // name="play-skip-forward"
+                  name={!isRTL ? "play-skip-back" : "play-skip-forward"}
                   size={24}
                   color={playerState.surahIndex === 0 ? "#9ca3af" : "#22c55e"}
                 />
@@ -353,7 +284,8 @@ const AudioPlayerModal = () => {
                 }
               >
                 <Ionicons
-                  name="play-skip-back"
+                  // name="play-skip-back"
+                  name={!isRTL ? "play-skip-forward" : "play-skip-back"}
                   size={24}
                   color={
                     playerState.surahIndex ===
@@ -364,12 +296,12 @@ const AudioPlayerModal = () => {
                 />
               </TouchableOpacity>
             </View>
-            <Text className="text-sm text-white w-[48px] text-end">
+            <Text className="text-sm font-notoKufi text-white w-[48px] text-end">
               {formatTime(duration)}
             </Text>
           </View>
         </View>
-      )}
+      </>
     </View>
   );
 };

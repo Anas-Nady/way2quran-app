@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 import getName from "../../helpers/getName";
+import { rowDirection } from "../../helpers/flexDirection";
 
 export default function SelectOptions({
   setRecitation,
@@ -17,7 +18,7 @@ export default function SelectOptions({
       borderRadius: 8,
       backgroundColor: "#374151",
       position: "relative",
-      flexDirection: "row",
+      flexDirection: rowDirection(),
     },
     inputStyles: {
       color: "#E5E7EB",

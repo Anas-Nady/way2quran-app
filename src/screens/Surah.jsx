@@ -13,6 +13,7 @@ import { Image } from "expo-image";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import { ReactNativeZoomableView } from "@openspacelabs/react-native-zoomable-view";
+import { rowDirection } from "../helpers/flexDirection";
 
 export default function Surah() {
   const { screenWidth, screenHeight } = useContext(ScreenDimensionsContext);
@@ -281,7 +282,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: "50%",
     width: "100%",
-    flexDirection: "row",
+    flexDirection: rowDirection(),
     justifyContent: "space-between",
     paddingHorizontal: 30,
     zIndex: 10,
