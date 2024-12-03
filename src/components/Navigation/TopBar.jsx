@@ -6,8 +6,13 @@ import { useNavigation } from "@react-navigation/native";
 import { flexDirection } from "../../helpers/flexDirection";
 import TopBarMenu from "./TopBarMenu";
 
-const TopBar = ({ isMenuOpen, toggleMenu }) => {
+const TopBar = ({ isMenuOpen, closeMenu, toggleMenu }) => {
   const navigation = useNavigation();
+
+  const handleNavigation = () => {
+    closeMenu();
+    navigation.navigate("Search");
+  };
 
   return (
     <>
@@ -29,7 +34,7 @@ const TopBar = ({ isMenuOpen, toggleMenu }) => {
           <AppTitle />
           <TouchableOpacity
             className="px-2 py-1 bg-gray-600 rounded"
-            onPress={() => navigation.navigate("Search")}
+            onPress={() => handleNavigation()}
           >
             <AntDesign name="search1" size={30} color={"white"} />
           </TouchableOpacity>
