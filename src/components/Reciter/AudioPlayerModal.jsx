@@ -169,37 +169,40 @@ const AudioPlayerModal = () => {
 
   return (
     <View
+      style={{ position: "relative" }}
       className={`bg-gray-800 border border-gray-500 border-b-0 rounded-t-3xl ${
         playerState?.isModalExpanded ? "h-[165px] p-5" : "h-[80px] p-2"
       }`}
     >
       {/* Modal Toggle Button */}
-      <View className="flex-row-reverse items-center justify-between">
-        <TouchableOpacity onPress={toggleModalExpansion}>
-          <Feather
-            name={
-              playerState?.isModalExpanded
-                ? "arrow-down-circle"
-                : "arrow-up-circle"
-            }
-            size={28}
-            color={iconColor}
-          />
-        </TouchableOpacity>
+      <TouchableOpacity
+        className={`absolute z-10 rounded-full top-2 left-3`}
+        onPress={toggleModalExpansion}
+      >
+        <Feather
+          name={
+            playerState?.isModalExpanded
+              ? "arrow-down-circle"
+              : "arrow-up-circle"
+          }
+          size={28}
+          color={iconColor}
+        />
+      </TouchableOpacity>
 
-        {/* Close Modal Button */}
-        <TouchableOpacity onPress={closeModal}>
-          <AntDesign name="closecircleo" size={28} color={iconColor} />
-        </TouchableOpacity>
-      </View>
+      {/* Close Modal Button */}
+      <TouchableOpacity
+        className={`absolute z-10 top-2 right-3`}
+        onPress={closeModal}
+      >
+        <AntDesign name="closecircleo" size={25} color={iconColor} />
+      </TouchableOpacity>
 
       {/* Expanded View */}
       {playerState?.isModalExpanded && (
         <>
           {/* Audio Details */}
-          <View
-            className={`${flexDirection()} items-center justify-end mx-2 -mt-7`}
-          >
+          <View className={`${flexDirection()} items-center justify-end mx-2`}>
             <View className={`${flexDirection()} items-center flex-1 gap-2`}>
               <View className="flex-1">
                 <TouchableOpacity
@@ -224,7 +227,7 @@ const AudioPlayerModal = () => {
         </>
       )}
       <>
-        <View className={`${!playerState.isModalExpanded && "px-7 -mt-7"}`}>
+        <View className={`${!playerState.isModalExpanded && "px-7"}`}>
           <Slider
             style={{
               width: "100%",
@@ -246,7 +249,8 @@ const AudioPlayerModal = () => {
 
           {/* Playback Controls */}
           <View
-            className={`${flexDirection()} items-center justify-between w-full -mt-2`}
+            style={{ marginTop: -4 }}
+            className={`${flexDirection()} items-center justify-between w-full`}
           >
             <Text className="text-sm font-notoKufi text-white w-[48px] text-center">
               {formatTime(position)}
@@ -264,14 +268,14 @@ const AudioPlayerModal = () => {
                 <Ionicons
                   // name="play-skip-forward"
                   name={!isRTL ? "play-skip-back" : "play-skip-forward"}
-                  size={24}
+                  size={28}
                   color={playerState.surahIndex === 0 ? "#9ca3af" : "#22c55e"}
                 />
               </TouchableOpacity>
               <TouchableOpacity onPress={togglePlayPause}>
                 <Ionicons
                   name={playerState.isPlaying ? "pause-circle" : "play-circle"}
-                  size={28}
+                  size={30}
                   color="#22c55e"
                 />
               </TouchableOpacity>
@@ -286,7 +290,7 @@ const AudioPlayerModal = () => {
                 <Ionicons
                   // name="play-skip-back"
                   name={!isRTL ? "play-skip-forward" : "play-skip-back"}
-                  size={24}
+                  size={28}
                   color={
                     playerState.surahIndex ===
                     playerState.recitation?.audioFiles.length - 1
