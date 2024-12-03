@@ -61,7 +61,10 @@ const ReciterHeader = ({
             recitationName={getName(currentRecitation?.recitationInfo)}
           />
         ) : (
-          <Text className="w-[90%] p-2 mx-auto text-2xl font-semibold text-center text-gray-200 border border-gray-600 rounded">
+          <Text
+            style={{ borderWidth: 1, borderRadius: 8, borderColor: "#4b5563" }}
+            className="w-[90%] p-2 mx-auto text-2xl font-semibold text-center text-gray-200"
+          >
             {getName(currentRecitation?.recitationInfo)}
           </Text>
         )}
