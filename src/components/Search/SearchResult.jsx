@@ -31,7 +31,7 @@ export default function SearchResult({ results, loading, error }) {
           role="button"
           tabIndex={0}
         >
-          <Text className="pt-1 pb-2 text-xl font-medium text-gray-100 border-b border-gray-500 text-start">
+          <Text className="pt-1 pb-2 text-xl font-medium text-center text-gray-100 border-b border-gray-500">
             {getName(item)}
           </Text>
         </TouchableOpacity>
