@@ -62,7 +62,8 @@ export default function Favorites() {
             recitationSlug: bookmark.recitationSlug,
           })
         }
-        className={`${flexDirection()} justify-center flex-1`}
+        style={{ flexDirection: rowDirection() }}
+        className={`justify-center flex-1`}
       >
         <Image
           className="rounded-full"
@@ -73,7 +74,7 @@ export default function Favorites() {
           alt={getName(bookmark)}
         />
         <Text
-          className={`flex-1 justify-start mt-2 text-lg font-semibold text-white`}
+          className={`flex-1 text-center mt-2 text-lg font-semibold text-white`}
         >
           {getName(bookmark)}
         </Text>
