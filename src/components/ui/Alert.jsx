@@ -57,7 +57,7 @@ const Alert = ({ message, type = "success", duration = 2500, onClose }) => {
         <Ionicons
           name={getIconName()}
           size={24}
-          color="#22c55e"
+          color={type === "success" ? "#22c55e" : "#f54248"}
           className="mx-1"
         />
         <Text className="flex-1 px-2 text-base font-semibold text-center text-white">
