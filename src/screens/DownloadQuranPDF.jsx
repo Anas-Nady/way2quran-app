@@ -6,6 +6,7 @@ import QuranPDFCard from "../components/QuranPDFCard";
 import listQuranPdf from "./../constants/listQuranPdf";
 import { ScreenDimensionsContext } from "./../contexts/ScreenDimensionsProvider";
 import { useContext } from "react";
+import { rowDirection } from "../helpers/flexDirection";
 
 export default function DownloadQuranPDF() {
   const { t } = useTranslation();
@@ -31,6 +32,7 @@ export default function DownloadQuranPDF() {
         numColumns={2}
         columnWrapperStyle={{
           justifyContent: "space-around",
+          flexDirection: rowDirection(),
         }}
         renderItem={({ item }) => (
           <QuranPDFCard quran={item} width={cardWidth} />
