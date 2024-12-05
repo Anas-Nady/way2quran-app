@@ -1,14 +1,17 @@
 import { Pressable, View } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { rowDirection } from "../../helpers/flexDirection";
+import { isRTL, rowDirection } from "../../helpers/flexDirection";
 
 export default function GoBackButton() {
   const navigation = useNavigation();
 
   return (
     <Pressable
-      style={{ flexDirection: rowDirection() }}
+      style={{
+        flexDirection: rowDirection(),
+        justifyContent: isRTL ? "flex-start" : "flex-end",
+      }}
       className="px-3 pt-3"
       onPress={() => navigation.goBack()}
     >
