@@ -4,7 +4,6 @@ import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { flexDirection } from "../../helpers/flexDirection";
 import ReciterImg from "./ReciterImg";
 import getName from "../../helpers/getName";
-import GoBackButton from "../ui/GoBackButton";
 import SelectOptions from "./SelectOptions";
 import TopReciterBadge from "./TopReciterBadge";
 
@@ -20,7 +19,6 @@ const ReciterHeader = ({
   return (
     <>
       <View className={`${flexDirection()} items-center justify-between`}>
-        <GoBackButton />
         <TouchableOpacity
           disabled={favouriteState.loading}
           onPress={handleFavoriteToggle}
