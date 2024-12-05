@@ -1,24 +1,19 @@
-import {
-  View,
-  Text,
-  ScrollView,
-  KeyboardAvoidingView,
-  Platform,
-} from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import ContactUsForm from "../components/ContactUsForm";
 import HeadingScreen from "../components/HeadingScreen";
 import GoBackButton from "../components/ui/GoBackButton";
 import { useTranslate } from "../helpers/i18nHelper";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function ContactUs() {
   const translate = useTranslate("ContactUsScreen");
-  const keyboardVerticalOffset = Platform.OS === "ios" ? 0 : 46;
 
   return (
-    <KeyboardAvoidingView
-      behavior="padding"
-      keyboardVerticalOffset={keyboardVerticalOffset}
+    <KeyboardAwareScrollView
       style={{ flex: 1 }}
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      contentContainerStyle={{ flex: 1 }}
+      scrollEnabled={true}
     >
       <ScrollView
         contentContainerStyle={{ flexGrow: 1 }}
@@ -38,6 +33,6 @@ export default function ContactUs() {
           <ContactUsForm />
         </View>
       </ScrollView>
-    </KeyboardAvoidingView>
+    </KeyboardAwareScrollView>
   );
 }
