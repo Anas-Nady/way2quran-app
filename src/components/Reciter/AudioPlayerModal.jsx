@@ -257,7 +257,8 @@ const AudioPlayerModal = () => {
             </Text>
             <View
               style={{
-                flexDirection: !isRTL ? "row" : "row-reverse",
+                flexDirection:
+                  !isRTL || Platform.OS === "android" ? "row" : "row-reverse",
                 marginTop: playerState.isModalExpanded ? 0 : -8,
               }}
               className={`items-center justify-center`}
