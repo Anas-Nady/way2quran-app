@@ -5,14 +5,20 @@ export const currentLanguage = getDefaultLanguage();
 export const isRTL = currentLanguage === "ar";
 
 export const flexDirection = () => {
-  if (Platform.OS === "ios" && isRTL) {
+  if (
+    (Platform.OS === "ios" && isRTL) ||
+    (!isRTL && Platform.OS === "android")
+  ) {
     return "flex-row-reverse";
   }
   return "flex-row";
 };
 
 export const rowDirection = () => {
-  if (Platform.OS === "ios" && isRTL) {
+  if (
+    (Platform.OS === "ios" && isRTL) ||
+    (!isRTL && Platform.OS === "android")
+  ) {
     return "row-reverse";
   }
   return "row";
