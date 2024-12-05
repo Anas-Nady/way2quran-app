@@ -14,11 +14,9 @@ const RecitationCard = ({ recitation }) => {
       key={recitation.slug}
       className="flex-row items-center justify-center w-[95%] mx-auto p-3 bg-gray-800 border border-gray-700 rounded-lg"
     >
-      <View className="overflow-hidden ">
-        <Text className="text-lg font-semibold text-slate-50">
-          {getName(recitation)}
-        </Text>
-      </View>
+      <Text className="text-lg font-semibold text-center text-slate-50">
+        {getName(recitation)}
+      </Text>
     </TouchableOpacity>
   );
 };
