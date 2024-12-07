@@ -233,10 +233,7 @@ const AudioPlayerModal = () => {
               width: "100%",
               height: 25,
               marginVertical: 10,
-              transform:
-                (Platform.OS === "ios" && !isRTL) || !isRTL
-                  ? [{ scaleX: 1 }]
-                  : [{ scaleX: -1 }],
+              transform: isRTL ? [{ scaleX: -1 }] : [{ scaleX: 1 }],
             }}
             minimumValue={0}
             maximumValue={duration}
