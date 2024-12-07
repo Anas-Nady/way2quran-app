@@ -14,7 +14,7 @@ const AppTitle = () => {
           className="pt-1 text-[26px] text-secondary font-notoKufi"
         >
           {t("wayTo")}
-          <Text className="text-green-500"> {t("quran")}</Text>
+          <Text className="text-green-600">{t("quran")}</Text>
         </Text>
       </View>
     </TouchableOpacity>
