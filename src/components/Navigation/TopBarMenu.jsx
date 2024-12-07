@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslate } from "../../helpers/i18nHelper";
-import { flexDirection } from "../../helpers/flexDirection";
+import { flexDirection, isRTL } from "../../helpers/flexDirection";
 import { chunkArray } from "../../helpers/chunkArray";
 
 export default function TopBarMenu({ closeMenu }) {
@@ -51,7 +51,11 @@ export default function TopBarMenu({ closeMenu }) {
               onPress={() => handleNavigation(link.routeName, link.params)}
               className="w-[49%] p-4 border-b border-gray-700"
             >
-              <Text className="text-lg font-bold text-center text-gray-200">
+              <Text
+                className={`${
+                  isRTL ? "text-[18px]" : "text-[16px]"
+                } font-bold text-center text-gray-200`}
+              >
                 {link.label}
               </Text>
             </TouchableOpacity>
