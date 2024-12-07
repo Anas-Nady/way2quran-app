@@ -6,6 +6,7 @@ import ReciterImg from "./ReciterImg";
 import getName from "../../helpers/getName";
 import SelectOptions from "./SelectOptions";
 import TopReciterBadge from "./TopReciterBadge";
+import GoBackButton from "./../ui/GoBackButton";
 
 const ReciterHeader = ({
   reciter,
@@ -19,6 +20,7 @@ const ReciterHeader = ({
   return (
     <>
       <View className={`${flexDirection()} items-center justify-between`}>
+        <GoBackButton />
         <TouchableOpacity
           disabled={favouriteState.loading}
           onPress={handleFavoriteToggle}
