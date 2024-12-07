@@ -5,7 +5,6 @@ import {
   PanResponder,
   Animated,
   Dimensions,
-  TouchableOpacity,
 } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { ScreenDimensionsContext } from "../contexts/ScreenDimensionsProvider";
