@@ -13,14 +13,20 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import { ReactNativeZoomableView } from "@openspacelabs/react-native-zoomable-view";
 import { rowDirection } from "../helpers/flexDirection";
+import * as FileSystem from "expo-file-system";
+import Alert from "./../components/ui/Alert";
+import { useTranslation } from "react-i18next";
 
 export default function Surah() {
   const { screenWidth, screenHeight } = useContext(ScreenDimensionsContext);
   const route = useRoute();
   const [contentFit, setContentFit] = useState("fill");
+  const { t } = useTranslation();
   const [currentPage, setCurrentPage] = useState(
     parseInt(route.params.pageNumber)
   );
+  const [imageUri, setImageUri] = useState(null);
+  const [isOffline, setIsOffline] = useState(false);
   const [showArrows, setShowArrows] = useState(false);
   const fadeAnim = useRef(new Animated.Value(1)).current;
   const leftArrowAnim = useRef(new Animated.Value(0)).current;
@@ -166,8 +172,6 @@ export default function Surah() {
     ).start();
   };
 
-  const surahPage = `https://storage.googleapis.com/way2quran_storage/quran-pages/${currentPage}.jpg`;
-
   const handleZoomChange = () => {
     const zoomValue = zoomableViewRef.current.zoomAnim;
     if (zoomValue <= 1) {
@@ -184,6 +188,40 @@ export default function Surah() {
     zoomableViewRef?.current.zoomTo(1);
     setCurrentZoom(1);
   };
+
+  const getImagePath = (pageNumber) => {
+    return `${FileSystem.documentDirectory}quran-pages/${pageNumber}.jpg`;
+  };
+
+  const downloadImageIfNeeded = async (pageNumber) => {
+    const localImagePath = getImagePath(pageNumber);
+    const imageExists = await FileSystem.getInfoAsync(localImagePath);
+    setIsOffline(false);
+
+    if (imageExists.exists) {
+      setImageUri(localImagePath);
+    } else {
+      const remoteImageUrl = `https://storage.googleapis.com/way2quran_storage/quran-pages/${pageNumber}.jpg`;
+
+      try {
+        await FileSystem.makeDirectoryAsync(
+          `${FileSystem.documentDirectory}quran-pages/`,
+          {
+            intermediates: true,
+          }
+        );
+        await FileSystem.downloadAsync(remoteImageUrl, localImagePath);
+        setImageUri(localImagePath);
+        setIsOffline(false);
+      } catch (error) {
+        setIsOffline(true);
+      }
+    }
+  };
+
+  useEffect(() => {
+    downloadImageIfNeeded(currentPage);
+  }, [currentPage]);
 
   return (
     <ReactNativeZoomableView
@@ -251,8 +289,15 @@ export default function Surah() {
           </Animated.View>
         )}
 
+        {isOffline && (
+          <Alert
+            type="warning"
+            message={t("offline")}
+            onClose={() => setIsOffline(false)}
+          />
+        )}
         <Image
-          source={surahPage}
+          source={imageUri}
           style={styles.quranImage}
           contentFit={contentFit}
           transition={300}
