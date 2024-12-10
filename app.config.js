@@ -23,14 +23,6 @@ export default () => {
         usesNonExemptEncryption: false,
       },
     },
-    android: {
-      package: process.env.IDENTIFIER_AR,
-    },
-    extra: {
-      eas: {
-        projectId: process.env.EAS_PROJECT_ID_AR,
-      },
-    },
   };
 
   const englishConfig = {
@@ -53,14 +45,6 @@ export default () => {
         usesNonExemptEncryption: false,
       },
     },
-    android: {
-      package: process.env.IDENTIFIER_EN,
-    },
-    extra: {
-      eas: {
-        projectId: process.env.EAS_PROJECT_ID_EN,
-      },
-    },
   };
 
   const commonConfig = {
@@ -74,6 +58,7 @@ export default () => {
     },
     assetBundlePatterns: ["**/*"],
     android: {
+      package: isArabic ? process.env.IDENTIFIER_AR : process.env.IDENTIFIER_EN,
       adaptiveIcon: {
         foregroundImage: "./src/assets/images/android-icon.png",
         backgroundColor: "#374151",
@@ -107,9 +92,19 @@ export default () => {
       router: {
         origin: false,
       },
+      eas: {
+        projectId: isArabic
+          ? process.env.EAS_PROJECT_ID_AR
+          : process.env.EAS_PROJECT_ID_EN,
+      },
     },
   };
 
+  const res = {
+    ...commonConfig,
+    ...arabicConfig,
+  };
+  console.log(res);
   return {
     ...commonConfig,
     ...(isArabic ? arabicConfig : englishConfig),
