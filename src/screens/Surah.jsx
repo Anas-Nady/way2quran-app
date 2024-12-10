@@ -81,24 +81,13 @@ export default function Surah() {
   const goToNextPage = () => {
     if (currentPage < 604) {
       setCurrentPage((prevPage) => prevPage + 1);
-      hideArrows(); // Hide arrows after scrolling
     }
-  };
-
-  // Hide arrows with fade-out animation
-  const hideArrows = () => {
-    Animated.timing(fadeAnim, {
-      toValue: 0,
-      duration: 500, // 500ms fade-out duration
-      useNativeDriver: true,
-    }).start(() => setShowArrows(false)); // Hide arrows completely
   };
 
   // Navigate to the previous page
   const goToPreviousPage = () => {
     if (currentPage > 1) {
       setCurrentPage((prevPage) => prevPage - 1);
-      hideArrows(); // Hide arrows after scrolling
     }
   };
 
