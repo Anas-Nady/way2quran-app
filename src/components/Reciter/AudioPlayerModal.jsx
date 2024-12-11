@@ -5,7 +5,11 @@ import Slider from "@react-native-community/slider";
 import { useAudioPlayer } from "../../contexts/AudioPlayerContext";
 import formatTime from "../../helpers/formatTime";
 import getName from "../../helpers/getName";
-import { flexDirection, isRTL } from "../../helpers/flexDirection";
+import {
+  flexDirection,
+  isRTL,
+  rowDirection,
+} from "../../helpers/flexDirection";
 import TrackPlayer, { State, useProgress } from "react-native-track-player";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -254,8 +258,7 @@ const AudioPlayerModal = () => {
             </Text>
             <View
               style={{
-                flexDirection:
-                  !isRTL || Platform.OS === "android" ? "row" : "row-reverse",
+                flexDirection: rowDirection(),
                 marginTop: playerState.isModalExpanded ? 0 : -8,
               }}
               className={`items-center justify-center`}
