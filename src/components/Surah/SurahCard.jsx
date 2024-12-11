@@ -13,6 +13,7 @@ const SurahCard = ({ surah }) => {
       onPress={() =>
         navigation.navigate("Surah", {
           pageNumber: surah.page,
+          surahSlug: surah.slug,
         })
       }
       className={`${flexDirection()} px-4 py-4 mx-auto w-[90%] border border-gray-600 rounded surah-card`}

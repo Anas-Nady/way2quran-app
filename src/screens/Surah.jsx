@@ -34,19 +34,42 @@ export default function Surah() {
   const fitScreenAnim = useRef(new Animated.Value(0.8)).current;
   const [currentZoom, setCurrentZoom] = useState(1);
   const [maxZoom, setMaxZoom] = useState(1.5);
+  const surahSlug = route.params.surahSlug;
+  const surahPageNumber = parseInt(route.params.pageNumber);
+  const [loadingPage, setLoadingPage] = useState(true);
 
   useEffect(() => {
     const checkFirstTime = async () => {
-      const hasSeenArrows = await AsyncStorage.getItem("hasSeenArrows");
-      if (!hasSeenArrows) {
-        setShowArrows(true);
-        await AsyncStorage.setItem("hasSeenArrows", "true");
-        animateArrows();
-        setTimeout(() => fadeOutArrows(), 3000);
+      try {
+        const hasSeenArrows = await AsyncStorage.getItem("hasSeenArrows");
+        if (!hasSeenArrows) {
+          setShowArrows(true);
+          setCurrentPage(surahPageNumber);
+          await AsyncStorage.setItem("hasSeenArrows", "true");
+          animateArrows();
+          setTimeout(() => fadeOutArrows(), 2500);
+        } else {
+          const getStoredPageNumber = await AsyncStorage.getItem(
+            `surah-${surahSlug}`
+          );
+          if (
+            getStoredPageNumber &&
+            parseInt(getStoredPageNumber) >= currentPage
+          ) {
+            setCurrentPage(parseInt(getStoredPageNumber));
+          } else {
+            setCurrentPage(surahPageNumber);
+          }
+        }
+      } catch (error) {
+        console.error("Error retrieving stored page number:", error);
+        setCurrentPage(surahPageNumber);
+      } finally {
+        setLoadingPage(false);
       }
     };
     checkFirstTime();
-  }, []);
+  }, [surahSlug]);
 
   useEffect(() => {
     // Listen to orientation changes
@@ -77,17 +100,33 @@ export default function Surah() {
     }).start(() => setShowArrows(false)); // Hide completely after animation
   };
 
+  const saveCurrentPageToStorage = async (currentPage) => {
+    try {
+      await AsyncStorage.setItem(`surah-${surahSlug}`, currentPage.toString());
+    } catch (error) {
+      console.error("Error saving current page:", error);
+    }
+  };
+
   // Navigate to the next page
   const goToNextPage = () => {
     if (currentPage < 604) {
-      setCurrentPage((prevPage) => prevPage + 1);
+      setCurrentPage((prevPage) => {
+        const nextPage = prevPage + 1;
+        saveCurrentPageToStorage(nextPage);
+        return nextPage;
+      });
     }
   };
 
   // Navigate to the previous page
   const goToPreviousPage = () => {
     if (currentPage > 1) {
-      setCurrentPage((prevPage) => prevPage - 1);
+      setCurrentPage((prevPage) => {
+        const prevPageNumber = prevPage - 1;
+        saveCurrentPageToStorage(prevPageNumber);
+        return prevPageNumber;
+      });
     }
   };
 
@@ -285,12 +324,14 @@ export default function Surah() {
             onClose={() => setIsOffline(false)}
           />
         )}
-        <Image
-          source={imageUri}
-          style={styles.quranImage}
-          contentFit={contentFit}
-          transition={300}
-        />
+        {!loadingPage && (
+          <Image
+            source={imageUri}
+            style={styles.quranImage}
+            contentFit={contentFit}
+            transition={300}
+          />
+        )}
       </View>
     </ReactNativeZoomableView>
   );
