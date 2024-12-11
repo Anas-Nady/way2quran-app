@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Platform } from "react-native";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { flexDirection } from "../../helpers/flexDirection";
 import ReciterImg from "./ReciterImg";
@@ -19,7 +19,11 @@ const ReciterHeader = ({
 }) => {
   return (
     <>
-      <View className={`${flexDirection()} items-center justify-between`}>
+      <View
+        className={`${
+          Platform.OS === "ios" ? "flex-row-reverse" : "flex-row"
+        } items-center justify-between`}
+      >
         <GoBackButton />
         <TouchableOpacity
           disabled={favouriteState.loading}
