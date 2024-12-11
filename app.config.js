@@ -15,7 +15,7 @@ export default () => {
       infoPlist: {
         UIBackgroundModes: ["audio"],
         NSLocationWhenInUseUsageDescription:
-          "نحن نستخدم موقعك لتحديد المدينة والبلد فقط لعرض أوقات الصلاة بشكل دقيق لك",
+          "نحن نستخدم موقعك لتحديد المدينة والبلد لعرض أوقات الصلاة بشكل دقيق لك",
         NSDocumentsFolderUsageDescription:
           "يحتاج التطبيق إلى الوصول إلى مجلد المستندات الخاص بك لحفظ صفحات القرآن الكريم.",
       },
@@ -48,7 +48,7 @@ export default () => {
   };
 
   const commonConfig = {
-    version: "1.0.5",
+    version: "1.0.6",
     orientation: "default",
     sdkVersion: "51.0.0",
     icon: "./src/assets/images/ios-icon.png",
