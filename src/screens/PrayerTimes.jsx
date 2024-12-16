@@ -33,9 +33,12 @@ const PrayerTimes = () => {
 
         const location = await Location.getCurrentPositionAsync({});
 
+        const latitude = location.coords.latitude;
+        const longitude = location.coords.longitude;
+
         const addressResponse = await Location.reverseGeocodeAsync({
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
+          latitude,
+          longitude,
         });
 
         if (addressResponse[0]) {
@@ -43,13 +46,11 @@ const PrayerTimes = () => {
           setAddress(`${city}, ${country}`);
         }
 
-        const times = await getPrayerTimes({
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
-        });
-
+        const times = await getPrayerTimes({ latitude, longitude });
+        const next = await getNextPrayer({ latitude, longitude });
         setPrayerTimes(times);
-        setNextPrayer(getNextPrayer(times));
+        setNextPrayer(next);
+
         setLoading(false);
       } catch (error) {
         setError(error?.message || translate("fetchError"));
@@ -66,6 +67,16 @@ const PrayerTimes = () => {
     const timer = setInterval(() => {
       const remaining = calculateRemainingTime(prayerTimes, nextPrayer);
       setRemainingTime(remaining);
+
+      // Advance to the next prayer if time has passed
+      if (
+        remaining &&
+        remaining.hours === 0 &&
+        remaining.minutes === 0 &&
+        remaining.seconds === 0
+      ) {
+        getNextPrayer({ latitude, longitude }).then(setNextPrayer);
+      }
     }, 1000);
 
     return () => clearInterval(timer);
@@ -95,9 +106,7 @@ const PrayerTimes = () => {
 
   const renderPrayerItem = ({ item }) => {
     const [prayer, time] = item;
-    const isPassed =
-      prayer !== nextPrayer?.name.toLowerCase() &&
-      getNextPrayer(prayerTimes)?.name.toLowerCase() !== prayer;
+    const isPassed = prayer !== nextPrayer?.name.toLowerCase();
 
     return (
       <View

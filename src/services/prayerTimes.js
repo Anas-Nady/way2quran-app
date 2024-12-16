@@ -1,10 +1,8 @@
 import { format } from "date-fns";
 import { isRTL } from "../helpers/flexDirection";
 
-export async function getPrayerTimes({ latitude, longitude }) {
+export async function fetchPrayerTimes({ latitude, longitude }) {
   try {
-    const today = format(new Date(), "yyyy-MM-dd");
-
     const response = await fetch(
       `https://api.aladhan.com/v1/timings?latitude=${latitude}&longitude=${longitude}`
     );
@@ -15,8 +13,17 @@ export async function getPrayerTimes({ latitude, longitude }) {
     }
 
     const data = await response.json();
+    return data.data.timings;
+  } catch (error) {
+    console.error("Error fetching prayer times:", error);
+    throw error;
+  }
+}
 
-    const timings = data.data.timings;
+export async function getPrayerTimes({ latitude, longitude }) {
+  try {
+    const today = format(new Date(), "yyyy-MM-dd");
+    const timings = await fetchPrayerTimes({ latitude, longitude });
 
     const formatTime = (time) => {
       const formatted = format(new Date(`${today} ${time}`), "hh:mm a");
@@ -40,21 +47,23 @@ export async function getPrayerTimes({ latitude, longitude }) {
   }
 }
 
-export function getNextPrayer(prayerTimes) {
+export async function getNextPrayer({ latitude, longitude }) {
   const now = new Date();
-  const currentTime = format(now, "HH:mm");
+
+  const timings = await fetchPrayerTimes({ latitude, longitude });
 
   const prayers = [
-    { name: "Fajr", time: prayerTimes.fajr },
-    { name: "Dhuhr", time: prayerTimes.dhuhr },
-    { name: "Asr", time: prayerTimes.asr },
-    { name: "Maghrib", time: prayerTimes.maghrib },
-    { name: "Isha", time: prayerTimes.isha },
+    { name: "Fajr", time: timings.Fajr },
+    { name: "Dhuhr", time: timings.Dhuhr },
+    { name: "Asr", time: timings.Asr },
+    { name: "Maghrib", time: timings.Maghrib },
+    { name: "Isha", time: timings.Isha },
   ];
 
   // Find the next prayer
   for (const prayer of prayers) {
-    if (prayer.time > currentTime) {
+    const prayerTime = new Date(`${now.toLocaleDateString()} ${prayer.time}`);
+    if (prayerTime > now) {
       return prayer;
     }
   }
