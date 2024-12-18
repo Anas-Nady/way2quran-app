@@ -1,8 +1,9 @@
 import { format } from "date-fns";
-import { isRTL } from "../helpers/flexDirection";
 
-export async function fetchPrayerTimes({ latitude, longitude }) {
+export async function getPrayerTimes({ latitude, longitude }) {
   try {
+    const today = format(new Date(), "yyyy-MM-dd");
+
     const response = await fetch(
       `https://api.aladhan.com/v1/timings?latitude=${latitude}&longitude=${longitude}`
     );
@@ -13,31 +14,16 @@ export async function fetchPrayerTimes({ latitude, longitude }) {
     }
 
     const data = await response.json();
-    return data.data.timings;
-  } catch (error) {
-    console.error("Error fetching prayer times:", error);
-    throw error;
-  }
-}
 
-export async function getPrayerTimes({ latitude, longitude }) {
-  try {
-    const today = format(new Date(), "yyyy-MM-dd");
-    const timings = await fetchPrayerTimes({ latitude, longitude });
+    const timings = data.data.timings;
 
-    const formatTime = (time) => {
-      const formatted = format(new Date(`${today} ${time}`), "hh:mm a");
-      return isRTL
-        ? formatted.replace("AM", "ص").replace("PM", "م")
-        : formatted;
-    };
-
+    // Format the times to HH:mm format
     const prayerTimes = {
-      fajr: formatTime(timings.Fajr),
-      dhuhr: formatTime(timings.Dhuhr),
-      asr: formatTime(timings.Asr),
-      maghrib: formatTime(timings.Maghrib),
-      isha: formatTime(timings.Isha),
+      fajr: format(new Date(`${today} ${timings.Fajr}`), "HH:mm"),
+      dhuhr: format(new Date(`${today} ${timings.Dhuhr}`), "HH:mm"),
+      asr: format(new Date(`${today} ${timings.Asr}`), "HH:mm"),
+      maghrib: format(new Date(`${today} ${timings.Maghrib}`), "HH:mm"),
+      isha: format(new Date(`${today} ${timings.Isha}`), "HH:mm"),
     };
 
     return prayerTimes;
@@ -47,23 +33,21 @@ export async function getPrayerTimes({ latitude, longitude }) {
   }
 }
 
-export async function getNextPrayer({ latitude, longitude }) {
+export function getNextPrayer(prayerTimes) {
   const now = new Date();
-
-  const timings = await fetchPrayerTimes({ latitude, longitude });
+  const currentTime = format(now, "HH:mm");
 
   const prayers = [
-    { name: "Fajr", time: timings.Fajr },
-    { name: "Dhuhr", time: timings.Dhuhr },
-    { name: "Asr", time: timings.Asr },
-    { name: "Maghrib", time: timings.Maghrib },
-    { name: "Isha", time: timings.Isha },
+    { name: "Fajr", time: prayerTimes.fajr },
+    { name: "Dhuhr", time: prayerTimes.dhuhr },
+    { name: "Asr", time: prayerTimes.asr },
+    { name: "Maghrib", time: prayerTimes.maghrib },
+    { name: "Isha", time: prayerTimes.isha },
   ];
 
   // Find the next prayer
   for (const prayer of prayers) {
-    const prayerTime = new Date(`${now.toLocaleDateString()} ${prayer.time}`);
-    if (prayerTime > now) {
+    if (prayer.time > currentTime) {
       return prayer;
     }
   }
@@ -76,31 +60,16 @@ export function calculateRemainingTime(times, nextPrayer) {
   if (!times || !nextPrayer) return null;
 
   const now = new Date();
-
-  const prayerTimeStr = times[nextPrayer.name.toLowerCase()];
-  const isPM = isRTL
-    ? prayerTimeStr.includes("م")
-    : prayerTimeStr.includes("PM");
-  const [timePart] = prayerTimeStr.split(" ");
-  const [hours, minutes] = timePart.split(":").map(Number);
-
-  // Convert to 24-hour format
-  let prayerHours = hours;
-  if (isPM && hours !== 12) {
-    prayerHours += 12;
-  }
-  if (!isPM && hours === 12) {
-    prayerHours = 0;
-  }
-
+  const [hours, minutes] = times[nextPrayer.name.toLowerCase()]
+    .split(":")
+    .map(Number);
   const prayerTime = new Date();
-  prayerTime.setHours(prayerHours, minutes, 0);
+  prayerTime.setHours(hours, minutes, 0);
 
   if (prayerTime < now) {
     prayerTime.setDate(prayerTime.getDate() + 1);
   }
 
-  // Calculate the remaining time
   const diff = prayerTime - now;
   const hours_remaining = Math.floor(diff / (1000 * 60 * 60));
   const minutes_remaining = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));

@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import { View, Text, TouchableOpacity, AppState, Platform } from "react-native";
+import { View, Text, TouchableOpacity, AppState } from "react-native";
 import { AntDesign, Feather, Ionicons } from "@expo/vector-icons";
 import Slider from "@react-native-community/slider";
 import { useAudioPlayer } from "../../contexts/AudioPlayerContext";
-import formatTime from "../../helpers/formatTime";
+import { formatDuration } from "../../helpers/formatTime";
 import getName from "../../helpers/getName";
 import {
   flexDirection,
@@ -254,7 +254,7 @@ const AudioPlayerModal = () => {
             className={`${flexDirection()} items-center justify-between w-full`}
           >
             <Text className="text-sm font-notoKufi text-white w-[48px] text-center">
-              {formatTime(position)}
+              {formatDuration(position)}
             </Text>
             <View
               style={{
@@ -305,7 +305,7 @@ const AudioPlayerModal = () => {
               </TouchableOpacity>
             </View>
             <Text className="text-sm font-notoKufi text-white w-[48px] text-end">
-              {formatTime(duration)}
+              {formatDuration(duration)}
             </Text>
           </View>
         </View>

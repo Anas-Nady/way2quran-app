@@ -11,6 +11,7 @@ import {
   getNextPrayer,
   getPrayerTimes,
 } from "../services/prayerTimes.js";
+import { formatPrayerTime } from "../helpers/formatTime.js";
 
 const PrayerTimes = () => {
   const translate = useTranslate("PrayerTimes");
@@ -47,7 +48,7 @@ const PrayerTimes = () => {
         }
 
         const times = await getPrayerTimes({ latitude, longitude });
-        const next = await getNextPrayer({ latitude, longitude });
+        const next = getNextPrayer(times);
         setPrayerTimes(times);
         setNextPrayer(next);
 
@@ -75,7 +76,7 @@ const PrayerTimes = () => {
         remaining.minutes === 0 &&
         remaining.seconds === 0
       ) {
-        getNextPrayer({ latitude, longitude }).then(setNextPrayer);
+        getNextPrayer(prayerTimes).then(setNextPrayer);
       }
     }, 1000);
 
@@ -137,7 +138,7 @@ const PrayerTimes = () => {
               : "text-gray-300"
           }`}
         >
-          {time}
+          {formatPrayerTime(time)}
         </Text>
       </View>
     );
