@@ -100,11 +100,6 @@ export default () => {
     },
   };
 
-  const res = {
-    ...commonConfig,
-    ...arabicConfig,
-  };
-  console.log(res);
   return {
     ...commonConfig,
     ...(isArabic ? arabicConfig : englishConfig),
