@@ -56,3 +56,11 @@ export const searchItems = async (query) => {
 
   return res;
 };
+
+export const incrementDownloadCount = async (slug) => {
+  const res = await fetch(`${BASE_END_POINT}/downloads/increment/${slug}`, {
+    method: "POST",
+  });
+
+  return res;
+};

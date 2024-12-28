@@ -27,7 +27,7 @@ export default function DownloadQuranPDF() {
       <FlatList
         data={listQuranPdf}
         ListHeaderComponent={renderHeader}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item.slug}
         showsVerticalScrollIndicator={false}
         numColumns={2}
         columnWrapperStyle={{

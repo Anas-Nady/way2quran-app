@@ -1,9 +1,22 @@
+import { useState } from "react";
 import { View, Text, TouchableOpacity, Image, Linking } from "react-native";
 import getName from "../helpers/getName";
+import { incrementDownloadCount } from "../services/api";
 
 export default function QuranPDFCard({ quran, width }) {
-  const handleDownloadPDF = () => {
-    Linking.openURL(quran.downloadLink);
+  const [loading, setLoading] = useState(false);
+
+  const handleDownloadPDF = async () => {
+    try {
+      setLoading(true);
+      await incrementDownloadCount(quran.slug);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+
+    Linking.openURL(quran.downloadURL);
   };
 
   const quranName = getName(quran);
@@ -11,6 +24,7 @@ export default function QuranPDFCard({ quran, width }) {
   return (
     <TouchableOpacity
       onPress={handleDownloadPDF}
+      disabled={loading}
       style={{ width: width }}
       className="my-2"
     >
@@ -18,7 +32,7 @@ export default function QuranPDFCard({ quran, width }) {
         <View className="items-center justify-center p-2">
           <Image
             source={{
-              uri: quran.img,
+              uri: quran.imageURL,
               width: width - 20,
               height: width - 20,
             }}
