@@ -127,8 +127,17 @@ const ReciterScreen = () => {
   };
 
   const downloadRecitation = () => {
-    const downloadUrl = `${BASE_END_POINT}/reciters/download-recitation/${reciterSlug}/${selectedRecitationSlug}`;
-    Linking.openURL(downloadUrl);
+    let downloadURL = `${BASE_END_POINT}/recitations/download/${reciterSlug}/${selectedRecitationSlug}`;
+
+    state.reciter?.recitations?.forEach((rec) => {
+      if (
+        rec?.recitationInfo.slug === selectedRecitationSlug &&
+        rec.downloadURL
+      ) {
+        downloadURL = rec.downloadURL;
+      }
+    });
+    Linking.openURL(downloadURL);
   };
 
   const handleRecitationChange = (newRecitationSlug) => {
