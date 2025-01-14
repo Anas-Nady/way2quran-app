@@ -1,13 +1,13 @@
-import { useNavigation } from "@react-navigation/native";
+import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { Text, TouchableOpacity, View } from "react-native";
 
 const AppTitle = () => {
   const { t } = useTranslation();
-  const navigation = useNavigation();
+  const router = useRouter();
 
   return (
-    <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+    <TouchableOpacity onPress={() => router.push("/")}>
       <View>
         <Text
           style={{ lineHeight: 43 }}

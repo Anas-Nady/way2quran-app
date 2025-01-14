@@ -1,14 +1,14 @@
-import { useNavigation } from "@react-navigation/native";
 import { View, Text, TouchableOpacity } from "react-native";
 import Error from "../States/Error";
 import EmptyState from "../States/EmptyState";
 import LoadingSpinner from "../States/LoadingSpinner";
 import { useTranslate } from "../../helpers/i18nHelper";
 import getName from "../../helpers/getName";
+import { useRouter } from "expo-router";
 
 export default function SearchResult({ results, loading, error }) {
-  const navigation = useNavigation();
   const translate = useTranslate("SearchScreen");
+  const router = useRouter();
 
   const renderResults = (items, pathPrefix, params) =>
     items.map((item, index) => {
@@ -26,7 +26,9 @@ export default function SearchResult({ results, loading, error }) {
       return (
         <TouchableOpacity
           key={index}
-          onPress={() => navigation.navigate(pathPrefix, dynamicParams)}
+          onPress={() =>
+            router.push({ pathname: pathPrefix, params: dynamicParams })
+          }
           className="block px-2 py-3"
           role="button"
           tabIndex={0}
@@ -59,16 +61,16 @@ export default function SearchResult({ results, loading, error }) {
     <View className="w-[90%] flex-1 mx-auto mt-2">
       <View className="">
         {results.reciters.length > 0 &&
-          renderResults(results.reciters, "Reciter", {
+          renderResults(results.reciters, "reciter", {
             reciterSlug: true,
             recitationSlug: true,
           })}
         {results.recitations.length > 0 &&
-          renderResults(results.recitations, "Reciters", {
+          renderResults(results.recitations, "reciters", {
             recitationSlug: true,
           })}
         {results.surahs.length > 0 &&
-          renderResults(results.surahs, "Surah", { surahNumber: true })}
+          renderResults(results.surahs, "surah", { surahNumber: true })}
       </View>
     </View>
   );

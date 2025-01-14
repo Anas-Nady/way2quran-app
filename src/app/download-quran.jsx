@@ -23,12 +23,11 @@ export default function DownloadQuranPDF() {
   };
 
   return (
-    <View className="flex-1 w-full mx-auto bg-gray-800">
+    <View className="flex-1 w-full h-full mx-auto bg-gray-800">
       <FlatList
         data={listQuranPdf}
         ListHeaderComponent={renderHeader}
         keyExtractor={(item) => item.slug}
-        showsVerticalScrollIndicator={false}
         numColumns={2}
         columnWrapperStyle={{
           justifyContent: "space-around",

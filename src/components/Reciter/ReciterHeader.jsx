@@ -42,7 +42,7 @@ const ReciterHeader = ({
         <View className="flex-col items-center w-full">
           <ReciterImg uri={reciter?.photo} />
           <View className="my-2">
-            <Text className="px-2 text-3xl font-semibold text-center text-slate-300">
+            <Text className="px-2 text-3xl font-semibold text-center text-slate-200">
               {getName(reciter)}
             </Text>
             {reciter?.isTopReciter && <TopReciterBadge />}

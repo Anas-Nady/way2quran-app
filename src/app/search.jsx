@@ -56,11 +56,7 @@ export default function Search() {
   };
 
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      contentContainerStyle={{ flexGrow: 1 }}
-      className="flex-1 w-full bg-gray-800"
-    >
+    <ScrollView className="flex-1 w-full h-full bg-gray-800">
       <View>
         <GoBackButton />
         <SearchInput handleTextDebounce={handleTextDebounce} />

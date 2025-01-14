@@ -1,9 +1,4 @@
-import axios from "axios";
-
 export const BASE_END_POINT = "https://way2quran.com/api";
-const api = axios.create({
-  baseURL: BASE_END_POINT,
-});
 
 export async function getReciters({
   recitationSlug = "",
@@ -34,19 +29,15 @@ export async function globalSearch(value) {
 }
 
 export const createMessage = async ({ senderName, senderEmail, content }) => {
-  const config = {
+  const res = await fetch(`${BASE_END_POINT}/messages`, {
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-  };
+    body: JSON.stringify({ senderName, senderEmail, content }),
+  });
 
-  const { data } = await api.post(
-    "/messages",
-    { senderName, senderEmail, content },
-    config
-  );
-
-  return data;
+  return res;
 };
 
 export const searchItems = async (query) => {

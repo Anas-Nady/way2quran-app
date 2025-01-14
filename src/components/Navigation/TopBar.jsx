@@ -2,16 +2,16 @@ import { AntDesign, Feather } from "@expo/vector-icons";
 import { TouchableOpacity, View } from "react-native";
 import AppTitle from "../AppTitle";
 import Animated, { FadeIn } from "react-native-reanimated";
-import { useNavigation } from "@react-navigation/native";
 import { flexDirection } from "../../helpers/flexDirection";
 import TopBarMenu from "./TopBarMenu";
+import { useRouter } from "expo-router";
 
 const TopBar = ({ isMenuOpen, closeMenu, toggleMenu }) => {
-  const navigation = useNavigation();
+  const router = useRouter();
 
   const handleNavigation = () => {
     closeMenu();
-    navigation.navigate("Search");
+    router.push("search");
   };
 
   return (

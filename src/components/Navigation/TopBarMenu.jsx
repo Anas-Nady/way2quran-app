@@ -1,37 +1,40 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import { useTranslate } from "../../helpers/i18nHelper";
 import { flexDirection, isRTL } from "../../helpers/flexDirection";
 import { chunkArray } from "../../helpers/chunkArray";
+import { useRouter } from "expo-router";
 
 export default function TopBarMenu({ closeMenu }) {
-  const navigation = useNavigation();
   const translate = useTranslate("TopBarMenu");
+  const router = useRouter();
 
   const handleNavigation = (route, params) => {
-    navigation.navigate(route, params);
+    router.push({
+      pathname: route,
+      params,
+    });
     closeMenu();
   };
 
   const menuLinks = [
     {
       label: translate("fullQuran"),
-      routeName: "Reciters",
+      routeName: "/reciters",
       params: { recitationSlug: "full-holy-quran" },
     },
     {
       label: translate("frequentRecitations"),
-      routeName: "Recitations",
+      routeName: "/recitations",
       params: {},
     },
     {
       label: translate("variousRecitations"),
-      routeName: "Reciters",
+      routeName: "/reciters",
       params: { recitationSlug: "various-recitations" },
     },
     {
       label: translate("downloadQuran"),
-      routeName: "DownloadQuranPDF",
+      routeName: "/download-quran",
       params: {},
     },
   ];

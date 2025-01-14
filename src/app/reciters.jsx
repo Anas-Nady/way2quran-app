@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from "react";
 import { View, FlatList } from "react-native";
-import { useNavigation, useRoute } from "@react-navigation/native";
 import recitations from "../constants/recitations";
 import HeadingScreen from "../components/HeadingScreen";
 import ReciterCard from "../components/Reciter/ReciterCard";
@@ -14,15 +13,14 @@ import getRecitationType from "./../helpers/getRecitationType";
 import getName from "../helpers/getName";
 import { ScreenDimensionsContext } from "../contexts/ScreenDimensionsProvider";
 import { rowDirection } from "../helpers/flexDirection";
+import { useLocalSearchParams, useRouter } from "expo-router";
 
 export default function Reciters() {
   const { screenWidth: width } = useContext(ScreenDimensionsContext);
-
-  const route = useRoute();
-  const { recitationSlug } = route.params;
-  const navigation = useNavigation();
+  const { recitationSlug } = useLocalSearchParams();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const router = useRouter();
 
   const [state, setState] = useState({
     reciters: [],
@@ -73,9 +71,12 @@ export default function Reciters() {
       key={reciter.slug}
       reciter={reciter}
       handleNavigateClick={() =>
-        navigation.navigate("Reciter", {
-          reciterSlug: reciter.slug,
-          recitationSlug: getRecitationType(recitationSlug),
+        router.push({
+          pathname: "reciter",
+          params: {
+            reciterSlug: reciter.slug,
+            recitationSlug: getRecitationType(recitationSlug),
+          },
         })
       }
     />
@@ -108,8 +109,6 @@ export default function Reciters() {
         <Error message={state.error} />
       ) : (
         <FlatList
-          nestedScrollEnabled={true}
-          style={{ flex: 1 }}
           data={state.reciters}
           renderItem={renderReciter}
           keyExtractor={(item) => item.slug}
@@ -122,7 +121,6 @@ export default function Reciters() {
           }}
           numColumns={numColumns}
           key={numColumns}
-          showsVerticalScrollIndicator={false}
           columnWrapperStyle={{
             justifyContent: "space-between",
             alignItems: "center",

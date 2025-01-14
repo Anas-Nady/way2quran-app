@@ -6,7 +6,6 @@ import {
   Animated,
   Dimensions,
 } from "react-native";
-import { useRoute } from "@react-navigation/native";
 import { ScreenDimensionsContext } from "../contexts/ScreenDimensionsProvider";
 import { Image } from "expo-image";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -16,15 +15,14 @@ import { rowDirection } from "../helpers/flexDirection";
 import * as FileSystem from "expo-file-system";
 import Alert from "./../components/ui/Alert";
 import { useTranslation } from "react-i18next";
+import { useLocalSearchParams } from "expo-router";
 
 export default function Surah() {
   const { screenWidth, screenHeight } = useContext(ScreenDimensionsContext);
-  const route = useRoute();
   const [contentFit, setContentFit] = useState("fill");
+  const { pageNumber, surahSlug } = useLocalSearchParams();
+  const [currentPage, setCurrentPage] = useState(parseInt(pageNumber));
   const { t } = useTranslation();
-  const [currentPage, setCurrentPage] = useState(
-    parseInt(route.params.pageNumber)
-  );
   const [imageUri, setImageUri] = useState(null);
   const [isOffline, setIsOffline] = useState(false);
   const [showArrows, setShowArrows] = useState(false);
@@ -34,8 +32,7 @@ export default function Surah() {
   const fitScreenAnim = useRef(new Animated.Value(0.8)).current;
   const [currentZoom, setCurrentZoom] = useState(1);
   const [maxZoom, setMaxZoom] = useState(1.5);
-  const surahSlug = route.params.surahSlug;
-  const surahPageNumber = parseInt(route.params.pageNumber);
+  const surahPageNumber = parseInt(pageNumber);
   const [loadingPage, setLoadingPage] = useState(true);
 
   useEffect(() => {

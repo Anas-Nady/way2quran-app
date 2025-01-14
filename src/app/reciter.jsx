@@ -1,22 +1,21 @@
 import { useEffect, useState } from "react";
 import { View, Linking, ActivityIndicator, FlatList } from "react-native";
-import { useRoute } from "@react-navigation/native";
-import SurahCardDetails from "../components/Surah/SurahCardDetails";
-import { BASE_END_POINT, getReciter } from "../services/api";
-import Error from "../components/States/Error";
-import LoadingSpinner from "../components/States/LoadingSpinner";
+import SurahCardDetails from "../components/Surah/SurahCardDetails.jsx";
+import { BASE_END_POINT, getReciter } from "../services/api.js";
+import Error from "../components/States/Error.jsx";
+import LoadingSpinner from "../components/States/LoadingSpinner.jsx";
 import {
   addBookmark,
   removeBookmark,
   isBookmarkExists,
-} from "../helpers/bookmarkHandlers";
-import Alert from "../components/ui/Alert";
-import { useTranslate } from "./../helpers/i18nHelper.js";
+} from "../helpers/bookmarkHandlers.js";
+import Alert from "../components/ui/Alert.jsx";
+import { useTranslate } from "../helpers/i18nHelper.js";
 import ReciterHeader from "../components/Reciter/ReciterHeader.jsx";
+import { useLocalSearchParams } from "expo-router";
 
 const ReciterScreen = () => {
-  const route = useRoute();
-  const { recitationSlug, reciterSlug } = route.params || {};
+  const { recitationSlug, reciterSlug } = useLocalSearchParams();
   const translate = useTranslate("ReciterScreen");
   const [state, setState] = useState({
     reciter: {},

@@ -159,7 +159,6 @@ const PrayerTimes = () => {
         keyExtractor={([prayer]) => prayer}
         renderItem={renderPrayerItem}
         ListHeaderComponent={renderHeader}
-        nestedScrollEnabled={true}
         contentContainerStyle={{
           flexGrow: 1,
           paddingBottom: 16,
@@ -168,7 +167,6 @@ const PrayerTimes = () => {
         }}
         style={{ flex: 1 }}
         className="flex-1 w-full bg-gray-800"
-        showsVerticalScrollIndicator={false}
       />
     </View>
   );

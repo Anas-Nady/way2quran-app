@@ -186,9 +186,9 @@ export default function Playlist() {
           reciter: playlist.reciter,
           recitation: { ...playlist.recitation, audioFiles: sortedSurahs },
           surahIndex: 0,
-          isAutoPlayEnabled: true,
           isPlaying: true,
           isModalVisible: true,
+          repeatMode: "queue",
           isPlaylist: true,
         };
 
@@ -211,10 +211,14 @@ export default function Playlist() {
           updatedPlayerState = { ...updatedPlayerState, isPlaying: false };
         } else {
           await TrackPlayer.play();
+          if (playerState.repeatMode === "off" && playerState.audioHasEnded) {
+            await TrackPlayer.seekTo(0);
+          }
           updatedPlayerState = {
             ...updatedPlayerState,
             isPlaying: true,
             isModalVisible: true,
+            audioHasEnded: false,
           };
         }
 
@@ -240,9 +244,9 @@ export default function Playlist() {
         reciter: playlist.reciter,
         recitation: { ...playlist.recitation, audioFiles: sortedSurahs },
         surahIndex: 0,
-        isAutoPlayEnabled: true,
         isPlaying: true,
         isModalVisible: true,
+        repeatMode: "queue",
         isPlaylist: true,
       };
 
@@ -312,14 +316,13 @@ export default function Playlist() {
   };
 
   return (
-    <View className="flex-1 w-full mx-auto bg-gray-800">
+    <View className="flex-1 w-full h-full mx-auto bg-gray-800">
       <FlatList
         data={playlists}
         renderItem={renderPlaylistItem}
         ListHeaderComponent={renderHeader}
         keyExtractor={(item) => item.key}
         contentContainerStyle={{ flexGrow: 1, backgroundColor: "#1f2937" }}
-        showsVerticalScrollIndicator={false}
         ListEmptyComponent={ListEmptyComponent}
       />
       <ConfirmationDialog

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { View, Text, TouchableOpacity, AppState } from "react-native";
-import { AntDesign, Feather, Ionicons } from "@expo/vector-icons";
+import { AntDesign, Feather } from "@expo/vector-icons";
 import Slider from "@react-native-community/slider";
 import { useAudioPlayer } from "../../contexts/AudioPlayerContext";
 import { formatDuration } from "../../helpers/formatTime";
@@ -11,17 +11,18 @@ import {
   rowDirection,
 } from "../../helpers/flexDirection";
 import TrackPlayer, { State, useProgress } from "react-native-track-player";
-import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { savePlayerState } from "../../helpers/playerStateStorage";
 import { setupTrackPlayback } from "../../helpers/setupTrackPlayback";
+import { useRouter } from "expo-router";
+import PlayerIcon from "./PlayerIcon";
 
 const AudioPlayerModal = () => {
   const { playerState, setPlayerState, toggleModalExpansion } =
     useAudioPlayer();
   const { position, duration } = useProgress();
   const iconColor = "white";
-  const navigation = useNavigation();
+  const router = useRouter();
 
   useEffect(() => {
     const handleAppStateChange = async (nextAppState) => {
@@ -34,8 +35,11 @@ const AudioPlayerModal = () => {
             const savedPlayerState = JSON.parse(getPlayerState);
             setPlayerState(savedPlayerState);
             if (savedPlayerState.reciter?.slug) {
-              navigation.navigate("Reciter", {
-                reciterSlug: savedPlayerState.reciter.slug,
+              router.push({
+                pathname: "reciter",
+                params: {
+                  reciterSlug: savedPlayerState.reciter.slug,
+                },
               });
             }
           } else {
@@ -60,7 +64,14 @@ const AudioPlayerModal = () => {
         updatedState = { ...updatedState, isPlaying: false };
       } else {
         await TrackPlayer.play();
-        updatedState = { ...playerState, isPlaying: true };
+        if (playerState.repeatMode === "off" && playerState.audioHasEnded) {
+          await TrackPlayer.seekTo(0);
+        }
+        updatedState = {
+          ...playerState,
+          isPlaying: true,
+          audioHasEnded: false,
+        };
       }
 
       setPlayerState(updatedState);
@@ -152,10 +163,11 @@ const AudioPlayerModal = () => {
       surahIndex: -1,
       isModalVisible: false,
       isModalExpanded: true,
-      isAutoPlayEnabled: false,
+      repeatMode: "off",
       reciter: null,
       recitation: null,
       modalHeight: 0,
+      audioHasEnded: false,
     };
 
     setPlayerState(updatedState);
@@ -166,10 +178,28 @@ const AudioPlayerModal = () => {
   if (!playerState.isModalVisible) return null;
 
   const navigateToReciterScreen = () =>
-    navigation.navigate("Reciter", {
-      reciterSlug: playerState.reciter?.slug,
-      recitationSlug: playerState.recitation?.recitationInfo?.slug,
+    router.push({
+      pathname: "reciter",
+      params: {
+        reciterSlug: playerState.reciter?.slug,
+        recitationSlug: playerState.recitation?.recitationInfo?.slug,
+      },
     });
+
+  // HANDLE TRACK PLAYER REPEAT CURRENT AUDIO
+  const handleRepeatCurrentAudio = () => {
+    setPlayerState((prev) => ({
+      ...prev,
+      repeatMode: prev.repeatMode === "track" ? "off" : "track",
+    }));
+  };
+
+  const handleRepeatQueue = () => {
+    setPlayerState((prev) => ({
+      ...prev,
+      repeatMode: prev.repeatMode === "queue" ? "off" : "queue",
+    }));
+  };
 
   return (
     <View
@@ -189,7 +219,7 @@ const AudioPlayerModal = () => {
               ? "arrow-down-circle"
               : "arrow-up-circle"
           }
-          size={28}
+          size={30}
           color={iconColor}
         />
       </TouchableOpacity>
@@ -199,7 +229,7 @@ const AudioPlayerModal = () => {
         className={`absolute z-10 top-2 right-3`}
         onPress={closeModal}
       >
-        <AntDesign name="closecircleo" size={25} color={iconColor} />
+        <AntDesign name="closecircleo" size={27} color={iconColor} />
       </TouchableOpacity>
 
       {/* Expanded View */}
@@ -228,85 +258,99 @@ const AudioPlayerModal = () => {
               </View>
             </View>
           </View>
-        </>
-      )}
-      <>
-        <View className={`${!playerState.isModalExpanded && "px-7"}`}>
-          <Slider
-            style={{
-              width: "100%",
-              height: 25,
-              marginVertical: 10,
-              transform: isRTL ? [{ scaleX: -1 }] : [{ scaleX: 1 }],
-            }}
-            minimumValue={0}
-            maximumValue={duration}
-            value={position}
-            onSlidingComplete={handleSeek}
-            minimumTrackTintColor="#22c55e"
-            maximumTrackTintColor="#9ca3af"
-            thumbTintColor="#22c55e"
-          />
-
-          {/* Playback Controls */}
-          <View
-            style={{ marginTop: playerState.isModalExpanded ? 0 : -4 }}
-            className={`${flexDirection()} items-center justify-between w-full`}
-          >
+          <View className="flex-row items-center justify-between w-full">
             <Text className="text-sm font-notoKufi text-white w-[48px] text-center">
               {formatDuration(position)}
             </Text>
+            <Slider
+              style={{
+                flex: 1,
+                height: 25,
+                marginVertical: 10,
+                transform: isRTL ? [{ scaleX: -1 }] : [{ scaleX: 1 }],
+              }}
+              minimumValue={0}
+              maximumValue={duration}
+              value={position}
+              onSlidingComplete={handleSeek}
+              minimumTrackTintColor="#22c55e"
+              maximumTrackTintColor="#9ca3af"
+              thumbTintColor="#22c55e"
+            />
+
+            <Text className="text-sm font-notoKufi text-white w-[48px] text-end">
+              {formatDuration(duration)}
+            </Text>
+          </View>
+        </>
+      )}
+      <>
+        {/* Playback Controls */}
+        <View className={`${!playerState.isModalExpanded && "px-7 mt-7"}`}>
+          <View
+            className={`${flexDirection()} items-center justify-between w-full`}
+          >
             <View
               style={{
                 flexDirection: rowDirection(),
-                marginTop: playerState.isModalExpanded ? 0 : -8,
               }}
-              className={`items-center justify-center`}
+              className={`items-center justify-between flex-1 flex-row-reverse`}
             >
-              <TouchableOpacity
+              <PlayerIcon
+                iconName="repeat"
+                iconLibrary="Feather"
+                size={27}
+                color={
+                  playerState.repeatMode === "track" ? "#22c55e" : "#9ca3af"
+                }
+                onPress={handleRepeatCurrentAudio}
+              />
+
+              <PlayerIcon
+                iconName={!isRTL ? "play-skip-back" : "play-skip-forward"}
+                size={30}
+                color={playerState.surahIndex === 0 ? "#9ca3af" : "#22c55e"}
                 onPress={handlePrevSurah}
                 disabled={
                   playerState.surahIndex === 0 || playerState.loadingNextPrev
                 }
-              >
-                <Ionicons
-                  // name="play-skip-forward"
-                  name={!isRTL ? "play-skip-back" : "play-skip-forward"}
-                  size={28}
-                  color={playerState.surahIndex === 0 ? "#9ca3af" : "#22c55e"}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={togglePlayPause}>
-                <Ionicons
-                  name={playerState.isPlaying ? "pause-circle" : "play-circle"}
-                  size={30}
-                  color="#22c55e"
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
+              />
+
+              <PlayerIcon
+                iconName={
+                  playerState.isPlaying ? "pause-circle" : "play-circle"
+                }
+                size={33}
+                color="#22c55e"
+                onPress={togglePlayPause}
+              />
+
+              <PlayerIcon
+                iconName={!isRTL ? "play-skip-forward" : "play-skip-back"}
+                size={30}
+                color={
+                  playerState.surahIndex ===
+                  playerState.recitation?.audioFiles.length - 1
+                    ? "#9ca3af"
+                    : "#22c55e"
+                }
                 onPress={handleNextSurah}
                 disabled={
                   playerState.surahIndex ===
                     playerState.recitation?.audioFiles.length - 1 ||
                   playerState.loadingNextPrev
                 }
-              >
-                <Ionicons
-                  // name="play-skip-back"
-                  name={!isRTL ? "play-skip-forward" : "play-skip-back"}
-                  size={28}
-                  color={
-                    playerState.surahIndex ===
-                    playerState.recitation?.audioFiles.length - 1
-                      ? "#9ca3af"
-                      : "#22c55e"
-                  }
-                />
-              </TouchableOpacity>
+              />
+
+              <PlayerIcon
+                iconName="shuffle-sharp"
+                size={27}
+                color={
+                  playerState.repeatMode === "queue" ? "#22c55e" : "#9ca3af"
+                }
+                onPress={handleRepeatQueue}
+              />
             </View>
-            <Text className="text-sm font-notoKufi text-white w-[48px] text-end">
-              {formatDuration(duration)}
-            </Text>
           </View>
         </View>
       </>

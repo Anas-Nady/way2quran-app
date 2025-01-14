@@ -3,17 +3,16 @@ import { View, Text, FlatList, Image, TouchableOpacity } from "react-native";
 import GoBackButton from "../components/ui/GoBackButton";
 import HeadingScreen from "../components/HeadingScreen";
 import { AntDesign } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
 import { getAllBookmarks, removeBookmark } from "../helpers/bookmarkHandlers";
 import EmptyState from "../components/States/EmptyState";
 import ConfirmationDialog from "../components/ui/ConfirmationDialog";
 import { useTranslate } from "../helpers/i18nHelper";
 import { flexDirection, rowDirection } from "../helpers/flexDirection";
 import getName from "../helpers/getName";
+import { Link } from "expo-router";
 
 export default function Favorites() {
   const TYPE = "Favorites";
-  const navigation = useNavigation();
   const [bookmarks, setBookmarks] = useState([]);
   const [isDialogVisible, setIsDialogVisible] = useState(false);
   const [bookmarkToDelete, setBookmarkToDelete] = useState(null);
@@ -55,30 +54,30 @@ export default function Favorites() {
     <View
       className={`${flexDirection()} w-[95%] mx-auto px-3 py-2 my-2 border rounded-xl bg-gray-700 border-gray-500`}
     >
-      <TouchableOpacity
-        onPress={() =>
-          navigation.navigate("Reciter", {
-            reciterSlug: bookmark.reciterSlug,
-            recitationSlug: bookmark.recitationSlug,
-          })
-        }
+      <Link
+        href={`/reciter?reciterSlug=${bookmark.reciterSlug}?recitationSlug=${bookmark.recitationSlug}`}
         style={{ flexDirection: rowDirection() }}
         className={`justify-center flex-1`}
+        asChild
       >
-        <Image
-          className="rounded-full"
-          style={{ width: 80, height: 80 }}
-          source={{
-            uri: bookmark.photo,
-          }}
-          alt={getName(bookmark)}
-        />
-        <Text
-          className={`flex-1 text-center mt-2 text-lg font-semibold text-white`}
-        >
-          {getName(bookmark)}
-        </Text>
-      </TouchableOpacity>
+        <TouchableOpacity>
+          <View style={{ alignItems: "center" }}>
+            <Image
+              className="rounded-full"
+              style={{ width: 80, height: 80 }}
+              source={{
+                uri: bookmark.photo,
+              }}
+              alt={getName(bookmark)}
+            />
+            <Text
+              className={`text-center mt-2 text-lg font-semibold text-white`}
+            >
+              {getName(bookmark)}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </Link>
       <TouchableOpacity onPress={() => handleDelete(bookmark)}>
         <AntDesign name="delete" size={25} color="#ef4444" />
       </TouchableOpacity>
@@ -95,13 +94,12 @@ export default function Favorites() {
   };
 
   return (
-    <View className="flex-1 w-full bg-gray-800">
+    <View className="flex-1 w-full h-full bg-gray-800">
       <FlatList
         data={bookmarks}
         renderItem={renderItem}
         style={{ flexDirection: rowDirection() }}
         keyExtractor={(item) => item.reciterSlug}
-        showsVerticalScrollIndicator={false}
         contentContainerStyle={{ flexGrow: 1, backgroundColor: "#1f2937" }}
         ListHeaderComponent={renderHeader}
         ListEmptyComponent={<EmptyState message={translate("emptyState")} />}

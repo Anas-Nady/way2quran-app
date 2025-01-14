@@ -20,7 +20,7 @@ export default function Recitations() {
   };
 
   return (
-    <View className="flex-1 w-full bg-gray-800">
+    <View className="flex-1 w-full h-full bg-gray-800">
       <FlatList
         data={recitations.slice(3)}
         ListHeaderComponent={renderHeader}
@@ -30,7 +30,6 @@ export default function Recitations() {
           flexGrow: 1,
           gap: 12,
         }}
-        showsVerticalScrollIndicator={false}
       />
     </View>
   );

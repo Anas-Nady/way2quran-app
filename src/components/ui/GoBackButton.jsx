@@ -1,11 +1,10 @@
 import { Pressable, View } from "react-native";
 import { Entypo } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
 import { isRTL, rowDirection } from "../../helpers/flexDirection";
+import { useRouter } from "expo-router";
 
 export default function GoBackButton() {
-  const navigation = useNavigation();
-
+  const router = useRouter();
   return (
     <Pressable
       style={{
@@ -13,7 +12,7 @@ export default function GoBackButton() {
         justifyContent: isRTL ? "flex-start" : "flex-end",
       }}
       className="px-3 pt-3"
-      onPress={() => navigation.goBack()}
+      onPress={() => router.back()}
     >
       <View className="p-1 bg-green-500 w-[30px] rounded-full">
         <Entypo name="forward" size={22} color="white" />

@@ -1,40 +1,39 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
 import { useTranslate } from "../../helpers/i18nHelper.js";
 import { flexDirection } from "../../helpers/flexDirection.js";
 import prayerTimesIcon from "./../../assets/images/mosqueIcon.png";
+import { useRouter } from "expo-router";
 
 export default function TabBar({ closeMenu }) {
-  const navigation = useNavigation();
   const translate = useTranslate("TabBar");
-
+  const router = useRouter();
   const tabsLinks = [
-    { label: translate("home"), routeName: "Home", icon: "home" },
+    { label: translate("home"), routeName: "/", icon: "home" },
     {
       label: translate("playlist"),
-      routeName: "Playlist",
+      routeName: "playlist",
       icon: "playlist-add",
     },
     {
       label: translate("favorites"),
-      routeName: "Favorites",
+      routeName: "favorites",
       icon: "favorite",
     },
     {
       label: translate("mushaf"),
-      routeName: "Mushaf",
+      routeName: "mushaf",
       icon: "menu-book",
     },
   ];
   const handleMenuPress = (routeName) => {
     closeMenu();
-    navigation.navigate(routeName);
+    router.push(routeName);
   };
 
   return (
-    <View className="w-[95%] bg-gray-700 rounded-full mx-auto py-1 px-4">
-      <View className={`${flexDirection()} items-center justify-between `}>
+    <View className="w-[97%] bg-gray-700 rounded-full mx-auto py-1 px-4">
+      <View className={`${flexDirection()} items-center justify-between`}>
         {tabsLinks.map((tab, i) => (
           <TouchableOpacity
             key={i}
@@ -48,7 +47,7 @@ export default function TabBar({ closeMenu }) {
             </View>
           </TouchableOpacity>
         ))}
-        <TouchableOpacity onPress={() => navigation.navigate("PrayerTimes")}>
+        <TouchableOpacity onPress={() => router.push("prayer-times")}>
           <View className="flex-col items-center justify-center">
             <Image source={prayerTimesIcon} width={24} />
             <Text className="font-semibold text-green-500 text-md">

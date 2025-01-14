@@ -15,9 +15,10 @@ export const AudioPlayerProvider = ({ children }) => {
     currentAudio: null,
     isPlaying: false,
     surahIndex: -1,
+    repeatMode: "off",
     isModalVisible: false,
     isModalExpanded: false,
-    isAutoPlayEnabled: false,
+    audioHasEnded: false,
     reciter: null,
     recitation: null,
     modalHeight: 80,
@@ -65,6 +66,7 @@ export const AudioPlayerProvider = ({ children }) => {
           updatedPlayerState = {
             ...playerState,
             isPlaying: false,
+            audioHasEnded: false,
             currentAudio: null,
             surahIndex: -1,
             isModalVisible: false,
@@ -153,8 +155,9 @@ export const AudioPlayerProvider = ({ children }) => {
   useTrackPlayerEvents([Event.PlaybackQueueEnded], async (event) => {
     if (event.type === Event.PlaybackQueueEnded) {
       if (
-        playerState.isAutoPlayEnabled &&
-        playerState.surahIndex < playerState.recitation?.audioFiles.length - 1
+        playerState.surahIndex <
+          playerState.recitation?.audioFiles.length - 1 &&
+        playerState.repeatMode === "queue"
       ) {
         const nextIdx = playerState.surahIndex + 1;
         const nextSurah = playerState.recitation.audioFiles[nextIdx];
@@ -181,13 +184,26 @@ export const AudioPlayerProvider = ({ children }) => {
           setPlayerState(updatedPlayerState);
           await savePlayerState(updatedPlayerState);
         }
+      } else if (playerState.repeatMode === "track") {
+        await TrackPlayer.seekTo(0);
       } else {
-        const updatedPlayerState = { ...playerState, isPlaying: false };
+        const updatedPlayerState = {
+          ...playerState,
+          isPlaying: false,
+          audioHasEnded: true,
+        };
         setPlayerState(updatedPlayerState);
         await savePlayerState(updatedPlayerState);
       }
     }
   });
+
+  function getPlayerModalHeight() {
+    if (playerState.isModalVisible) {
+      return playerState.isModalExpanded ? 165 : 80;
+    }
+    return 0;
+  }
 
   const toggleModalExpansion = async () => {
     const updatedPlayerState = {
@@ -205,6 +221,7 @@ export const AudioPlayerProvider = ({ children }) => {
         playerState,
         setPlayerState,
         toggleModalExpansion,
+        getPlayerModalHeight,
       }}
     >
       {children}
