@@ -64,6 +64,7 @@ const SurahCardDetails = ({ surah, surahIndex, reciter, recitation }) => {
           reciter,
           recitation,
           isPlaylist: false,
+          repeatMode: "off",
         };
 
         setPlayerState(updatedPlayerState);
@@ -87,6 +88,9 @@ const SurahCardDetails = ({ surah, surahIndex, reciter, recitation }) => {
           updatedPlayerState = { ...updatedPlayerState, isPlaying: false };
         } else {
           await TrackPlayer.play();
+          if (playerState.repeatMode === "off" && playerState.audioHasEnded) {
+            await TrackPlayer.seekTo(0);
+          }
           updatedPlayerState = { ...updatedPlayerState, isPlaying: true };
         }
 
@@ -114,6 +118,7 @@ const SurahCardDetails = ({ surah, surahIndex, reciter, recitation }) => {
         reciter,
         recitation,
         isPlaylist: false,
+        repeatMode: "off",
       };
 
       setPlayerState(updatedPlayerState);
