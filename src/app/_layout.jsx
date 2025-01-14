@@ -16,7 +16,6 @@ import TopBar from "../components/Navigation/TopBar";
 import TabBar from "../components/Navigation/TabBar";
 import AudioPlayerModal from "../components/Reciter/AudioPlayerModal";
 
-// Create a new component for the main layout content
 const MainLayout = () => {
   const { getPlayerModalHeight } = useAudioPlayer();
   const playerModalHeight = getPlayerModalHeight();
@@ -76,7 +75,6 @@ const RootLayout = () => {
   const { fontsLoaded, error } = useCustomFonts();
   const [splashScreenLoaded, setSplashScreenLoaded] = useState(true);
 
-  // Initialize RTL layout direction
   useEffect(() => {
     I18nManager.forceRTL(I18nManager.isRTL);
   }, []);
