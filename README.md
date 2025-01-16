@@ -25,8 +25,8 @@ Way2Quran is a comprehensive Quran app that offers a diverse collection of recit
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/anas-nady/way2quran-mobile-app.git
-   cd way2quran-mobile-app
+   git clone https://github.com/anas-nady/way2quran-app.git
+   cd way2quran-app
    ```
 
 2. Install dependencies:
@@ -60,11 +60,11 @@ We welcome contributions to Way2Quran! If you'd like to add features or fix bugs
 
 ## Contact
 
-Anas NadY- [@linkedIn](https://www.linkedin.com/in/anas-nady/) | eng.anas.nady@gmail.com
+Anas Abdallah Nady- [@linkedIn](https://www.linkedin.com/in/anas-nady/) | eng.anas.nady@gmail.com
 
 Website Project Link: [https://github.com/anas-nady/way2quran.com](https://github.com/anas-nady/way2quran.com)
 
-Mobile App Project Link: [https://github.com/anas-nady/way2quran-mobile](https://github.com/anas-nady/way2quran-mobile)
+Mobile App Project Link: [https://github.com/anas-nady/way2quran-app](https://github.com/anas-nady/way2quran-app)
 
 ---
 
