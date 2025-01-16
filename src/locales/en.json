@@ -2,7 +2,7 @@
   "titleHome": "Way2quran",
   "wayTo": "Way2",
   "quran": "Quran",
-  "downloadQuranPdf": "Download Quran",
+  "downloadMushaf": "Download Mushaf",
   "mushaf": "Mushaf",
   "search": "Search...",
   "noResultsFound": "No results found.",
@@ -70,7 +70,8 @@
     "errorNameRequired": "Name is required",
     "errorInvalidEmail": "Please enter a valid email address",
     "errorMessageRequired": "Message is required",
-    "sending": "Sending..."
+    "sending": "Sending...",
+    "messageFromApp": "This message is from the app"
   },
 
   "TabBar": {

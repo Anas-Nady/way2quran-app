@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {},
+  "extends": "expo/tsconfig.base",
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "src/types/*.ts",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts",
+    "babel.config.js"
+  ]
+}

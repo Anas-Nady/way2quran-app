@@ -2,7 +2,7 @@
   "titleHome": "الطريق الي القرآن",
   "wayTo": "الطريق إلي ",
   "quran": "القرآن",
-  "downloadQuranPdf": "تحميل المصحف",
+  "downloadMushaf": "تحميل المصحف",
   "mushaf": "المصحف الشريف",
   "search": "بحث...",
   "noResultsFound": "لا يوجد نتائج",
@@ -68,7 +68,8 @@
     "errorNameRequired": "الاسم مطلوب",
     "errorInvalidEmail": "يرجى إدخال عنوان بريد إلكتروني صحيح",
     "errorMessageRequired": "الرسالة مطلوبة",
-    "sending": "جاري الإرسال..."
+    "sending": "جاري الإرسال...",
+    "messageFromApp": "هذه الرسالة من التطبيق"
   },
 
   "TabBar": {
