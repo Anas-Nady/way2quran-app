@@ -80,6 +80,7 @@ const AudioPlayerModal = () => {
           isPlaying: true,
           surahIndex: nextIdx,
           loadingNextPrev: false,
+          audioHasEnded: false,
         };
 
         setPlayerState(updatedPlayerState as IPlayerState);
@@ -113,6 +114,7 @@ const AudioPlayerModal = () => {
           isPlaying: true,
           surahIndex: prevIdx,
           loadingNextPrev: false,
+          audioHasEnded: false,
         };
 
         setPlayerState(updatedPlayerState as IPlayerState);
