@@ -95,7 +95,6 @@ export const togglePlayback = async ({
   surahIndex,
   isPlaylist,
 }: ITogglePlaybackProps) => {
-  console.log(playerState);
   setPlayerState((prev) => ({ ...prev, playLoading: true }));
 
   const repeatMode = isPlaylist
@@ -136,7 +135,6 @@ export const togglePlayback = async ({
         isPlaylist,
         audioHasEnded: false,
       };
-      console.log(updatedPlayerState.isPlaying);
 
       setPlayerState(updatedPlayerState as IPlayerState);
       await savePlayerState(updatedPlayerState as IPlayerState);
