@@ -77,7 +77,7 @@ export const searchItems = async ({ query }: ISearchItems) => {
 export const incrementDownloadCount = async ({
   slug,
 }: IIncrementDownloadCount) => {
-  const res = await fetch(`${BASE_END_POINT}/downloads/increment/${slug}`, {
+  const res = await fetch(`${BASE_END_POINT}/mushaf/increment/${slug}`, {
     method: "POST",
   });
 
