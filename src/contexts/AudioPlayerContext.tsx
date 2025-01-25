@@ -194,6 +194,15 @@ export const AudioPlayerProvider = ({ children }) => {
         }
       } else if (playerState.repeatMode === RepeatModeOptions.TRACK) {
         await TrackPlayer.seekTo(0);
+        await TrackPlayer.play();
+
+        const updatedPlayerState = {
+          ...playerState,
+          isPlaying: true,
+          audioHasEnded: false,
+        };
+        setPlayerState(updatedPlayerState as IPlayerState);
+        await savePlayerState(updatedPlayerState as IPlayerState);
       } else {
         const updatedPlayerState = {
           ...playerState,
