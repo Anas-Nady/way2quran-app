@@ -6,23 +6,18 @@ import {
   isBookmarkExists,
   addBookmark,
   getBookmarkData,
+  removeBookmark,
 } from "../../helpers/bookmarkHandlers";
 import getName from "../../helpers/getName";
 import { flexDirection } from "../../helpers/flexDirection";
-import TrackPlayer from "react-native-track-player";
-import { savePlayerState } from "../../helpers/playerStateStorage";
-import { setupTrackPlayback } from "../../helpers/setupTrackPlayback";
-import trackPlayerService from "../../services/trackPlayer";
 import {
-  IAudioFile,
-  IPlayerState,
-  IPlaylistBookmark,
-  RepeatModeOptions,
-} from "../../types/types";
+  isPlayerPlaying,
+  togglePlayback,
+} from "../../helpers/setupTrackPlayback";
+import { IAudioFile, IPlaylistBookmark } from "../../types/types";
 
 const SurahCardDetails = ({ surah, surahIndex, reciter, recitation }) => {
   const [isBookmarked, setIsBookmarked] = useState(false);
-  const currentSurahIndex = surah.surahNumber - 1;
 
   const { playerState, setPlayerState } = useAudioPlayer();
 
@@ -30,140 +25,34 @@ const SurahCardDetails = ({ surah, surahIndex, reciter, recitation }) => {
     Linking.openURL(surah?.downloadUrl);
   };
 
-  const iconColor = "#fff";
+  const currentlyPlaying = isPlayerPlaying({
+    playerState,
+    reciterSlug: reciter.slug,
+    recitationSlug: recitation.recitationInfo.slug,
+    currentSurahIndex: surahIndex,
+    isPlaylist: false,
+  });
 
-  const togglePlayback = async (surah: IAudioFile) => {
-    setPlayerState((prev) => ({ ...prev, playLoading: true }));
-
-    try {
-      // If no track is loaded yet
-      if (playerState.surahIndex === -1) {
-        try {
-          await TrackPlayer.getPlaybackState();
-        } catch (error) {
-          await TrackPlayer.setupPlayer({
-            autoHandleInterruptions: true,
-          });
-          await trackPlayerService();
-        }
-
-        await setupTrackPlayback({
-          id: surah.surahNumber.toString(),
-          url: surah.url,
-          title: `${getName(surah?.surahInfo)}`,
-          artist: getName(reciter),
-          artwork: reciter.photo,
-        });
-
-        const updatedPlayerState = {
-          ...playerState,
-          playLoading: false,
-          currentAudio: surah,
-          audioFiles: recitation.audioFiles,
-          isPlaying: true,
-          isModalVisible: true,
-          surahIndex,
-          reciter: {
-            slug: reciter.slug,
-            arabicName: reciter.arabicName,
-            englishName: reciter.englishName,
-            photo: reciter.photo,
-          },
-          recitation: {
-            slug: recitation.recitationInfo.slug,
-            arabicName: recitation.recitationInfo.arabicName,
-            englishName: recitation.recitationInfo.englishName,
-          },
-          isPlaylist: false,
-          repeatMode: RepeatModeOptions.OFF,
-          audioHasEnded: false,
-        };
-
-        setPlayerState(updatedPlayerState);
-        await savePlayerState(updatedPlayerState);
-        return;
-      }
-
-      if (
-        !playerState.isPlaylist &&
-        playerState.surahIndex == currentSurahIndex &&
-        playerState.reciter?.slug === reciter?.slug &&
-        playerState.recitation?.slug === recitation?.recitationInfo?.slug
-      ) {
-        let updatedPlayerState = {
-          ...playerState,
-          playLoading: false,
-        };
-        if (playerState.isPlaying) {
-          await TrackPlayer.pause();
-          updatedPlayerState = { ...updatedPlayerState, isPlaying: false };
-        } else {
-          await TrackPlayer.play();
-          if (
-            playerState.repeatMode === RepeatModeOptions.OFF &&
-            playerState.audioHasEnded
-          ) {
-            await TrackPlayer.seekTo(0);
-          }
-          updatedPlayerState = { ...updatedPlayerState, isPlaying: true };
-        }
-
-        await savePlayerState(updatedPlayerState);
-        setPlayerState(updatedPlayerState);
-        return;
-      }
-
-      // If switching to a different track
-      await setupTrackPlayback({
-        id: surah.surahNumber.toString(),
-        url: surah.url,
-        title: `${getName(surah?.surahInfo)}`,
-        artist: getName(reciter),
-        artwork: reciter.photo,
-      });
-
-      const updatedPlayerState = {
-        ...playerState,
-        playLoading: false,
-        currentAudio: surah,
-        audioFiles: recitation.audioFiles,
-        isPlaying: true,
-        isModalVisible: true,
-        surahIndex,
-        reciter: {
-          slug: reciter.slug,
-          arabicName: reciter.arabicName,
-          englishName: reciter.englishName,
-          photo: reciter.photo,
-        },
-        recitation: {
-          slug: recitation.recitationInfo.slug,
-          arabicName: recitation.recitationInfo.arabicName,
-          englishName: recitation.recitationInfo.englishName,
-        },
-        isPlaylist: false,
-        repeatMode: RepeatModeOptions.OFF,
-        audioHasEnded: false,
-      };
-
-      setPlayerState(updatedPlayerState as IPlayerState);
-      await savePlayerState(updatedPlayerState as IPlayerState);
-    } catch (error) {
-      const updatedState = { ...playerState, playLoading: false };
-      setPlayerState(updatedState);
-      await savePlayerState(updatedState);
-    }
-  };
-
-  const isCurrentlyPlaying = () => {
-    return (
-      playerState.isPlaying &&
-      playerState.reciter?.slug === reciter?.slug &&
-      playerState.recitation?.slug === recitation?.recitationInfo?.slug &&
-      playerState.surahIndex === currentSurahIndex &&
-      !playerState.isPlaylist
-    );
-  };
+  const togglePlayPause = async () =>
+    await togglePlayback({
+      playerState,
+      setPlayerState,
+      reciter: {
+        arabicName: reciter.arabicName,
+        englishName: reciter.englishName,
+        slug: reciter.slug,
+        photo: reciter.photo,
+      },
+      recitation: {
+        arabicName: recitation.recitationInfo.arabicName,
+        englishName: recitation.recitationInfo.englishName,
+        slug: recitation.recitationInfo.slug,
+      },
+      audioFiles: recitation.audioFiles,
+      currentAudio: surah,
+      surahIndex,
+      isPlaylist: false,
+    });
 
   useEffect(() => {
     checkBookmarkStatus();
@@ -208,12 +97,17 @@ const SurahCardDetails = ({ surah, surahIndex, reciter, recitation }) => {
             url: surah.url,
             downloadUrl: surah.downloadUrl,
           },
-        ];
+        ].sort((a, b) => a.surahNumber - b.surahNumber);
       }
-      await addBookmark("Playlist", bookmarkKey, {
-        ...bookmarkData,
-        audioFiles: updatedSurahs,
-      });
+
+      if (updatedSurahs.length > 0) {
+        await addBookmark("Playlist", bookmarkKey, {
+          ...bookmarkData,
+          audioFiles: updatedSurahs,
+        });
+      } else {
+        await removeBookmark("Playlist", bookmarkKey);
+      }
     } else {
       const newBookmarkData: IPlaylistBookmark = {
         reciter: {
@@ -248,7 +142,7 @@ const SurahCardDetails = ({ surah, surahIndex, reciter, recitation }) => {
     >
       <TouchableOpacity
         className={`${flexDirection()} items-center flex-1`}
-        onPress={() => togglePlayback(surah)}
+        onPress={togglePlayPause}
         disabled={playerState.playLoading}
       >
         <View
@@ -273,16 +167,14 @@ const SurahCardDetails = ({ surah, surahIndex, reciter, recitation }) => {
         {/* Audio Play Button */}
         <TouchableOpacity
           disabled={playerState.playLoading}
-          onPress={() => togglePlayback(surah)}
+          onPress={togglePlayPause}
         >
           <Ionicons
             name={
-              isCurrentlyPlaying()
-                ? "pause-circle-outline"
-                : "play-circle-outline"
+              currentlyPlaying ? "pause-circle-outline" : "play-circle-outline"
             }
             size={30}
-            color={isCurrentlyPlaying() ? "#22c55e" : iconColor}
+            color={currentlyPlaying ? "#22c55e" : "#fff"}
           />
         </TouchableOpacity>
 
@@ -290,13 +182,13 @@ const SurahCardDetails = ({ surah, surahIndex, reciter, recitation }) => {
           <MaterialIcons
             name={isBookmarked ? "playlist-add-check" : "playlist-add"}
             size={30}
-            color={isBookmarked ? "#22c55e" : iconColor}
+            color={isBookmarked ? "#22c55e" : "#fff"}
           />
         </TouchableOpacity>
 
         {/* Download Button */}
         <TouchableOpacity onPress={handleDownload}>
-          <Feather name="download" size={26} color={iconColor} />
+          <Feather name="download" size={26} color={"#fff"} />
         </TouchableOpacity>
       </View>
     </View>
