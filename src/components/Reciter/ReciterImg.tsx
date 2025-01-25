@@ -1,3 +1,4 @@
+import React from "react";
 import { View } from "react-native";
 import getObjectFitClass from "./../../helpers/getObjectFitClass";
 import { defaultReciterPhoto } from "../../constants/images";

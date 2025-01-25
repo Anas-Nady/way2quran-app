@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Linking, ActivityIndicator, FlatList } from "react-native";
 import SurahCardDetails from "../components/Surah/SurahCardDetails";
 import { BASE_END_POINT, getReciter } from "../services/api";

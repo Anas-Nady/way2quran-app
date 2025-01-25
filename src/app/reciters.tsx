@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, FlatList } from "react-native";
 import recitations from "../constants/recitations";
 import HeadingScreen from "../components/HeadingScreen";

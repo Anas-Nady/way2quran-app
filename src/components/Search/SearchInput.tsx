@@ -1,3 +1,4 @@
+import React from "react";
 import { View, TextInput } from "react-native";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";

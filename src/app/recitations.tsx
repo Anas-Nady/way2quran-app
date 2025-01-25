@@ -1,3 +1,4 @@
+import React from "react";
 import { View, FlatList } from "react-native";
 import { useTranslation } from "react-i18next";
 import recitations from "./../constants/recitations";

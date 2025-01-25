@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import React, { useMemo } from "react";
 import { View, FlatList } from "react-native";
 import HeadingScreen from "../components/HeadingScreen";
 import { useTranslation } from "react-i18next";

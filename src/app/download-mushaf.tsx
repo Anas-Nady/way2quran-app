@@ -1,3 +1,4 @@
+import React from "react";
 import { View, FlatList } from "react-native";
 import GoBackButton from "../components/ui/GoBackButton";
 import HeadingScreen from "../components/HeadingScreen";

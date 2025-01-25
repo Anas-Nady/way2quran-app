@@ -1,3 +1,4 @@
+import React from "react";
 import { Text, View } from "react-native";
 import { isRTL } from "../../helpers/flexDirection";
 import { useTranslate } from "../../helpers/i18nHelper";

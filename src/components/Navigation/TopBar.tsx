@@ -1,3 +1,4 @@
+import React from "react";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { TouchableOpacity, View } from "react-native";
 import AppTitle from "../AppTitle";

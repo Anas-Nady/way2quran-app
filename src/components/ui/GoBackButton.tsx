@@ -1,3 +1,4 @@
+import React from "react";
 import { Pressable, View } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import { isRTL, rowDirection } from "../../helpers/flexDirection";

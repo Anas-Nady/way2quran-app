@@ -1,3 +1,4 @@
+import React from "react";
 import { View, Text, ScrollView } from "react-native";
 import ContactUsForm from "../components/ContactUsForm";
 import HeadingScreen from "../components/HeadingScreen";

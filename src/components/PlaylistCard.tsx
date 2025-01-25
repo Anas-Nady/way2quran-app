@@ -1,3 +1,4 @@
+import React from "react";
 import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
 import getName from "../helpers/getName";
 import { useAudioPlayer } from "../contexts/AudioPlayerContext";

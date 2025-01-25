@@ -1,3 +1,4 @@
+import React from "react";
 import { Linking, TouchableOpacity, View } from "react-native";
 import { flexDirection } from "../../helpers/flexDirection";
 import {

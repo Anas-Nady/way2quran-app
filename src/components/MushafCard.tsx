@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Image, Linking } from "react-native";
 import getName from "../helpers/getName";
 import { incrementDownloadCount } from "../services/api";

@@ -1,3 +1,4 @@
+import React from "react";
 import { View, ScrollView } from "react-native";
 import HeadingScreen from "./../components/HeadingScreen";
 import GoBackButton from "../components/ui/GoBackButton";

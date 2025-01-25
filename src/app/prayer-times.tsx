@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, FlatList } from "react-native";
 import * as Location from "expo-location";
 import LoadingSpinner from "./../components/States/LoadingSpinner";

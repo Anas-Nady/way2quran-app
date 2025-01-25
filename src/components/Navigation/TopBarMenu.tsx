@@ -1,3 +1,4 @@
+import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { useTranslate } from "../../helpers/i18nHelper";
 import { flexDirection, isRTL } from "../../helpers/flexDirection";
