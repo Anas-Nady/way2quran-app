@@ -11,6 +11,12 @@
         "gradleCommand": ":app:assembleDebug"
       }
     },
+    "ios-simulator": {
+      "extends": "development",
+      "ios": {
+        "simulator": true
+      }
+    },
     "preview": {
       "distribution": "internal",
       "android": {
@@ -20,7 +26,7 @@
     "production": {
       "autoIncrement": true,
       "android": {
-        "buildType": "app-bundle"
+        "buildType": "apk"
       }
     }
   },
