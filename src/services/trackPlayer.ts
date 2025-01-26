@@ -4,6 +4,8 @@ import TrackPlayer, {
 } from "react-native-track-player";
 
 export default async function () {
+  await TrackPlayer.setupPlayer();
+
   TrackPlayer.updateOptions({
     capabilities: [
       Capability.Play,
