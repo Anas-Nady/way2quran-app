@@ -235,7 +235,9 @@ const AudioPlayerModal = () => {
               </View>
             </View>
           </View>
-          <View className="flex-row items-center justify-between w-full">
+          <View
+            className={`${flexDirection()} items-center justify-between w-full`}
+          >
             <Text className="text-sm font-notoKufi text-white w-[48px] text-center">
               {formatDuration(position)}
             </Text>
