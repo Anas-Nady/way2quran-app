@@ -102,17 +102,10 @@ export const togglePlayback = async ({
     : RepeatModeOptions.OFF;
 
   try {
+    await trackPlayerService();
+
     // If no track is playing, start new playlist
     if (playerState.surahIndex === -1) {
-      try {
-        await TrackPlayer.getPlaybackState();
-      } catch (error) {
-        await TrackPlayer.setupPlayer({
-          autoHandleInterruptions: true,
-        });
-        await trackPlayerService();
-      }
-
       await setupTrackPlayback({
         id: currentAudio.surahNumber.toString(),
         url: currentAudio.url,

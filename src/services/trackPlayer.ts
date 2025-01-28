@@ -3,30 +3,43 @@ import TrackPlayer, {
   Capability,
 } from "react-native-track-player";
 
-export default async function () {
-  await TrackPlayer.setupPlayer();
+let isPlayerInitialized = false;
+let setupPromise: Promise<void> | null = null;
 
-  TrackPlayer.updateOptions({
-    capabilities: [
-      Capability.Play,
-      Capability.Pause,
-      Capability.SkipToNext,
-      Capability.SkipToPrevious,
-      Capability.Stop,
-      Capability.SeekTo,
-    ],
+export default async function trackPlayerService() {
+  if (isPlayerInitialized) {
+    return;
+  }
 
-    compactCapabilities: [
-      Capability.Play,
-      Capability.Pause,
-      Capability.SkipToNext,
-      Capability.SkipToPrevious,
-    ],
+  if (!setupPromise) {
+    setupPromise = (async () => {
+      await TrackPlayer.setupPlayer();
 
-    android: {
-      appKilledPlaybackBehavior:
-        AppKilledPlaybackBehavior.StopPlaybackAndRemoveNotification,
-      alwaysPauseOnInterruption: true,
-    },
-  });
+      TrackPlayer.updateOptions({
+        capabilities: [
+          Capability.Play,
+          Capability.Pause,
+          Capability.SkipToNext,
+          Capability.SkipToPrevious,
+          Capability.Stop,
+          Capability.SeekTo,
+        ],
+        compactCapabilities: [
+          Capability.Play,
+          Capability.Pause,
+          Capability.SkipToNext,
+          Capability.SkipToPrevious,
+        ],
+        android: {
+          appKilledPlaybackBehavior:
+            AppKilledPlaybackBehavior.StopPlaybackAndRemoveNotification,
+          alwaysPauseOnInterruption: true,
+        },
+      });
+
+      isPlayerInitialized = true;
+    })();
+  }
+
+  await setupPromise;
 }
