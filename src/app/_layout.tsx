@@ -15,6 +15,7 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import TopBar from "../components/Navigation/TopBar";
 import TabBar from "../components/Navigation/TabBar";
 import AudioPlayerModal from "../components/Reciter/AudioPlayerModal";
+import { getDefaultLanguage } from "../services/i18next";
 
 const MainLayout = () => {
   const { getPlayerModalHeight } = useAudioPlayer();
@@ -76,7 +77,7 @@ const RootLayout = () => {
   const [splashScreenLoaded, setSplashScreenLoaded] = useState(true);
 
   useEffect(() => {
-    I18nManager.forceRTL(I18nManager.isRTL);
+    I18nManager.forceRTL(getDefaultLanguage == "ar" ? true : false);
   }, []);
 
   useEffect(() => {

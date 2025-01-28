@@ -1,4 +1,4 @@
-import { currentLanguage } from "./flexDirection";
+import { getDefaultLanguage } from "../services/i18next";
 
 interface IGetNameProps {
   arabicName: string;
@@ -8,9 +8,9 @@ interface IGetNameProps {
 const getName = function (obj: IGetNameProps) {
   if (!obj) return "";
 
-  if (currentLanguage === "en") {
+  if (getDefaultLanguage === "en") {
     return obj.englishName;
-  } else if (currentLanguage === "ar") {
+  } else if (getDefaultLanguage === "ar") {
     return obj.arabicName;
   }
   return "default name";

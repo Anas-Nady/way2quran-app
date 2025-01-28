@@ -1,8 +1,7 @@
 import { getDefaultLanguage } from "../services/i18next";
 import { Platform } from "react-native";
 
-export const currentLanguage = getDefaultLanguage();
-export const isRTL = currentLanguage === "ar";
+export const isRTL = getDefaultLanguage === "ar";
 
 export const flexDirection = () => {
   if (
