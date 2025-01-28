@@ -48,7 +48,7 @@ export default () => {
   };
 
   const commonConfig = {
-    version: "1.0.12",
+    version: "1.0.13",
     orientation: "default",
     sdkVersion: "51.0.0",
     icon: "./src/assets/images/ios-icon.png",
@@ -75,7 +75,6 @@ export default () => {
     },
     plugins: [
       "expo-router",
-      "expo-localization",
       [
         "expo-location",
         {
