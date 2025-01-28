@@ -164,10 +164,15 @@ export const AudioPlayerProvider = ({ children }) => {
   useTrackPlayerEvents([Event.PlaybackQueueEnded], async (event) => {
     if (event.type === Event.PlaybackQueueEnded) {
       if (
-        playerState.surahIndex < playerState.audioFiles.length - 1 &&
+        playerState.surahIndex <= playerState.audioFiles.length - 1 &&
         playerState.repeatMode === RepeatModeOptions.QUEUE
       ) {
-        const nextIdx = playerState.surahIndex + 1;
+        let nextIdx: number;
+        if (playerState.surahIndex === playerState.audioFiles.length - 1) {
+          nextIdx = 0;
+        } else {
+          nextIdx = playerState.surahIndex + 1;
+        }
         const nextSurah = playerState.audioFiles[nextIdx];
 
         try {
