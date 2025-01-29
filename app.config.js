@@ -96,6 +96,7 @@ export default () => {
           ? process.env.EAS_PROJECT_ID_AR
           : process.env.EAS_PROJECT_ID_EN,
       },
+      appLanguage: isArabic ? "ar" : "en",
     },
   };
 
