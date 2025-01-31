@@ -26,7 +26,7 @@ export default function Playlist() {
 
   const loadBookmarks = async () => {
     const allBookmarks = await getAllBookmarks(TYPE);
-    setPlaylists(allBookmarks);
+    setPlaylists(allBookmarks?.reverse());
   };
 
   const handleDeleteBookmark = async (key: string) => {

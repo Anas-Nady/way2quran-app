@@ -25,7 +25,7 @@ export default function Favorites() {
 
   const loadBookmarks = async () => {
     const allBookmarks = await getAllBookmarks(TYPE);
-    setBookmarks(allBookmarks);
+    setBookmarks(allBookmarks?.reverse());
   };
 
   const handleDeleteBookmark = async (reciterSlug: string) => {
