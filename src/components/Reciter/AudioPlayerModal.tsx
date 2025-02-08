@@ -16,6 +16,7 @@ import { setupTrackPlayback } from "../../helpers/setupTrackPlayback";
 import { useRouter } from "expo-router";
 import PlayerIcon, { IconNameOptions } from "./PlayerIcon";
 import { IPlayerState, RepeatModeOptions } from "../../types/types";
+import { deviceLanguage } from "../../services/i18next";
 
 const AudioPlayerModal = () => {
   const { playerState, setPlayerState, toggleModalExpansion } =
@@ -246,7 +247,10 @@ const AudioPlayerModal = () => {
                 flex: 1,
                 height: 25,
                 marginVertical: 10,
-                transform: isRTL ? [{ scaleX: -1 }] : [{ scaleX: 1 }],
+                transform:
+                  isRTL && deviceLanguage === "ar"
+                    ? [{ scaleX: -1 }]
+                    : [{ scaleX: 1 }],
               }}
               minimumValue={0}
               maximumValue={duration}
