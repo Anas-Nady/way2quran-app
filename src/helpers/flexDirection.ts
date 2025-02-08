@@ -1,11 +1,11 @@
-import { getDefaultLanguage } from "../services/i18next";
+import { appLanguage, deviceLanguage } from "../services/i18next";
 import { Platform } from "react-native";
 
-export const isRTL = getDefaultLanguage === "ar";
+export const isRTL = appLanguage === "ar";
 
 export const flexDirection = () => {
   if (
-    (Platform.OS === "ios" && isRTL) ||
+    (Platform.OS === "ios" && deviceLanguage === "ar" && isRTL) ||
     (!isRTL && Platform.OS === "android")
   ) {
     return "flex-row-reverse";
@@ -15,7 +15,7 @@ export const flexDirection = () => {
 
 export const rowDirection = () => {
   if (
-    (Platform.OS === "ios" && isRTL) ||
+    (Platform.OS === "ios" && deviceLanguage === "ar" && isRTL) ||
     (!isRTL && Platform.OS === "android")
   ) {
     return "row-reverse";

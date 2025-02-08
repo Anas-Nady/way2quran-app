@@ -7,6 +7,7 @@ import getName from "../../helpers/getName";
 import SelectOptions from "./SelectOptions";
 import TopReciterBadge from "./TopReciterBadge";
 import GoBackButton from "./../ui/GoBackButton";
+import { deviceLanguage } from "../../services/i18next";
 
 const ReciterHeader = ({
   reciter,
@@ -21,7 +22,9 @@ const ReciterHeader = ({
     <>
       <View
         className={`${
-          Platform.OS === "ios" ? "flex-row-reverse" : "flex-row"
+          Platform.OS === "ios" && deviceLanguage === "ar"
+            ? "flex-row-reverse"
+            : "flex-row"
         } items-center justify-between`}
       >
         <GoBackButton />

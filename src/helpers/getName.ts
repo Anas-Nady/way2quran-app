@@ -1,4 +1,4 @@
-import { getDefaultLanguage } from "../services/i18next";
+import { appLanguage } from "../services/i18next";
 
 interface IGetNameProps {
   arabicName: string;
@@ -8,9 +8,9 @@ interface IGetNameProps {
 const getName = function (obj: IGetNameProps) {
   if (!obj) return "";
 
-  if (getDefaultLanguage === "en") {
+  if (appLanguage === "en") {
     return obj.englishName;
-  } else if (getDefaultLanguage === "ar") {
+  } else if (appLanguage === "ar") {
     return obj.arabicName;
   }
   return "default name";

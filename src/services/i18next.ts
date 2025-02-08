@@ -3,18 +3,27 @@ import { initReactI18next } from "react-i18next";
 import ar from "./../locales/ar.json";
 import en from "./../locales/en.json";
 import Constants from "expo-constants";
+import * as Localization from "expo-localization";
 
 const languageResources = {
   en: { translation: en },
   ar: { translation: ar },
 };
 
-export const getDefaultLanguage: "ar" | "en" =
-  Constants.expoConfig.extra.appLanguage;
+export const appLanguage: "ar" | "en" = Constants.expoConfig.extra.appLanguage;
+
+export const getDeviceLanguage = () => {
+  const getLocales = Localization.getLocales();
+  const deviceLanguage = getLocales[0].languageCode;
+
+  return deviceLanguage === "ar" ? "ar" : "en";
+};
+
+export const deviceLanguage = getDeviceLanguage();
 
 const intiInfo = {
   compatibilityJSON: "v3",
-  lng: getDefaultLanguage,
+  lng: appLanguage,
   fallbackLng: ["en", "ar"],
   debug: false,
   resources: languageResources,
