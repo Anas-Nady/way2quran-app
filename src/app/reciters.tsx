@@ -99,7 +99,7 @@ export default function Reciters() {
         onPageChange={handlePageChange}
       />
     );
-  const numColumns = width > 600 ? 4 : 2;
+  const numColumns = width >= 900 ? 4 : width >= 600 ? 3 : 2;
 
   return (
     <View className="flex-1 w-full bg-gray-800">

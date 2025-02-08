@@ -8,16 +8,10 @@ const ReciterCard = ({ reciter, handleNavigateClick }) => {
   if (!reciter) {
     return null;
   }
-  const limitTextSize = isRTL ? 18 : 16;
-
-  const truncatedName =
-    getName(reciter).length > limitTextSize
-      ? `${getName(reciter).slice(0, limitTextSize)}...`
-      : getName(reciter);
 
   return (
     <TouchableOpacity
-      style={{ flexGrow: 1, paddingVertical: 10 }}
+      style={{ flex: 1, paddingVertical: 10 }}
       onPress={handleNavigateClick}
     >
       <View className="w-full">
@@ -28,9 +22,9 @@ const ReciterCard = ({ reciter, handleNavigateClick }) => {
       <Text
         className={`${
           isRTL ? "text-[18px]" : "text-[15px]"
-        } font-semibold text-center text-gray-100`}
+        } font-semibold h-[50px] w-full text-center text-gray-100`}
       >
-        {truncatedName}
+        {getName(reciter)}
       </Text>
     </TouchableOpacity>
   );
