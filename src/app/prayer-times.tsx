@@ -13,7 +13,6 @@ import {
 } from "../services/prayerTimes";
 import { formatPrayerTime } from "../helpers/formatTime";
 import { INextPrayer, IPrayerTimes, IRemainingTime } from "../types/types";
-import { requestLocationPermission } from "../services/prayerTimes";
 
 const PrayerTimes = () => {
   const translate = useTranslate("PrayerTimes");
@@ -29,8 +28,8 @@ const PrayerTimes = () => {
   useEffect(() => {
     const getLocationAndPrayerTimes = async () => {
       try {
-        const hasPermission = await requestLocationPermission();
-        if (!hasPermission) {
+        const { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== "granted") {
           setError(translate("locationPermissionDenied"));
           setLoading(false);
           return;

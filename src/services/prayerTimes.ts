@@ -1,25 +1,5 @@
 import { format } from "date-fns";
 import { INextPrayer, IPrayerTimes, IRemainingTime } from "../types/types";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as Location from "expo-location";
-
-const PERMISSION_KEY = "locationPermission";
-
-export const requestLocationPermission = async () => {
-  try {
-    const storedStatus = await AsyncStorage.getItem(PERMISSION_KEY);
-    if (storedStatus === "granted") return true;
-
-    const { status } = await Location.requestForegroundPermissionsAsync();
-    if (status === "granted") {
-      await AsyncStorage.setItem(PERMISSION_KEY, "granted");
-      return true;
-    }
-    return false;
-  } catch {
-    return false;
-  }
-};
 
 interface IGetPrayerTimes {
   latitude: number;
