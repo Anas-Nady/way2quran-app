@@ -48,7 +48,7 @@ export default () => {
   };
 
   const commonConfig = {
-    version: "1.1.16",
+    version: "1.1.17",
     orientation: "default",
     sdkVersion: "51.0.0",
     icon: "./src/assets/images/ios-icon.png",
