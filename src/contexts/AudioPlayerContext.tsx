@@ -4,7 +4,6 @@ import TrackPlayer, {
   useTrackPlayerEvents,
 } from "react-native-track-player";
 import getName from "../helpers/getName";
-import { savePlayerState } from "../helpers/playerStateStorage";
 import { setupTrackPlayback } from "../helpers/setupTrackPlayback";
 import { IPlayerState, RepeatModeOptions } from "../types/types";
 
@@ -58,7 +57,7 @@ export const AudioPlayerProvider = ({ children }) => {
             isPlaying: true,
           };
           setPlayerState(updatedPlayerState as IPlayerState);
-          await savePlayerState(updatedPlayerState as IPlayerState);
+
           break;
 
         case Event.RemotePause:
@@ -68,7 +67,7 @@ export const AudioPlayerProvider = ({ children }) => {
             isPlaying: false,
           };
           setPlayerState(updatedPlayerState as IPlayerState);
-          await savePlayerState(updatedPlayerState as IPlayerState);
+
           break;
 
         case Event.RemoteStop:
@@ -83,7 +82,7 @@ export const AudioPlayerProvider = ({ children }) => {
           };
 
           setPlayerState(updatedPlayerState as IPlayerState);
-          await savePlayerState(updatedPlayerState as IPlayerState);
+
           break;
 
         case Event.RemoteSeek:
@@ -118,7 +117,6 @@ export const AudioPlayerProvider = ({ children }) => {
             };
 
             setPlayerState(updatedPlayerState as IPlayerState);
-            await savePlayerState(updatedPlayerState as IPlayerState);
           } catch (error) {
             console.error("Error handling remote next:", error);
           }
@@ -144,7 +142,6 @@ export const AudioPlayerProvider = ({ children }) => {
               surahIndex: prevIdx,
             };
             setPlayerState(updatedPlayerState as IPlayerState);
-            await savePlayerState(updatedPlayerState as IPlayerState);
           }
           break;
 
@@ -165,7 +162,7 @@ export const AudioPlayerProvider = ({ children }) => {
     if (event.type === Event.PlaybackQueueEnded) {
       if (
         playerState.surahIndex <= playerState.audioFiles.length - 1 &&
-        playerState.repeatMode === RepeatModeOptions.QUEUE
+        playerState.repeatMode === RepeatModeOptions.ALL
       ) {
         let nextIdx: number;
         if (playerState.surahIndex === playerState.audioFiles.length - 1) {
@@ -191,13 +188,11 @@ export const AudioPlayerProvider = ({ children }) => {
             surahIndex: nextIdx,
           };
           setPlayerState(updatedPlayerState as IPlayerState);
-          await savePlayerState(updatedPlayerState as IPlayerState);
         } catch (error) {
           const updatedPlayerState = { ...playerState, isPlaying: false };
           setPlayerState(updatedPlayerState as IPlayerState);
-          await savePlayerState(updatedPlayerState as IPlayerState);
         }
-      } else if (playerState.repeatMode === RepeatModeOptions.TRACK) {
+      } else if (playerState.repeatMode === RepeatModeOptions.ONE) {
         await TrackPlayer.seekTo(0);
         await TrackPlayer.play();
 
@@ -207,7 +202,6 @@ export const AudioPlayerProvider = ({ children }) => {
           audioHasEnded: false,
         };
         setPlayerState(updatedPlayerState as IPlayerState);
-        await savePlayerState(updatedPlayerState as IPlayerState);
       } else {
         const updatedPlayerState = {
           ...playerState,
@@ -215,7 +209,6 @@ export const AudioPlayerProvider = ({ children }) => {
           audioHasEnded: true,
         };
         setPlayerState(updatedPlayerState as IPlayerState);
-        await savePlayerState(updatedPlayerState as IPlayerState);
       }
     }
   });
@@ -234,7 +227,6 @@ export const AudioPlayerProvider = ({ children }) => {
       modalHeight: playerState.isModalExpanded ? 165 : 80,
     };
     setPlayerState(updatedPlayerState as IPlayerState);
-    await savePlayerState(updatedPlayerState as IPlayerState);
   };
 
   return (

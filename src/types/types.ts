@@ -30,9 +30,9 @@ export interface ITopBarLink {
 }
 
 export enum RepeatModeOptions {
-  OFF = "off",
-  TRACK = "track",
-  QUEUE = "queue",
+  OFF = "OFF",
+  ONE = "ONE",
+  ALL = "ALL",
 }
 
 export interface IPlayerReciter extends INameWithSlug {

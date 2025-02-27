@@ -6,7 +6,6 @@ import {
   IPlayerState,
   RepeatModeOptions,
 } from "../types/types";
-import { savePlayerState } from "./playerStateStorage";
 import getName from "./getName";
 import trackPlayerService from "../services/trackPlayer";
 
@@ -97,9 +96,7 @@ export const togglePlayback = async ({
 }: ITogglePlaybackProps) => {
   setPlayerState((prev) => ({ ...prev, playLoading: true }));
 
-  const repeatMode = isPlaylist
-    ? RepeatModeOptions.QUEUE
-    : RepeatModeOptions.OFF;
+  const repeatMode = isPlaylist ? RepeatModeOptions.ALL : RepeatModeOptions.OFF;
 
   try {
     await trackPlayerService();
@@ -130,7 +127,7 @@ export const togglePlayback = async ({
       };
 
       setPlayerState(updatedPlayerState as IPlayerState);
-      await savePlayerState(updatedPlayerState as IPlayerState);
+
       return;
     }
 
@@ -165,7 +162,7 @@ export const togglePlayback = async ({
       }
 
       setPlayerState(updatedPlayerState as IPlayerState);
-      await savePlayerState(updatedPlayerState as IPlayerState);
+
       return;
     }
 
@@ -194,12 +191,12 @@ export const togglePlayback = async ({
     };
 
     setPlayerState(updatedPlayerState as IPlayerState);
-    await savePlayerState(updatedPlayerState as IPlayerState);
+
     return;
   } catch (error) {
     const updatedState = { ...playerState, playLoading: false };
     setPlayerState(updatedState as IPlayerState);
-    await savePlayerState(updatedState as IPlayerState);
+
     return;
   }
 };

@@ -11,7 +11,6 @@ import {
   rowDirection,
 } from "../../helpers/flexDirection";
 import TrackPlayer, { State, useProgress } from "react-native-track-player";
-import { savePlayerState } from "../../helpers/playerStateStorage";
 import { setupTrackPlayback } from "../../helpers/setupTrackPlayback";
 import { useRouter } from "expo-router";
 import PlayerIcon, { IconNameOptions } from "./PlayerIcon";
@@ -49,7 +48,6 @@ const AudioPlayerModal = () => {
       }
 
       setPlayerState(updatedState as IPlayerState);
-      await savePlayerState(updatedState as IPlayerState);
     } catch (error) {
       console.error("Error handling playback:", error);
     }
@@ -85,7 +83,6 @@ const AudioPlayerModal = () => {
         };
 
         setPlayerState(updatedPlayerState as IPlayerState);
-        await savePlayerState(updatedPlayerState as IPlayerState);
       }
     } catch (error) {
       console.error("Error playing next track:", error);
@@ -119,7 +116,6 @@ const AudioPlayerModal = () => {
         };
 
         setPlayerState(updatedPlayerState as IPlayerState);
-        await savePlayerState(updatedPlayerState as IPlayerState);
       }
     } catch (error) {
       console.error("Error playing previous track:", error);
@@ -145,7 +141,6 @@ const AudioPlayerModal = () => {
 
     setPlayerState(updatedState as IPlayerState);
     await TrackPlayer.reset();
-    await savePlayerState(updatedState as IPlayerState);
   };
 
   if (!playerState.isModalVisible) return null;
@@ -159,23 +154,11 @@ const AudioPlayerModal = () => {
       },
     });
 
-  const handleRepeatCurrentAudio = () => {
+  const handleRepeatMode = (repeatMode: RepeatModeOptions) => {
     setPlayerState((prev) => ({
       ...prev,
       repeatMode:
-        prev.repeatMode === RepeatModeOptions.TRACK
-          ? RepeatModeOptions.OFF
-          : RepeatModeOptions.TRACK,
-    }));
-  };
-
-  const handleRepeatQueue = () => {
-    setPlayerState((prev) => ({
-      ...prev,
-      repeatMode:
-        prev.repeatMode === RepeatModeOptions.QUEUE
-          ? RepeatModeOptions.OFF
-          : RepeatModeOptions.QUEUE,
+        prev.repeatMode === repeatMode ? RepeatModeOptions.OFF : repeatMode,
     }));
   };
 
@@ -282,8 +265,8 @@ const AudioPlayerModal = () => {
               <PlayerIcon
                 iconName={IconNameOptions.REPEAT}
                 size={27}
-                isActive={playerState.repeatMode === RepeatModeOptions.TRACK}
-                onPress={handleRepeatCurrentAudio}
+                isActive={playerState.repeatMode === RepeatModeOptions.ONE}
+                onPress={() => handleRepeatMode(RepeatModeOptions.ONE)}
               />
 
               <PlayerIcon
@@ -332,8 +315,8 @@ const AudioPlayerModal = () => {
               <PlayerIcon
                 iconName={IconNameOptions.SHUFFLE_SHARP}
                 size={27}
-                isActive={playerState.repeatMode === RepeatModeOptions.QUEUE}
-                onPress={handleRepeatQueue}
+                isActive={playerState.repeatMode === RepeatModeOptions.ALL}
+                onPress={() => handleRepeatMode(RepeatModeOptions.ALL)}
               />
             </View>
           </View>
