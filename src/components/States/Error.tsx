@@ -12,7 +12,9 @@ export default function Error({ message }) {
         className="p-4 mx-auto bg-gray-900 border border-gray-500"
         style={{ width: width * 0.9 }}
       >
-        <Text className="text-lg font-semibold text-red-500">{message}</Text>
+        <Text className="text-lg font-semibold text-center text-red-500">
+          {message}
+        </Text>
       </View>
     </View>
   );
