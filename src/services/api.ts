@@ -83,3 +83,10 @@ export const incrementDownloadCount = async ({
 
   return res;
 };
+
+export const getSurah = async (surahSlug: string) => {
+  const res = await fetch(
+    `${BASE_END_POINT}/surah/${surahSlug}?selectField=verses`
+  );
+  return res;
+};
