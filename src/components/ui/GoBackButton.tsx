@@ -1,7 +1,7 @@
 import React from "react";
 import { Pressable, View } from "react-native";
 import { Entypo } from "@expo/vector-icons";
-import { isRTL, rowDirection } from "../../helpers/flexDirection";
+import { isRTL } from "../../helpers/flexDirection";
 import { useRouter } from "expo-router";
 
 export default function GoBackButton() {
@@ -9,7 +9,7 @@ export default function GoBackButton() {
   return (
     <Pressable
       style={{
-        flexDirection: rowDirection(),
+        flexDirection: "row",
         justifyContent: isRTL ? "flex-start" : "flex-end",
       }}
       className="px-3 pt-3"

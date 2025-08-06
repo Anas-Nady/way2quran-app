@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Pressable } from "react-native";
 import ReciterImg from "./ReciterImg";
 import getName from "./../../helpers/getName";
 import { isRTL } from "../../helpers/flexDirection";
@@ -15,7 +15,7 @@ const ReciterCard = ({ reciter, handleNavigateClick }) => {
       onPress={handleNavigateClick}
     >
       <View className="w-full">
-        <View className="flex-col items-center pb-3">
+        <View className="items-center pb-3">
           <ReciterImg uri={reciter.photo} alt={getName(reciter)} />
         </View>
       </View>

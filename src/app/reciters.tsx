@@ -12,7 +12,6 @@ import Error from "../components/States/Error";
 import getRecitationType from "./../helpers/getRecitationType";
 import getName from "../helpers/getName";
 import { ScreenDimensionsContext } from "../contexts/ScreenDimensionsProvider";
-import { rowDirection } from "../helpers/flexDirection";
 import { useLocalSearchParams, useRouter } from "expo-router";
 
 export default function Reciters() {
@@ -115,6 +114,7 @@ export default function Reciters() {
           ListHeaderComponent={ListHeaderComponent}
           ListFooterComponent={ListFooterComponent}
           ListEmptyComponent={ListEmptyComponent}
+          showsVerticalScrollIndicator={false}
           contentContainerStyle={{
             backgroundColor: "#1f2937", // bg-gray-800
           }}
@@ -124,7 +124,7 @@ export default function Reciters() {
           columnWrapperStyle={{
             justifyContent: "space-between",
             alignItems: "center",
-            flexDirection: rowDirection(),
+            flexDirection: "row",
             flex: 1,
           }}
         />

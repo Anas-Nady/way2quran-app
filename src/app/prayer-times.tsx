@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, Pressable } from "react-native";
 import * as Location from "expo-location";
 import LoadingSpinner from "./../components/States/LoadingSpinner";
 import Error from "./../components/States/Error";
@@ -113,28 +113,30 @@ const PrayerTimes = () => {
     const isCurrentPrayer = prayer === nextPrayer?.name.toLowerCase();
 
     return (
-      <View
-        className={`${flexDirection()} w-[90%] mx-auto items-center justify-between border border-gray-500 p-3 rounded
+      <Pressable className="w-full">
+        <View
+          className={`${flexDirection()} w-[90%] mx-auto items-center justify-between border border-gray-500 p-3 my-2 rounded
           ${isCurrentPrayer ? "bg-green-500 border-none" : "bg-gray-700"}`}
-      >
-        <View>
+        >
+          <View>
+            <Text
+              className={`text-xl font-semibold ${
+                isCurrentPrayer ? "font-bold text-white" : "text-gray-300"
+              }`}
+            >
+              {translate(prayer)}
+              {":"}
+            </Text>
+          </View>
           <Text
             className={`text-xl font-semibold ${
               isCurrentPrayer ? "font-bold text-white" : "text-gray-300"
             }`}
           >
-            {translate(prayer)}
-            {":"}
+            {formatPrayerTime(time)}
           </Text>
         </View>
-        <Text
-          className={`text-xl font-semibold ${
-            isCurrentPrayer ? "font-bold text-white" : "text-gray-300"
-          }`}
-        >
-          {formatPrayerTime(time)}
-        </Text>
-      </View>
+      </Pressable>
     );
   };
 
@@ -153,12 +155,10 @@ const PrayerTimes = () => {
         keyExtractor={([prayer]) => prayer}
         renderItem={renderPrayerItem}
         ListHeaderComponent={renderHeader}
+        showsVerticalScrollIndicator={false}
         contentContainerStyle={{
-          paddingBottom: 16,
-          gap: 14,
           width: "100%",
         }}
-        style={{ flex: 1 }}
       />
     </View>
   );

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity, Platform } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { flexDirection } from "../../helpers/flexDirection";
 import ReciterImg from "./ReciterImg";
@@ -7,7 +7,6 @@ import getName from "../../helpers/getName";
 import SelectOptions from "./SelectOptions";
 import TopReciterBadge from "./TopReciterBadge";
 import GoBackButton from "./../ui/GoBackButton";
-import { deviceLanguage } from "../../services/i18next";
 
 const ReciterHeader = ({
   reciter,
@@ -20,13 +19,7 @@ const ReciterHeader = ({
 }) => {
   return (
     <>
-      <View
-        className={`${
-          Platform.OS === "ios" && deviceLanguage === "ar"
-            ? "flex-row-reverse"
-            : "flex-row"
-        } items-center justify-between`}
-      >
+      <View className={`${flexDirection()} items-center justify-between`}>
         <GoBackButton />
         <TouchableOpacity
           disabled={favouriteState.loading}
@@ -70,7 +63,7 @@ const ReciterHeader = ({
         ) : (
           <Text
             style={{ borderWidth: 1, borderRadius: 8, borderColor: "#4b5563" }}
-            className="w-[90%] p-2 mx-auto text-2xl font-semibold text-center text-gray-200"
+            className="w-[90%] p-2 mx-auto text-2xl font-semibold text-center  text-gray-200"
           >
             {getName(currentRecitation?.recitationInfo)}
           </Text>
@@ -78,7 +71,7 @@ const ReciterHeader = ({
         {/* Download All Button */}
         <TouchableOpacity
           onPress={downloadRecitation}
-          className="w-[95%] mx-auto p-4 mt-4 bg-gray-700 border border-gray-500 rounded-md"
+          className="w-[95%] mx-auto p-3 my-2 bg-gray-700 border border-gray-500 rounded-md"
         >
           <Text className="ml-2 text-lg font-semibold text-center text-slate-100">
             {downloadTranslate}

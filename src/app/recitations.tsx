@@ -27,9 +27,7 @@ export default function Recitations() {
         ListHeaderComponent={renderHeader}
         renderItem={renderItem}
         keyExtractor={(item) => item.slug}
-        contentContainerStyle={{
-          gap: 12,
-        }}
+        contentContainerStyle={{}}
         style={{ flex: 1 }}
       />
     </View>

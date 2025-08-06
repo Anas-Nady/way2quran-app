@@ -11,8 +11,6 @@ import { Image, ImageContentFit } from "expo-image";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import { ReactNativeZoomableView } from "@openspacelabs/react-native-zoomable-view";
-import { rowDirection } from "../helpers/flexDirection";
-import * as FileSystem from "expo-file-system";
 import Alert from "./../components/ui/Alert";
 import { useTranslation } from "react-i18next";
 import { useLocalSearchParams } from "expo-router";
@@ -216,34 +214,9 @@ export default function Surah() {
     setCurrentZoom(1);
   };
 
-  const getImagePath = (pageNumber: number) => {
-    return `${FileSystem.documentDirectory}quran-pages/${pageNumber}.jpg`;
-  };
-
   const downloadImageIfNeeded = async (pageNumber: number) => {
-    const localImagePath = getImagePath(pageNumber);
-    const imageExists = await FileSystem.getInfoAsync(localImagePath);
-    setIsOffline(false);
-
-    if (imageExists.exists) {
-      setImageUri(localImagePath);
-    } else {
-      const remoteImageUrl = `https://storage.googleapis.com/way2quran_storage/quran-pages/${pageNumber}.jpg`;
-
-      try {
-        await FileSystem.makeDirectoryAsync(
-          `${FileSystem.documentDirectory}quran-pages/`,
-          {
-            intermediates: true,
-          }
-        );
-        await FileSystem.downloadAsync(remoteImageUrl, localImagePath);
-        setImageUri(localImagePath);
-        setIsOffline(false);
-      } catch (error) {
-        setIsOffline(true);
-      }
-    }
+    const remoteImageUrl = `https://storage.googleapis.com/way2quran_storage/quran-pages/${pageNumber}.jpg`;
+    setImageUri(remoteImageUrl);
   };
 
   useEffect(() => {
@@ -342,7 +315,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: "50%",
     width: "100%",
-    flexDirection: rowDirection(),
+    flexDirection: "row",
     justifyContent: "space-between",
     paddingHorizontal: 30,
     zIndex: 10,

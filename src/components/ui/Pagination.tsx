@@ -1,6 +1,5 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { rowDirection } from "../../helpers/flexDirection";
 
 interface IPaginationProps {
   currentPage: number;
@@ -33,7 +32,6 @@ const Pagination = ({
     <View style={styles.paginationContainer}>
       {pageRange.map((page) => (
         <PaginationButton
-          key={page}
           text={page.toString()}
           onPress={() => handlePageChange(page)}
           isActive={currentPage === page}
@@ -66,7 +64,7 @@ const PaginationButton = ({ text, onPress, isActive }) => {
 
 const styles = StyleSheet.create({
   paginationContainer: {
-    flexDirection: rowDirection(),
+    flexDirection: "row",
     justifyContent: "center",
     flexWrap: "wrap",
     marginBottom: 10,

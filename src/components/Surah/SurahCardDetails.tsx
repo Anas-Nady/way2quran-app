@@ -137,61 +137,70 @@ const SurahCardDetails = ({ surah, surahIndex, reciter, recitation }) => {
   };
 
   return (
-    <View
-      className={`${flexDirection()} w-[95%] mx-auto relative items-center justify-between p-4 my-1 border rounded-lg border-gray-500 bg-gray-700`}
+    <TouchableOpacity
+      activeOpacity={1}
+      onPress={togglePlayPause}
+      disabled={playerState.playLoading}
+      className="w-full"
     >
-      <TouchableOpacity
-        className={`${flexDirection()} items-center flex-1`}
-        onPress={togglePlayPause}
-        disabled={playerState.playLoading}
-      >
-        <View
-          style={{ transform: [{ rotate: "45deg" }] }}
-          className={`${flexDirection()} items-center justify-center mx-2.5 w-9 h-9 bg-green-600`}
-        >
-          <Text
-            style={{ transform: [{ rotate: "-45deg" }] }}
-            className="font-semibold text-center text-white text-md"
-          >
-            {surah?.surahNumber}
-          </Text>
-        </View>
-        <Text className="text-lg font-semibold text-white">
-          {getName(surah?.surahInfo)}
-        </Text>
-      </TouchableOpacity>
       <View
-        style={{ gap: 9 }}
-        className={`${flexDirection()} items-center justify-center`}
+        className={`${flexDirection()} w-[95%] mx-auto relative items-center justify-between py-4 px-2 border border-gray-900 rounded-lg bg-gray-700`}
       >
-        {/* Audio Play Button */}
         <TouchableOpacity
-          disabled={playerState.playLoading}
+          className={`${flexDirection()} items-center flex-1`}
           onPress={togglePlayPause}
+          disabled={playerState.playLoading}
         >
-          <Ionicons
-            name={
-              currentlyPlaying ? "pause-circle-outline" : "play-circle-outline"
-            }
-            size={30}
-            color={currentlyPlaying ? "#22c55e" : "#fff"}
-          />
+          <View
+            style={{ transform: [{ rotate: "45deg" }] }}
+            className={`${flexDirection()} items-center justify-center mx-2.5 w-9 h-9 bg-green-600`}
+          >
+            <Text
+              style={{ transform: [{ rotate: "-45deg" }] }}
+              className="font-semibold text-center text-white text-md"
+            >
+              {surah?.surahNumber}
+            </Text>
+          </View>
+          <Text className="text-lg font-semibold text-white">
+            {getName(surah?.surahInfo)}
+          </Text>
         </TouchableOpacity>
+        <View
+          style={{ gap: 9 }}
+          className={`${flexDirection()} items-center justify-center`}
+        >
+          {/* Audio Play Button */}
+          <TouchableOpacity
+            disabled={playerState.playLoading}
+            onPress={togglePlayPause}
+          >
+            <Ionicons
+              name={
+                currentlyPlaying
+                  ? "pause-circle-outline"
+                  : "play-circle-outline"
+              }
+              size={30}
+              color={currentlyPlaying ? "#22c55e" : "#fff"}
+            />
+          </TouchableOpacity>
 
-        <TouchableOpacity onPress={toggleBookmark}>
-          <MaterialIcons
-            name={isBookmarked ? "playlist-add-check" : "playlist-add"}
-            size={30}
-            color={isBookmarked ? "#22c55e" : "#fff"}
-          />
-        </TouchableOpacity>
+          <TouchableOpacity onPress={toggleBookmark}>
+            <MaterialIcons
+              name={isBookmarked ? "playlist-add-check" : "playlist-add"}
+              size={30}
+              color={isBookmarked ? "#22c55e" : "#fff"}
+            />
+          </TouchableOpacity>
 
-        {/* Download Button */}
-        <TouchableOpacity onPress={handleDownload}>
-          <Feather name="download" size={26} color={"#fff"} />
-        </TouchableOpacity>
+          {/* Download Button */}
+          <TouchableOpacity onPress={handleDownload}>
+            <Feather name="download" size={26} color={"#fff"} />
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

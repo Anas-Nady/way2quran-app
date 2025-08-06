@@ -230,6 +230,7 @@ const ReciterScreen = () => {
               contentContainerStyle={{
                 backgroundColor: "#1e293b",
                 width: "100%",
+                flexGrow: 1,
               }}
             />
           )}

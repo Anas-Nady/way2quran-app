@@ -27,10 +27,8 @@ export default function Mushaf() {
         ListHeaderComponent={renderHeader}
         contentContainerStyle={{
           backgroundColor: "#1f2937",
-          gap: 12,
           width: "100%",
         }}
-        style={{ flex: 1 }}
         showsVerticalScrollIndicator={false}
       />
     </View>

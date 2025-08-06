@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, FlatList, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  Image,
+  TouchableOpacity,
+  Pressable,
+} from "react-native";
 import GoBackButton from "../components/ui/GoBackButton";
 import HeadingScreen from "../components/HeadingScreen";
 import { AntDesign } from "@expo/vector-icons";
@@ -7,7 +14,7 @@ import { getAllBookmarks, removeBookmark } from "../helpers/bookmarkHandlers";
 import EmptyState from "../components/States/EmptyState";
 import ConfirmationDialog from "../components/ui/ConfirmationDialog";
 import { useTranslate } from "../helpers/i18nHelper";
-import { flexDirection, rowDirection } from "../helpers/flexDirection";
+import { flexDirection } from "../helpers/flexDirection";
 import getName from "../helpers/getName";
 import { Link } from "expo-router";
 import { IFavouriteBookmark } from "../types/types";
@@ -52,37 +59,38 @@ export default function Favorites() {
   };
 
   const renderItem = ({ item: bookmark }: { item: IFavouriteBookmark }) => (
-    <View
-      className={`${flexDirection()} w-[95%] mx-auto px-3 py-2 my-2 border rounded-xl bg-gray-700 border-gray-500`}
-    >
-      <Link
-        href={`/reciter?reciterSlug=${bookmark.reciterSlug}?recitationSlug=${bookmark.recitationSlug}`}
-        style={{ flexDirection: rowDirection() }}
-        className={`justify-center flex-1`}
-        asChild
+    <Pressable className="w-full ">
+      <View
+        className={`${flexDirection()} w-[95%] mx-auto p-3 my-2 border rounded-xl bg-gray-800 border-gray-500`}
       >
-        <TouchableOpacity>
-          <View style={{ alignItems: "center" }}>
-            <Image
-              className="rounded-full"
-              style={{ width: 80, height: 80 }}
-              source={{
-                uri: bookmark.photo,
-              }}
-              alt={getName(bookmark)}
-            />
-            <Text
-              className={`text-center mt-2 text-lg font-semibold text-white`}
-            >
-              {getName(bookmark)}
-            </Text>
-          </View>
+        <Link
+          href={`/reciter?reciterSlug=${bookmark.reciterSlug}?recitationSlug=${bookmark.recitationSlug}`}
+          className={`justify-center flex-1`}
+          asChild
+        >
+          <TouchableOpacity>
+            <View style={{ alignItems: "center" }}>
+              <Image
+                className="border border-gray-600 rounded-full"
+                style={{ width: 110, height: 110 }}
+                source={{
+                  uri: bookmark.photo,
+                }}
+                alt={getName(bookmark)}
+              />
+              <Text
+                className={`text-center mt-2 text-lg font-semibold text-white`}
+              >
+                {getName(bookmark)}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </Link>
+        <TouchableOpacity onPress={() => handleDelete(bookmark)}>
+          <AntDesign name="delete" size={25} color="#ef4444" />
         </TouchableOpacity>
-      </Link>
-      <TouchableOpacity onPress={() => handleDelete(bookmark)}>
-        <AntDesign name="delete" size={25} color="#ef4444" />
-      </TouchableOpacity>
-    </View>
+      </View>
+    </Pressable>
   );
 
   const renderHeader = () => {

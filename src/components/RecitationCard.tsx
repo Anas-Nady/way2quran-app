@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, TouchableOpacity } from "react-native";
+import { Text, View, TouchableOpacity } from "react-native";
 import getName from "../helpers/getName";
 import { useRouter } from "expo-router";
 
@@ -15,11 +15,14 @@ const RecitationCard = ({ recitation }) => {
         })
       }
       key={recitation.slug}
-      className="flex-row items-center justify-center w-[95%] mx-auto p-3 bg-gray-800 border border-gray-700 rounded-lg"
+      activeOpacity={1}
+      className="flex-row items-center justify-center w-full mx-auto h-[70px] bg-gray-800"
     >
-      <Text className="text-lg font-semibold text-center text-slate-50">
-        {getName(recitation)}
-      </Text>
+      <View className="w-[95%] border border-gray-700 rounded-lg p-3">
+        <Text className="text-lg font-semibold text-center text-slate-50">
+          {getName(recitation)}
+        </Text>
+      </View>
     </TouchableOpacity>
   );
 };

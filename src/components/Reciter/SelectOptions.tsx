@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 import getName from "../../helpers/getName";
-import { rowDirection } from "../../helpers/flexDirection";
 import { AntDesign } from "@expo/vector-icons";
 import { IReciterRecitation } from "../../types/types";
 
@@ -27,29 +26,35 @@ export default function SelectOptions({
       borderRadius: 8,
       backgroundColor: "#374151",
       position: "relative",
-      flexDirection: rowDirection(),
+      flexDirection: "row",
+      alignItems: "center",
     },
     inputStyles: {
       color: "#E5E7EB",
       fontSize: 18,
       fontWeight: "bold",
+      textAlign: "center",
+      flex: 1,
     },
     dropdownStyles: {
       borderColor: "#4B5563",
       backgroundColor: "#1F2937",
       position: "relative",
+      flexDirection: "row",
       width: "100%",
     },
     dropdownItemStyles: {
       paddingVertical: 10,
       borderBottomWidth: 1,
       borderBottomColor: "#4B5563",
-      flexDirection: rowDirection(),
+      flexDirection: "row",
     },
     dropdownTextStyles: {
       color: "#E5E7EB",
       fontSize: 18,
       fontWeight: "bold",
+      flex: 1,
+      textAlign: "center",
     },
   } as const;
 
