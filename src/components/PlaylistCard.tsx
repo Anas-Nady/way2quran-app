@@ -22,17 +22,19 @@ const PlaylistCard = ({
   isCurrentlyPlaying,
 }) => {
   const sortedSurahs = data.audioFiles;
+  const { playerState } = useAudioPlayer();
 
   const renderSurah = ({ item }: { item: IAudioFile }) => (
     <Text
-      style={{ borderWidth: 1, borderRadius: 5, borderColor: "#6b7280" }}
-      className="flex-grow p-1 font-semibold text-center text-md text-gray-50"
+      className={`border rounded flex-grow p-1 font-semibold text-center text-md text-gray-50 mx-[1px] my-1 ${
+        String(playerState.currentAudio?.url) === item.url
+          ? "bg-green-500 broder-gray-400"
+          : "bg-gray-800 border-gray-600 border"
+      }`}
     >
       {getName(item.surahInfo)}
     </Text>
   );
-
-  const { playerState } = useAudioPlayer();
 
   const numColumns = 4;
   return (

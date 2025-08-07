@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, Linking } from "react-native";
+import { View, Text, TouchableOpacity, Linking, Pressable } from "react-native";
 import { Feather, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { useAudioPlayer } from "../../contexts/AudioPlayerContext";
 import {
@@ -137,14 +137,9 @@ const SurahCardDetails = ({ surah, surahIndex, reciter, recitation }) => {
   };
 
   return (
-    <TouchableOpacity
-      activeOpacity={1}
-      onPress={togglePlayPause}
-      disabled={playerState.playLoading}
-      className="w-full"
-    >
+    <Pressable className="w-full">
       <View
-        className={`${flexDirection()} w-[95%] mx-auto relative items-center justify-between py-4 px-2 border border-gray-900 rounded-lg bg-gray-700`}
+        className={`${flexDirection()} w-[95%] mx-auto relative items-center justify-between py-4 px-2 mt-2.5 border border-gray-600 rounded-lg bg-gray-700`}
       >
         <TouchableOpacity
           className={`${flexDirection()} items-center flex-1`}
@@ -200,7 +195,7 @@ const SurahCardDetails = ({ surah, surahIndex, reciter, recitation }) => {
           </TouchableOpacity>
         </View>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

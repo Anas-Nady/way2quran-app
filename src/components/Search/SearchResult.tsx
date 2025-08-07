@@ -21,8 +21,8 @@ export default function SearchResult({ results, loading, error }) {
         dynamicParams.recitationSlug = item.recitationSlug;
       } else if (params.recitationSlug) {
         dynamicParams.recitationSlug = item.slug;
-      } else if (params.surahNumber) {
-        dynamicParams.pageNumber = item.pageNumber;
+      } else if (params.surahSlug) {
+        dynamicParams.surahSlug = item.slug;
       }
 
       return (
@@ -74,7 +74,7 @@ export default function SearchResult({ results, loading, error }) {
             recitationSlug: true,
           })}
         {results.surahs.length > 0 &&
-          renderResults(results.surahs, "/surah", { surahNumber: true })}
+          renderResults(results.surahs, "/surah", { surahSlug: true })}
       </View>
     </View>
   );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { flexDirection } from "../../helpers/flexDirection";
@@ -7,16 +7,63 @@ import getName from "../../helpers/getName";
 import SelectOptions from "./SelectOptions";
 import TopReciterBadge from "./TopReciterBadge";
 import GoBackButton from "./../ui/GoBackButton";
+import {
+  addBookmark,
+  isBookmarkExists,
+  removeBookmark,
+} from "../../helpers/bookmarkHandlers";
+
+interface IFavouriteState {
+  isFavourite: boolean;
+  loading: boolean;
+}
 
 const ReciterHeader = ({
   reciter,
   currentRecitation,
-  favouriteState,
   downloadRecitation,
   handleRecitationChange,
-  handleFavoriteToggle,
+  selectedRecitationSlug,
   downloadTranslate,
 }) => {
+  const [favouriteState, setFavouriteState] = useState<IFavouriteState>({
+    isFavourite: false,
+    loading: true,
+  });
+
+  const handleFavoriteToggle = async () => {
+    if (favouriteState.isFavourite) {
+      await removeBookmark("Favorites", reciter.slug as string);
+    } else {
+      const savedData = {
+        type: "Favorites",
+        arabicName: reciter.arabicName,
+        englishName: reciter.englishName,
+        photo: reciter.photo,
+        reciterSlug: reciter.slug as string,
+        recitationSlug: selectedRecitationSlug as string,
+      };
+      await addBookmark("Favorites", reciter.slug as string, savedData);
+    }
+    setFavouriteState((prev) => ({
+      ...prev,
+      isFavourite: !prev.isFavourite,
+      loading: false,
+    }));
+  };
+
+  const checkIsFavourite = async () => {
+    const favoriteStatus = await isBookmarkExists(
+      "Favorites",
+      reciter.slug as string
+    );
+    console.log(favoriteStatus);
+    setFavouriteState({ isFavourite: favoriteStatus, loading: false });
+  };
+
+  useEffect(() => {
+    checkIsFavourite();
+  }, []);
   return (
     <>
       <View className={`${flexDirection()} items-center justify-between`}>
@@ -71,7 +118,7 @@ const ReciterHeader = ({
         {/* Download All Button */}
         <TouchableOpacity
           onPress={downloadRecitation}
-          className="w-[95%] mx-auto p-3 my-2 bg-gray-700 border border-gray-500 rounded-md"
+          className="w-[95%] mx-auto p-3 mt-2 bg-gray-700 border border-gray-500 rounded-md"
         >
           <Text className="ml-2 text-lg font-semibold text-center text-slate-100">
             {downloadTranslate}

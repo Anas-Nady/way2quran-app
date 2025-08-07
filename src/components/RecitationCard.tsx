@@ -18,7 +18,7 @@ const RecitationCard = ({ recitation }) => {
       activeOpacity={1}
       className="flex-row items-center justify-center w-full mx-auto bg-gray-800"
     >
-      <View className="w-[95%] my-2 border border-gray-700 rounded-lg p-3">
+      <View className="w-[95%] my-2 border border-gray-600 rounded-lg p-3">
         <Text className="text-lg font-semibold text-center text-slate-50">
           {getName(recitation)}
         </Text>

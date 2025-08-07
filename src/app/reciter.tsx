@@ -4,20 +4,11 @@ import SurahCardDetails from "../components/Surah/SurahCardDetails";
 import { BASE_END_POINT, getReciter } from "../services/api";
 import Error from "../components/States/Error";
 import LoadingSpinner from "../components/States/LoadingSpinner";
-import {
-  addBookmark,
-  removeBookmark,
-  isBookmarkExists,
-} from "../helpers/bookmarkHandlers";
 import Alert from "../components/ui/Alert";
 import { useTranslate } from "../helpers/i18nHelper";
 import ReciterHeader from "../components/Reciter/ReciterHeader";
 import { useLocalSearchParams } from "expo-router";
-import {
-  IFavouriteBookmark,
-  IReciter,
-  IReciterRecitation,
-} from "../types/types";
+import { IReciter, IReciterRecitation } from "../types/types";
 
 interface IFetchReciter {
   reciter: IReciter | null;
@@ -28,11 +19,6 @@ interface IFetchReciter {
 interface IAlert {
   message: string;
   type: "success" | "error";
-}
-
-interface IFavouriteState {
-  isFavourite: boolean;
-  loading: boolean;
 }
 
 const ReciterScreen = () => {
@@ -48,10 +34,6 @@ const ReciterScreen = () => {
     recitationSlug as string
   );
   const [recitations, setRecitations] = useState<IReciterRecitation[]>([]);
-  const [favouriteState, setFavouriteState] = useState<IFavouriteState>({
-    isFavourite: false,
-    loading: true,
-  });
 
   const [alert, setAlert] = useState<IAlert | null>(null);
   const [isChangingRecitation, setIsChangingRecitation] = useState(false);
@@ -92,63 +74,7 @@ const ReciterScreen = () => {
     };
 
     fetchReciter();
-    checkFavoriteStatus();
   }, [reciterSlug, recitationSlug]);
-
-  const checkFavoriteStatus = async () => {
-    const favoriteStatus = await isBookmarkExists(
-      "Favorites",
-      reciterSlug as string
-    );
-    setFavouriteState((prev) => ({
-      ...prev,
-      isFavourite: favoriteStatus,
-      loading: false,
-    }));
-  };
-
-  const handleFavoriteToggle = async () => {
-    if (favouriteState.isFavourite) {
-      try {
-        await removeBookmark("Favorites", reciterSlug as string);
-        setAlert({
-          message: translate("removedFromFavorites"),
-          type: "success",
-        });
-      } catch (error) {
-        setAlert({
-          message: error?.message || "An error occurred. Please try again.",
-          type: "error",
-        });
-      }
-    } else {
-      const savedData: IFavouriteBookmark = {
-        type: "Favorites",
-        arabicName: state.reciter.arabicName,
-        englishName: state.reciter.englishName,
-        photo: state.reciter.photo,
-        reciterSlug: reciterSlug as string,
-        recitationSlug: selectedRecitationSlug as string,
-      };
-      try {
-        await addBookmark("Favorites", reciterSlug as string, savedData);
-        setAlert({
-          message: translate("addedToFavorites"),
-          type: "success",
-        });
-      } catch (error) {
-        setAlert({
-          message: error?.message || "An error occurred. Please try again.",
-          type: "error",
-        });
-      }
-    }
-    setFavouriteState((prev) => ({
-      ...prev,
-      isFavourite: !prev.isFavourite,
-      loading: false,
-    }));
-  };
 
   const downloadRecitation = (): void => {
     let downloadURL = `${BASE_END_POINT}/recitations/download/${reciterSlug}/${selectedRecitationSlug}`;
@@ -187,6 +113,14 @@ const ReciterScreen = () => {
       }}
     />
   );
+  // Main render logic
+  if (state.loading) {
+    return <LoadingSpinner />;
+  }
+
+  if (state.error) {
+    return <Error message={state.error} />;
+  }
 
   return (
     <View
@@ -200,42 +134,34 @@ const ReciterScreen = () => {
           onClose={() => setAlert(null)}
         />
       )}
-      {state.loading ? (
-        <LoadingSpinner />
-      ) : state.error ? (
-        <Error message={state.error} />
-      ) : (
-        <>
-          {isChangingRecitation ? (
-            <View className="flex items-center justify-center py-10">
-              <ActivityIndicator size="large" color="#22c55e" />
-            </View>
-          ) : (
-            <FlatList
-              data={currentRecitation?.audioFiles}
-              keyExtractor={(item) => item?.surahInfo?.slug}
-              ListHeaderComponent={
-                <ReciterHeader
-                  reciter={state.reciter}
-                  currentRecitation={currentRecitation}
-                  favouriteState={favouriteState}
-                  downloadRecitation={downloadRecitation}
-                  handleRecitationChange={handleRecitationChange}
-                  handleFavoriteToggle={handleFavoriteToggle}
-                  downloadTranslate={translate("downloadAll")}
-                />
-              }
-              renderItem={renderSurahItem}
-              showsVerticalScrollIndicator={false}
-              contentContainerStyle={{
-                backgroundColor: "#1e293b",
-                width: "100%",
-                flexGrow: 1,
-              }}
-            />
-          )}
-        </>
-      )}
+
+      <>
+        {isChangingRecitation ? (
+          <View className="flex items-center justify-center py-10">
+            <ActivityIndicator size="large" color="#22c55e" />
+          </View>
+        ) : (
+          <FlatList
+            ListHeaderComponent={() => (
+              <ReciterHeader
+                reciter={state.reciter}
+                currentRecitation={currentRecitation}
+                selectedRecitationSlug={selectedRecitationSlug}
+                downloadRecitation={downloadRecitation}
+                handleRecitationChange={handleRecitationChange}
+                downloadTranslate={translate("downloadAll")}
+              />
+            )}
+            data={currentRecitation?.audioFiles}
+            keyExtractor={(item) => item?.surahInfo?.slug}
+            renderItem={renderSurahItem}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{
+              backgroundColor: "#1e293b",
+            }}
+          />
+        )}
+      </>
     </View>
   );
 };

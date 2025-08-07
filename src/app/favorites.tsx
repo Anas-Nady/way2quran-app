@@ -16,7 +16,7 @@ import ConfirmationDialog from "../components/ui/ConfirmationDialog";
 import { useTranslate } from "../helpers/i18nHelper";
 import { flexDirection } from "../helpers/flexDirection";
 import getName from "../helpers/getName";
-import { Link } from "expo-router";
+import { useRouter } from "expo-router";
 import { IFavouriteBookmark } from "../types/types";
 
 export default function Favorites() {
@@ -25,6 +25,7 @@ export default function Favorites() {
   const [isDialogVisible, setIsDialogVisible] = useState(false);
   const [bookmarkToDelete, setBookmarkToDelete] = useState(null);
   const translate = useTranslate("FavoritesScreen");
+  const router = useRouter();
 
   useEffect(() => {
     loadBookmarks();
@@ -58,17 +59,22 @@ export default function Favorites() {
     setBookmarkToDelete(null);
   };
 
+  const navigateToReciterScreen = (bookmark: IFavouriteBookmark) => {
+    router.push({
+      pathname: "/reciter",
+      params: {
+        reciterSlug: bookmark.reciterSlug,
+        recitationSlug: bookmark.recitationSlug,
+      },
+    });
+  };
   const renderItem = ({ item: bookmark }: { item: IFavouriteBookmark }) => (
-    <Pressable className="w-full ">
+    <Pressable className="w-full">
       <View
         className={`${flexDirection()} w-[95%] mx-auto p-3 my-2 border rounded-xl bg-gray-800 border-gray-500`}
       >
-        <Link
-          href={`/reciter?reciterSlug=${bookmark.reciterSlug}?recitationSlug=${bookmark.recitationSlug}`}
-          className={`justify-center flex-1`}
-          asChild
-        >
-          <TouchableOpacity>
+        <View className={`justify-center flex-1`}>
+          <TouchableOpacity onPress={() => navigateToReciterScreen(bookmark)}>
             <View style={{ alignItems: "center" }}>
               <Image
                 className="border border-gray-600 rounded-full"
@@ -85,7 +91,7 @@ export default function Favorites() {
               </Text>
             </View>
           </TouchableOpacity>
-        </Link>
+        </View>
         <TouchableOpacity onPress={() => handleDelete(bookmark)}>
           <AntDesign name="delete" size={25} color="#ef4444" />
         </TouchableOpacity>

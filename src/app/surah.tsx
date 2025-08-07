@@ -49,7 +49,7 @@ export default function Surah() {
       <Pressable className="flex-row w-full">
         <View className="w-[95%] border-b-2 border-gray-600 py-4 mx-auto">
           <View className="flex-row items-end justify-start">
-            <Text className="text-[26px] text-center font-arabic font-bold text-slate-200">
+            <Text className="text-[26px] text-center mx-auto font-arabic text-slate-200">
               {item.textArabic}
               <Text className="text-5xl font-verses text-slate-200">
                 {item.id}
@@ -58,7 +58,7 @@ export default function Surah() {
           </View>
           {appLanguage === "en" && (
             <View className="flex-row items-end justify-start">
-              <Text className="text-lg text-center text-slate-200">
+              <Text className="mx-auto text-lg text-center text-slate-200">
                 {item.textEnglish}
               </Text>
             </View>
