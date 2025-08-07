@@ -46,21 +46,23 @@ export default function Surah() {
 
   const renderSurahCard = ({ item }) => {
     return (
-      <Pressable className="w-full">
-        <View className="w-[95%] border-b-2 border-gray-600 my-2 p-3 mx-auto">
-          <View className="flex-col gap-1">
-            <Text
-              style={{ lineHeight: 40 }}
-              className="text-[26px] font-verses font-bold text-slate-200"
-            >
+      <Pressable className="flex-row w-full">
+        <View className="w-[95%] border-b-2 border-gray-600 py-4 mx-auto">
+          <View className="flex-row items-end justify-start">
+            <Text className="text-[26px] text-center font-arabic font-bold text-slate-200">
               {item.textArabic}
+              <Text className="text-5xl font-verses text-slate-200">
+                {item.id}
+              </Text>
             </Text>
-            {appLanguage === "en" && (
-              <Text className="text-lg text-left text-slate-200">
+          </View>
+          {appLanguage === "en" && (
+            <View className="flex-row items-end justify-start">
+              <Text className="text-lg text-center text-slate-200">
                 {item.textEnglish}
               </Text>
-            )}
-          </View>
+            </View>
+          )}
         </View>
       </Pressable>
     );
@@ -78,7 +80,7 @@ export default function Surah() {
         <FlatList
           data={surahInfo?.surah?.verses}
           renderItem={renderSurahCard}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item, index) => `${item.id}-${index}`}
           ListHeaderComponent={ListHeaderComponent}
           ListEmptyComponent={ListEmptyComponent}
           showsVerticalScrollIndicator={false}

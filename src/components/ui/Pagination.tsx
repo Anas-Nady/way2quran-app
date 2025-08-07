@@ -33,6 +33,7 @@ const Pagination = ({
       {pageRange.map((page) => (
         <PaginationButton
           text={page.toString()}
+          key={page}
           onPress={() => handlePageChange(page)}
           isActive={currentPage === page}
         />
