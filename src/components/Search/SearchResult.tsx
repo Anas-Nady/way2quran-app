@@ -38,9 +38,16 @@ export default function SearchResult({ results, loading, error }) {
           className="block px-2 py-3"
           role="button"
         >
-          <CustomText className="pt-1 pb-2 text-xl font-medium text-center text-gray-100 border-b border-gray-500">
-            {getName(item)}
-          </CustomText>
+          <View
+            style={{
+              borderBottomWidth: 1,
+              borderBottomColor: "#4B5563",
+            }}
+          >
+            <CustomText className="pt-1 pb-2 text-xl font-medium text-center text-gray-100">
+              {getName(item)}
+            </CustomText>
+          </View>
         </TouchableOpacity>
       );
     });
