@@ -9,6 +9,7 @@ import LoadingSpinner from "../components/States/LoadingSpinner";
 import Error from "../components/States/Error";
 import NotFoundResults from "../components/States/NotFoundResults";
 import { appLanguage } from "../services/i18next";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Surah() {
   const { surahSlug } = useLocalSearchParams();
@@ -20,14 +21,24 @@ export default function Surah() {
   const [surahInfo, setSurahInfo] = useState(null);
 
   useEffect(() => {
-    setState({
-      loading: true,
-      error: null,
-    });
     const fetchSurahContent = async () => {
+      setState({
+        loading: true,
+        error: null,
+      });
+
       try {
+        const storedSurah = await AsyncStorage.getItem(`surah_${surahSlug}`);
+        if (storedSurah) {
+          setSurahInfo(JSON.parse(storedSurah));
+          setState({ loading: false, error: null });
+          return;
+        }
+
         const res = await getSurah(surahSlug as string);
         const data = await res.json();
+
+        await AsyncStorage.setItem(`surah_${surahSlug}`, JSON.stringify(data));
         setSurahInfo(data);
         setState({ error: null, loading: false });
       } catch (error) {
