@@ -1,12 +1,12 @@
 import React from "react";
-import { View, ScrollView } from "react-native";
+import { View, Pressable, FlatList } from "react-native";
 import HeadingScreen from "./../components/HeadingScreen";
 import GoBackButton from "../components/ui/GoBackButton";
 import { useTranslate } from "../helpers/i18nHelper";
 import { socialMedia } from "../constants/socialMedia";
 import SocialMediaIcons from "../components/AboutUs/SocialMediaIcons";
 import { chunkArray } from "../helpers/chunkArray";
-import DescriptionList from "../components/AboutUs/DescriptionList";
+import DescriptionCard from "../components/AboutUs/DescriptionCard";
 
 const AboutUsList = () => {
   const translate = useTranslate("AboutScreen");
@@ -16,20 +16,28 @@ const AboutUsList = () => {
     text: translate(`about_${index + 1}`),
   }));
 
+  const ListHeaderComponent = () => (
+    <View>
+      <GoBackButton />
+      <HeadingScreen headingTxt={translate("aboutTitle")} />
+    </View>
+  );
   return (
-    <ScrollView
-      style={{ flex: 1 }}
-      className="w-full bg-gray-800"
-      contentContainerStyle={{ gap: 8 }}
-      showsVerticalScrollIndicator={false}
-    >
-      <View>
-        <GoBackButton />
-        <HeadingScreen headingTxt={translate("aboutTitle")} />
-      </View>
-      <DescriptionList data={descriptionList} />
-      <SocialMediaIcons data={chunkArray(socialMedia, 5)} />
-    </ScrollView>
+    <View style={{ flex: 1 }} className="w-full bg-gray-800">
+      <FlatList
+        data={descriptionList}
+        ListHeaderComponent={ListHeaderComponent}
+        showsVerticalScrollIndicator={false}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <DescriptionCard index={item.id} />}
+        contentContainerStyle={{
+          backgroundColor: "#1f2937",
+        }}
+        ListFooterComponent={() => (
+          <SocialMediaIcons data={chunkArray(socialMedia, 5)} />
+        )}
+      />
+    </View>
   );
 };
 
