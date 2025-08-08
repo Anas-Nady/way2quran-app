@@ -4,7 +4,6 @@ import SurahCardDetails from "../components/Surah/SurahCardDetails";
 import { BASE_END_POINT, getReciter } from "../services/api";
 import Error from "../components/States/Error";
 import LoadingSpinner from "../components/States/LoadingSpinner";
-import Alert from "../components/ui/Alert";
 import { useTranslate } from "../helpers/i18nHelper";
 import ReciterHeader from "../components/Reciter/ReciterHeader";
 import { useLocalSearchParams } from "expo-router";
@@ -14,11 +13,6 @@ interface IFetchReciter {
   reciter: IReciter | null;
   loading: boolean;
   error: string | null;
-}
-
-interface IAlert {
-  message: string;
-  type: "success" | "error";
 }
 
 const ReciterScreen = () => {
@@ -35,7 +29,6 @@ const ReciterScreen = () => {
   );
   const [recitations, setRecitations] = useState<IReciterRecitation[]>([]);
 
-  const [alert, setAlert] = useState<IAlert | null>(null);
   const [isChangingRecitation, setIsChangingRecitation] = useState(false);
 
   const currentRecitation = recitations?.find(
@@ -127,14 +120,6 @@ const ReciterScreen = () => {
       style={{ position: "relative" }}
       className="flex-1 w-full mx-auto bg-slate-800"
     >
-      {alert && (
-        <Alert
-          message={alert.message}
-          type={alert.type}
-          onClose={() => setAlert(null)}
-        />
-      )}
-
       <>
         {isChangingRecitation ? (
           <View className="flex items-center justify-center py-10">

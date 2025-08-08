@@ -13,10 +13,17 @@ import {
   removeBookmark,
 } from "../../helpers/bookmarkHandlers";
 import CustomText from "../CustomText";
+import Alert from "../ui/Alert";
+import { useTranslate } from "../../helpers/i18nHelper";
 
 interface IFavouriteState {
   isFavourite: boolean;
   loading: boolean;
+}
+
+interface IAlert {
+  message: string;
+  type: "added" | "removed";
 }
 
 const ReciterHeader = ({
@@ -27,6 +34,8 @@ const ReciterHeader = ({
   selectedRecitationSlug,
   downloadTranslate,
 }) => {
+  const [alert, setAlert] = useState<IAlert | null>(null);
+  const translate = useTranslate("ReciterScreen");
   const [favouriteState, setFavouriteState] = useState<IFavouriteState>({
     isFavourite: false,
     loading: true,
@@ -35,6 +44,10 @@ const ReciterHeader = ({
   const handleFavoriteToggle = async () => {
     if (favouriteState.isFavourite) {
       await removeBookmark("Favorites", reciter.slug as string);
+      setAlert({
+        message: translate("removedFromFavorites"),
+        type: "removed",
+      });
     } else {
       const savedData = {
         type: "Favorites",
@@ -45,6 +58,10 @@ const ReciterHeader = ({
         recitationSlug: selectedRecitationSlug as string,
       };
       await addBookmark("Favorites", reciter.slug as string, savedData);
+      setAlert({
+        message: translate("addedToFavorites"),
+        type: "added",
+      });
     }
     setFavouriteState((prev) => ({
       ...prev,
@@ -65,7 +82,14 @@ const ReciterHeader = ({
     checkIsFavourite();
   }, []);
   return (
-    <>
+    <View>
+      {alert && (
+        <Alert
+          message={alert.message}
+          type={alert.type}
+          onClose={() => setAlert(null)}
+        />
+      )}
       <View className={`${flexDirection()} items-center justify-between`}>
         <GoBackButton />
         <TouchableOpacity
@@ -123,7 +147,7 @@ const ReciterHeader = ({
           </CustomText>
         </TouchableOpacity>
       </View>
-    </>
+    </View>
   );
 };
 
