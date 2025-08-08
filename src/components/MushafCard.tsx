@@ -43,7 +43,7 @@ export default function MushafCard({ mushaf, width }) {
               style={{ width: "100%", height: 250 }}
             />
           </View>
-          <CustomText className="py-1 mt-1 text-lg font-semibold text-center bg-gray-600 text-slate-300">
+          <CustomText className="py-1 mt-1 text-lg font-semibold text-center bg-gray-700 text-slate-100">
             {mushafName}
           </CustomText>
         </TouchableOpacity>
