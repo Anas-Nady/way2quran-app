@@ -1,5 +1,6 @@
 import React from "react";
-import { TouchableOpacity, Text } from "react-native";
+import { TouchableOpacity } from "react-native";
+import CustomText from "../CustomText";
 
 const Button = ({ onPress, text, disabled }) => {
   return (
@@ -10,7 +11,9 @@ const Button = ({ onPress, text, disabled }) => {
         disabled ? "bg-gray-700" : "bg-green-600"
       } px-5 py-2.5 text-sm font-medium text-center rounded-lg`}
     >
-      <Text className="text-base font-semibold text-slate-200">{text}</Text>
+      <CustomText className="text-lg font-semibold text-slate-200">
+        {text}
+      </CustomText>
     </TouchableOpacity>
   );
 };

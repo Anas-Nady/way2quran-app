@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { flexDirection } from "../../helpers/flexDirection";
 import ReciterImg from "./ReciterImg";
@@ -12,6 +12,7 @@ import {
   isBookmarkExists,
   removeBookmark,
 } from "../../helpers/bookmarkHandlers";
+import CustomText from "../CustomText";
 
 interface IFavouriteState {
   isFavourite: boolean;
@@ -57,7 +58,6 @@ const ReciterHeader = ({
       "Favorites",
       reciter.slug as string
     );
-    console.log(favoriteStatus);
     setFavouriteState({ isFavourite: favoriteStatus, loading: false });
   };
 
@@ -84,18 +84,16 @@ const ReciterHeader = ({
         {/* Reciter Info */}
         <View className="flex-col items-center w-full">
           <ReciterImg uri={reciter?.photo} alt={getName(reciter)} />
-          <View className="my-2">
-            <Text className="px-2 text-3xl font-semibold text-center text-slate-200">
+          <View className="mt-2">
+            <CustomText className="px-2 pt-3 text-3xl font-semibold text-center text-slate-200">
               {getName(reciter)}
-            </Text>
+            </CustomText>
             {reciter?.isTopReciter && <TopReciterBadge />}
-            <View
-              className={`${flexDirection()} items-center justify-center gap-2 mt-1`}
-            >
+            <View className={`flex-row justify-center my-1`}>
               <Ionicons name="eye-outline" size={25} color="#6B7280" />
-              <Text className="mb-1 ml-1 text-lg font-semibold text-slate-300">
+              <CustomText className="mx-1 text-lg font-semibold text-slate-300">
                 {reciter?.totalViewers?.toLocaleString()}
-              </Text>
+              </CustomText>
             </View>
           </View>
         </View>
@@ -108,21 +106,21 @@ const ReciterHeader = ({
             recitationName={getName(currentRecitation?.recitationInfo)}
           />
         ) : (
-          <Text
+          <CustomText
             style={{ borderWidth: 1, borderRadius: 8, borderColor: "#4b5563" }}
             className="w-[90%] p-2 mx-auto text-2xl font-semibold text-center  text-gray-200"
           >
             {getName(currentRecitation?.recitationInfo)}
-          </Text>
+          </CustomText>
         )}
         {/* Download All Button */}
         <TouchableOpacity
           onPress={downloadRecitation}
           className="w-[95%] mx-auto p-3 mt-2 bg-gray-700 border border-gray-500 rounded-md"
         >
-          <Text className="ml-2 text-lg font-semibold text-center text-slate-100">
+          <CustomText className="ml-2 text-lg font-semibold text-center text-slate-100">
             {downloadTranslate}
-          </Text>
+          </CustomText>
         </TouchableOpacity>
       </View>
     </>

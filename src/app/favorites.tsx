@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
   View,
-  Text,
   FlatList,
   Image,
   TouchableOpacity,
@@ -18,6 +17,7 @@ import { flexDirection } from "../helpers/flexDirection";
 import getName from "../helpers/getName";
 import { useRouter } from "expo-router";
 import { IFavouriteBookmark } from "../types/types";
+import CustomText from "../components/CustomText";
 
 export default function Favorites() {
   const TYPE = "Favorites";
@@ -84,11 +84,11 @@ export default function Favorites() {
                 }}
                 alt={getName(bookmark)}
               />
-              <Text
+              <CustomText
                 className={`text-center mt-2 text-lg font-semibold text-white`}
               >
                 {getName(bookmark)}
-              </Text>
+              </CustomText>
             </View>
           </TouchableOpacity>
         </View>
@@ -117,6 +117,7 @@ export default function Favorites() {
         keyExtractor={(item) => item.reciterSlug}
         contentContainerStyle={{ backgroundColor: "#1f2937" }}
         ListHeaderComponent={renderHeader}
+        showsVerticalScrollIndicator={false}
         ListEmptyComponent={<EmptyState message={translate("emptyState")} />}
       />
       <ConfirmationDialog

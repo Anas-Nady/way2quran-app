@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   View,
-  Text,
   TouchableOpacity,
   Image,
   Linking,
@@ -9,6 +8,7 @@ import {
 } from "react-native";
 import getName from "../helpers/getName";
 import { incrementDownloadCount } from "../services/api";
+import CustomText from "./CustomText";
 
 export default function MushafCard({ mushaf, width }) {
   const [loading, setLoading] = useState(false);
@@ -32,7 +32,7 @@ export default function MushafCard({ mushaf, width }) {
     <Pressable disabled={loading}>
       <View className="w-full">
         <TouchableOpacity
-          className="p-2 my-3 w-[80%] mx-auto border border-gray-600"
+          className="p-2 my-3 w-[85%] mx-auto border border-gray-600"
           onPress={handleDownloadMushaf}
         >
           <View className="items-center justify-center">
@@ -40,12 +40,12 @@ export default function MushafCard({ mushaf, width }) {
               source={{ uri: mushaf.imageURL }}
               alt={mushafName}
               resizeMode="contain"
-              style={{ width: "100%", height: 300 }}
+              style={{ width: "100%", height: 250 }}
             />
           </View>
-          <Text className="py-1 font-semibold text-center text-slate-300 bg-gray-600 text-[15px]">
+          <CustomText className="py-1 mt-1 text-lg font-semibold text-center bg-gray-600 text-slate-300">
             {mushafName}
-          </Text>
+          </CustomText>
         </TouchableOpacity>
       </View>
     </Pressable>

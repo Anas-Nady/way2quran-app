@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import Error from "../States/Error";
 import EmptyState from "../States/EmptyState";
 import LoadingSpinner from "../States/LoadingSpinner";
@@ -7,6 +7,7 @@ import { useTranslate } from "../../helpers/i18nHelper";
 import getName from "../../helpers/getName";
 import { useRouter } from "expo-router";
 import { IDynamicSearchParams } from "../../types/types";
+import CustomText from "../CustomText";
 
 export default function SearchResult({ results, loading, error }) {
   const translate = useTranslate("SearchScreen");
@@ -37,9 +38,9 @@ export default function SearchResult({ results, loading, error }) {
           className="block px-2 py-3"
           role="button"
         >
-          <Text className="pt-1 pb-2 text-xl font-medium text-center text-gray-100 border-b border-gray-500">
+          <CustomText className="pt-1 pb-2 text-xl font-medium text-center text-gray-100 border-b border-gray-500">
             {getName(item)}
-          </Text>
+          </CustomText>
         </TouchableOpacity>
       );
     });

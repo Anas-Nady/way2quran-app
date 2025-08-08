@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, Animated } from "react-native";
+import { View, TouchableOpacity, Animated } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { flexDirection } from "../../helpers/flexDirection";
 import { ScreenDimensionsContext } from "../../contexts/ScreenDimensionsProvider";
+import CustomText from "../CustomText";
 
 const Alert = ({ message, type = "success", duration = 2500, onClose }) => {
   const [fadeAnim] = useState(new Animated.Value(0));
@@ -60,9 +61,9 @@ const Alert = ({ message, type = "success", duration = 2500, onClose }) => {
           color={type === "success" ? "#22c55e" : "#f54248"}
           className="mx-1"
         />
-        <Text className="flex-1 px-2 text-base font-semibold text-center text-white">
+        <CustomText className="flex-1 px-2 text-base font-semibold text-center text-white">
           {message}
-        </Text>
+        </CustomText>
         <TouchableOpacity
           onPress={onClose}
           className="p-1 border border-gray-500 rounded-full"

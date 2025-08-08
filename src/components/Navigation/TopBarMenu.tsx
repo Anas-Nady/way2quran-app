@@ -4,6 +4,7 @@ import { useTranslate } from "../../helpers/i18nHelper";
 import { flexDirection, isRTL } from "../../helpers/flexDirection";
 import { chunkArray } from "../../helpers/chunkArray";
 import { useRouter } from "expo-router";
+import CustomText from "../CustomText";
 
 export default function TopBarMenu({ closeMenu }) {
   const translate = useTranslate("TopBarMenu");
@@ -55,13 +56,13 @@ export default function TopBarMenu({ closeMenu }) {
               onPress={() => handleNavigation(link.routeName, link.params)}
               className="w-[49%] p-4 border-b border-gray-700"
             >
-              <Text
+              <CustomText
                 className={`${
                   isRTL ? "text-[18px]" : "text-[16px]"
                 } font-bold text-center text-gray-200`}
               >
                 {link.label}
-              </Text>
+              </CustomText>
             </TouchableOpacity>
           ))}
         </View>

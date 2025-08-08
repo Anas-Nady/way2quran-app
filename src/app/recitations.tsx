@@ -25,6 +25,7 @@ export default function Recitations() {
       <FlatList
         data={recitations.slice(3)}
         ListHeaderComponent={renderHeader}
+        showsVerticalScrollIndicator={false}
         renderItem={renderItem}
         keyExtractor={(item) => item.slug}
         contentContainerStyle={{}}

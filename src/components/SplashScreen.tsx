@@ -1,6 +1,7 @@
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image } from "react-native";
 import Constants from "expo-constants";
+import CustomText from "./CustomText";
 
 const SplashScreen = () => {
   const appVersion = Constants.expoConfig.version;
@@ -12,7 +13,7 @@ const SplashScreen = () => {
         resizeMode="contain"
         style={{ width: "100%", height: "100%", flex: 1 }}
       />
-      <Text
+      <CustomText
         className="text-lg font-bold text-green-600"
         style={{
           position: "absolute",
@@ -20,7 +21,7 @@ const SplashScreen = () => {
         }}
       >
         v{appVersion}
-      </Text>
+      </CustomText>
     </View>
   );
 };

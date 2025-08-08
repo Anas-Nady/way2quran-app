@@ -5,6 +5,7 @@ import { useTranslate } from "../../helpers/i18nHelper";
 import { flexDirection } from "../../helpers/flexDirection";
 import { Href, useRouter } from "expo-router";
 import { ITabLink } from "../../types/types";
+import CustomText from "../CustomText";
 
 export default function TabBar({ closeMenu }) {
   const translate = useTranslate("TabBar");
@@ -27,7 +28,7 @@ export default function TabBar({ closeMenu }) {
       icon: "menu-book",
     },
   ];
-  const handleMenuPress = (routeName: Href<string>) => {
+  const handleMenuPress = (routeName: Href) => {
     closeMenu();
     router.push(routeName);
   };
@@ -42,23 +43,21 @@ export default function TabBar({ closeMenu }) {
           >
             <View className="flex-col items-center justify-center">
               <MaterialIcons name={tab.icon as any} size={24} color="#22c55e" />
-              <Text className="font-semibold text-green-500 text-md">
+              <CustomText className="font-semibold text-green-500 text-md">
                 {tab.label}
-              </Text>
+              </CustomText>
             </View>
           </TouchableOpacity>
         ))}
-        <TouchableOpacity
-          onPress={() => router.push("prayer-times" as Href<string | object>)}
-        >
+        <TouchableOpacity onPress={() => router.push("prayer-times" as Href)}>
           <View className="flex-col items-center justify-center">
             <Image
               source={require("../../assets/images/mosqueIcon.png")}
               width={24}
             />
-            <Text className="font-semibold text-green-500 text-md">
+            <CustomText className="font-semibold text-green-500 text-md">
               {translate("prayerTimes")}
-            </Text>
+            </CustomText>
           </View>
         </TouchableOpacity>
       </View>

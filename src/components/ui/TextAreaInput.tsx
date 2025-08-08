@@ -1,13 +1,14 @@
 import React from "react";
-import { View, Text, TextInput } from "react-native";
+import { View, TextInput } from "react-native";
 import { textDirection } from "../../helpers/flexDirection";
+import CustomText from "../CustomText";
 
 const TextAreaInput = ({ id, value, onChangeText, label }) => {
   return (
     <View className="w-full mb-5">
-      <Text className="text-lg font-medium text-center text-gray-200">
+      <CustomText className="text-lg font-medium text-center text-gray-200">
         {label}
-      </Text>
+      </CustomText>
       <TextInput
         id={id}
         accessibilityLabel={label}

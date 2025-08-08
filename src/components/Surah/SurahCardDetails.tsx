@@ -15,6 +15,7 @@ import {
   togglePlayback,
 } from "../../helpers/setupTrackPlayback";
 import { IAudioFile, IPlaylistBookmark } from "../../types/types";
+import CustomText from "../CustomText";
 
 const SurahCardDetails = ({ surah, surahIndex, reciter, recitation }) => {
   const [isBookmarked, setIsBookmarked] = useState(false);
@@ -150,16 +151,16 @@ const SurahCardDetails = ({ surah, surahIndex, reciter, recitation }) => {
             style={{ transform: [{ rotate: "45deg" }] }}
             className={`${flexDirection()} items-center justify-center mx-2.5 w-9 h-9 bg-green-600`}
           >
-            <Text
+            <CustomText
               style={{ transform: [{ rotate: "-45deg" }] }}
               className="font-semibold text-center text-white text-md"
             >
               {surah?.surahNumber}
-            </Text>
+            </CustomText>
           </View>
-          <Text className="text-lg font-semibold text-white">
+          <CustomText className="text-lg font-semibold text-white">
             {getName(surah?.surahInfo)}
-          </Text>
+          </CustomText>
         </TouchableOpacity>
         <View
           style={{ gap: 9 }}

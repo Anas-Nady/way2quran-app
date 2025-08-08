@@ -1,7 +1,8 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import { useContext } from "react";
 import { ScreenDimensionsContext } from "../../contexts/ScreenDimensionsProvider";
+import CustomText from "../CustomText";
 
 export default function Error({ message }) {
   const { screenWidth: width } = useContext(ScreenDimensionsContext);
@@ -12,9 +13,9 @@ export default function Error({ message }) {
         className="p-4 mx-auto bg-gray-900 border border-gray-500"
         style={{ width: width * 0.9 }}
       >
-        <Text className="text-lg font-semibold text-center text-red-500">
+        <CustomText className="text-lg font-semibold text-center text-red-500">
           {message}
-        </Text>
+        </CustomText>
       </View>
     </View>
   );

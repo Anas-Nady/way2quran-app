@@ -108,6 +108,7 @@ export default function Playlist() {
       <FlatList
         data={playlists}
         renderItem={renderItem}
+        showsVerticalScrollIndicator={false}
         ListHeaderComponent={renderHeader}
         style={{ flex: 1 }}
         keyExtractor={(item) => item.key}

@@ -27,6 +27,7 @@ export default function DownloadMushaf() {
       <FlatList
         data={listMushaf}
         ListHeaderComponent={renderHeader}
+        showsVerticalScrollIndicator={false}
         keyExtractor={(item) => item.slug}
         renderItem={({ item }) => (
           <MushafCard mushaf={item} width={cardWidth} />

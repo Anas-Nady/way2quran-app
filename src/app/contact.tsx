@@ -1,10 +1,11 @@
 import React from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, ScrollView } from "react-native";
 import ContactUsForm from "../components/ContactUsForm";
 import HeadingScreen from "../components/HeadingScreen";
 import GoBackButton from "../components/ui/GoBackButton";
 import { useTranslate } from "../helpers/i18nHelper";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import CustomText from "../components/CustomText";
 
 export default function ContactUs() {
   const translate = useTranslate("ContactUsScreen");
@@ -26,9 +27,9 @@ export default function ContactUs() {
           <HeadingScreen headingTxt={translate("contactTitle")} />
         </View>
         <View className="w-full mx-auto">
-          <Text className="px-2 mb-1 text-base text-center text-gray-400">
+          <CustomText className="px-2 mb-1 text-base text-center text-gray-400">
             {translate("contactDescription")}
-          </Text>
+          </CustomText>
           <ContactUsForm />
         </View>
       </ScrollView>

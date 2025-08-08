@@ -8,8 +8,6 @@
     "**/*.tsx",
     "src/types/*.ts",
     ".expo/types/**/*.ts",
-    "expo-env.d.ts",
-    "babel.config.js",
-    "app.config.js"
+    "expo-env.d.ts"
   ]
 }

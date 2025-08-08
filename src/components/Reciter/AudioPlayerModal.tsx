@@ -11,6 +11,7 @@ import { setupTrackPlayback } from "../../helpers/setupTrackPlayback";
 import { useRouter } from "expo-router";
 import PlayerIcon, { IconNameOptions } from "./PlayerIcon";
 import { IPlayerState, RepeatModeOptions } from "../../types/types";
+import CustomText from "../CustomText";
 
 const AudioPlayerModal = () => {
   const { playerState, setPlayerState, toggleModalExpansion } =
@@ -193,38 +194,36 @@ const AudioPlayerModal = () => {
         <>
           {/* Audio Details */}
           <View className={`${flexDirection()} items-center justify-end mx-2`}>
-            <View className={`${flexDirection()} items-center flex-1 gap-2`}>
+            <View className={`${flexDirection()} items-center flex-1 `}>
               <View className="flex-1">
                 <TouchableOpacity
                   className="mx-3"
                   onPress={navigateToReciterScreen}
                 >
-                  <Text
-                    className={` text-[18px] text-center font-bold text-gray-100`}
-                  >
+                  <CustomText className={`text-lg text-center text-gray-100`}>
                     {getName(playerState.reciter)}
-                  </Text>
+                  </CustomText>
                 </TouchableOpacity>
-                <Text
+                <CustomText
                   numberOfLines={1}
-                  className={`mt-1 text-[15px] text-center font-semibold text-gray-100`}
+                  className={`mt- text-[15px] text-center font-semibold text-gray-100`}
                 >
                   {getName(playerState.currentAudio?.surahInfo)}
-                </Text>
+                </CustomText>
               </View>
             </View>
           </View>
           <View
             className={`${flexDirection()} items-center justify-between w-full`}
           >
-            <Text className="text-sm font-notoKufi text-white w-[48px] text-center">
+            <CustomText className="text-sm font-notoKufi text-white w-[48px] text-center">
               {formatDuration(position)}
-            </Text>
+            </CustomText>
             <Slider
               style={{
                 flex: 1,
                 height: 25,
-                marginVertical: 10,
+                marginVertical: 5,
                 transform: isRTL ? [{ scaleX: -1 }] : [{ scaleX: 1 }],
               }}
               minimumValue={0}
@@ -236,9 +235,9 @@ const AudioPlayerModal = () => {
               thumbTintColor="#22c55e"
             />
 
-            <Text className="text-sm font-notoKufi text-white w-[48px] text-end">
+            <CustomText className="text-sm font-notoKufi text-white w-[48px] text-end">
               {formatDuration(duration)}
-            </Text>
+            </CustomText>
           </View>
         </>
       )}

@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, Pressable } from "react-native";
 import ReciterImg from "./ReciterImg";
 import getName from "./../../helpers/getName";
 import { isRTL } from "../../helpers/flexDirection";
+import CustomText from "../CustomText";
 
 const ReciterCard = ({ reciter, handleNavigateClick }) => {
   if (!reciter) {
@@ -19,13 +20,13 @@ const ReciterCard = ({ reciter, handleNavigateClick }) => {
           <ReciterImg uri={reciter.photo} alt={getName(reciter)} />
         </View>
       </View>
-      <Text
+      <CustomText
         className={`${
           isRTL ? "text-[18px]" : "text-[15px]"
         } font-semibold h-[50px] w-full text-center text-gray-100`}
       >
         {getName(reciter)}
-      </Text>
+      </CustomText>
     </TouchableOpacity>
   );
 };

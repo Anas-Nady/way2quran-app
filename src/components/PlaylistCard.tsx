@@ -3,7 +3,6 @@ import {
   FlatList,
   Image,
   Pressable,
-  Text,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -12,6 +11,7 @@ import { useAudioPlayer } from "../contexts/AudioPlayerContext";
 import { IAudioFile } from "../types/types";
 import { flexDirection, isRTL } from "../helpers/flexDirection";
 import { Ionicons } from "@expo/vector-icons";
+import CustomText from "./CustomText";
 
 const PlaylistCard = ({
   data,
@@ -24,17 +24,28 @@ const PlaylistCard = ({
   const sortedSurahs = data.audioFiles;
   const { playerState } = useAudioPlayer();
 
-  const renderSurah = ({ item }: { item: IAudioFile }) => (
-    <Text
-      className={`border rounded flex-grow p-1 font-semibold text-center text-md text-gray-50 mx-[1px] my-1 ${
-        String(playerState.currentAudio?.url) === item.url
-          ? "bg-green-500 broder-gray-400"
-          : "bg-gray-800 border-gray-600 border"
-      }`}
-    >
-      {getName(item.surahInfo)}
-    </Text>
-  );
+  const renderSurah = ({ item }: { item: IAudioFile }) => {
+    const isPlaying = String(playerState.currentAudio?.url) === item.url;
+
+    return (
+      <View
+        style={{
+          flexGrow: 1,
+          padding: 4,
+          borderWidth: 1,
+          borderRadius: 8,
+          borderColor: isPlaying ? "#9ca3af" : "#4b5563",
+          backgroundColor: isPlaying ? "#16a34a" : "#1f2937",
+          marginHorizontal: 1.5,
+          marginVertical: 4,
+        }}
+      >
+        <CustomText className="font-semibold text-center text-md text-gray-50">
+          {getName(item.surahInfo)}
+        </CustomText>
+      </View>
+    );
+  };
 
   const numColumns = 4;
   return (
@@ -46,19 +57,19 @@ const PlaylistCard = ({
           >
             <Image
               source={{ uri: data.reciter.photo }}
-              className="w-20 h-20 rounded-full"
+              className="w-20 h-20 border border-gray-600 rounded-full"
             />
             <View className={`flex-1 flex-col justify-start mx-2`}>
-              <Text
+              <CustomText
                 className={`${
                   isRTL ? "text-xl" : "text-[16px]"
-                } font-bold text-center text-gray-200`}
+                } text-center text-gray-200`}
               >
                 {getName(data.reciter)}
-              </Text>
-              <Text className={`text-sm text-center text-gray-200`}>
+              </CustomText>
+              <CustomText className={`text-sm text-center text-gray-200`}>
                 {getName(data.recitation)}
-              </Text>
+              </CustomText>
             </View>
             <View
               className={`${flexDirection()} items-center justify-between gap-3`}
@@ -85,7 +96,7 @@ const PlaylistCard = ({
           </View>
           {expanded && (
             <View className="border-t border-gray-600">
-              <Text
+              <CustomText
                 style={{
                   borderWidth: 1,
                   borderRadius: 10,
@@ -94,7 +105,7 @@ const PlaylistCard = ({
                 className="p-1 px-2 mx-auto -mt-3 font-bold text-white text-md"
               >
                 {sortedSurahs.length}
-              </Text>
+              </CustomText>
               <View className={`p-4`}>
                 <FlatList
                   data={sortedSurahs}
