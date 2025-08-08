@@ -134,7 +134,7 @@ const PrayerTimes = () => {
             </CustomText>
           </View>
           <CustomText
-            className={`text-xl font-semibold ${
+            className={`text-xl font-semibold font-english ${
               isCurrentPrayer ? "font-bold text-white" : "text-gray-300"
             }`}
           >
