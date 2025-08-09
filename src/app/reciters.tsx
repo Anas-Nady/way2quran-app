@@ -67,6 +67,7 @@ export default function Reciters() {
 
   const renderReciter = ({ item: reciter }) => (
     <ReciterCard
+      numColumns={numColumns}
       key={reciter.slug}
       reciter={reciter}
       handleNavigateClick={() =>
@@ -100,35 +101,30 @@ export default function Reciters() {
     );
   const numColumns = width >= 900 ? 4 : width >= 600 ? 3 : 2;
 
+  if (state.loading) {
+    return <LoadingSpinner />;
+  }
+  if (state.error) {
+    return <Error message={state.error} />;
+  }
+
   return (
     <View className="flex-1 w-full bg-gray-800">
-      {state.loading ? (
-        <LoadingSpinner />
-      ) : state.error ? (
-        <Error message={state.error} />
-      ) : (
-        <FlatList
-          data={state.reciters}
-          renderItem={renderReciter}
-          keyExtractor={(item) => item.slug}
-          ListHeaderComponent={ListHeaderComponent}
-          ListFooterComponent={ListFooterComponent}
-          ListEmptyComponent={ListEmptyComponent}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{
-            backgroundColor: "#1f2937", // bg-gray-800
-          }}
-          style={{ flex: 1 }}
-          numColumns={numColumns}
-          key={numColumns}
-          columnWrapperStyle={{
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexDirection: "row",
-            flex: 1,
-          }}
-        />
-      )}
+      <FlatList
+        data={state.reciters}
+        renderItem={renderReciter}
+        keyExtractor={(item) => item.slug}
+        ListHeaderComponent={ListHeaderComponent}
+        ListFooterComponent={ListFooterComponent}
+        ListEmptyComponent={ListEmptyComponent}
+        columnWrapperStyle={{
+          flex: 1,
+          justifyContent: "space-around",
+        }}
+        numColumns={numColumns}
+        key={numColumns}
+        showsVerticalScrollIndicator={false}
+      />
     </View>
   );
 }
