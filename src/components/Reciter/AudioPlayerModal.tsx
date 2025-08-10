@@ -224,7 +224,7 @@ const AudioPlayerModal = () => {
                 flex: 1,
                 height: 25,
                 marginVertical: 5,
-                transform: isRTL ? [{ scaleX: -1 }] : [{ scaleX: 1 }],
+                transform: [{ scaleX: 1 }],
               }}
               minimumValue={0}
               maximumValue={duration}
