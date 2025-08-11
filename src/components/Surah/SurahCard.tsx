@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, Pressable } from "react-native";
 import getName from "../../helpers/getName";
-import { flexDirection } from "../../helpers/flexDirection";
+
 import React from "react";
 import { useRouter } from "expo-router";
 import CustomText from "../CustomText";
@@ -8,7 +8,7 @@ const SurahCard = ({ surah }) => {
   const router = useRouter();
 
   return (
-    <Pressable className={`${flexDirection()} mx-auto w-full surah-card`}>
+    <Pressable className={`flex-row mx-auto w-full surah-card`}>
       <View className=" px-4 py-4 w-[90%] mx-auto border border-gray-600 rounded mt-3">
         <TouchableOpacity
           onPress={() =>
@@ -20,7 +20,7 @@ const SurahCard = ({ surah }) => {
               },
             })
           }
-          className={`${flexDirection()} items-center gap-4`}
+          className={`flex-row items-center gap-4`}
         >
           <View
             style={{

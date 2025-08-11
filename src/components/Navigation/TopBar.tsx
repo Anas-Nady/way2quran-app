@@ -3,7 +3,7 @@ import { AntDesign, Feather } from "@expo/vector-icons";
 import { TouchableOpacity, View } from "react-native";
 import AppTitle from "../AppTitle";
 import Animated, { FadeIn } from "react-native-reanimated";
-import { flexDirection } from "../../helpers/flexDirection";
+
 import TopBarMenu from "./TopBarMenu";
 import { useRouter } from "expo-router";
 
@@ -25,7 +25,7 @@ const TopBar = ({ isMenuOpen, closeMenu, toggleMenu }) => {
         }}
         className={`w-full bg-gray-800 border-b-2 border-gray-500 flex-col`}
       >
-        <View className={`${flexDirection()} items-center justify-between p-3`}>
+        <View className={`flex-row items-center justify-between p-3`}>
           <TouchableOpacity
             onPress={toggleMenu}
             className="px-2 py-1 bg-gray-600 rounded"

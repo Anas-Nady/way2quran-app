@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { View, TouchableOpacity, Animated } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { flexDirection } from "../../helpers/flexDirection";
+
 import { ScreenDimensionsContext } from "../../contexts/ScreenDimensionsProvider";
 import CustomText from "../CustomText";
 
@@ -53,7 +53,7 @@ const Alert = ({ message, type = "success", duration = 2500, onClose }) => {
       }}
     >
       <View
-        className={`${flexDirection()} w-full mx-auto items-center p-4 border rounded-lg shadow-md bg-gray-800 border-gray-500`}
+        className={`flex-row w-full mx-auto items-center p-4 border rounded-lg shadow-md bg-gray-800 border-gray-500`}
       >
         <Ionicons
           name={getIconName()}

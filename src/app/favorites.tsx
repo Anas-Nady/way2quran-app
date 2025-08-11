@@ -13,7 +13,7 @@ import { getAllBookmarks, removeBookmark } from "../helpers/bookmarkHandlers";
 import EmptyState from "../components/States/EmptyState";
 import ConfirmationDialog from "../components/ui/ConfirmationDialog";
 import { useTranslate } from "../helpers/i18nHelper";
-import { flexDirection } from "../helpers/flexDirection";
+
 import getName from "../helpers/getName";
 import { useRouter } from "expo-router";
 import { IFavouriteBookmark } from "../types/types";
@@ -71,7 +71,7 @@ export default function Favorites() {
   const renderItem = ({ item: bookmark }: { item: IFavouriteBookmark }) => (
     <Pressable className="w-full">
       <View
-        className={`${flexDirection()} w-[95%] mx-auto p-3 my-2 border rounded-xl bg-gray-800 border-gray-500`}
+        className={`flex-row w-[95%] mx-auto p-3 my-2 border rounded-xl bg-gray-800 border-gray-500`}
       >
         <View className={`justify-center flex-1`}>
           <TouchableOpacity onPress={() => navigateToReciterScreen(bookmark)}>

@@ -2,16 +2,14 @@ import React from "react";
 import { View, TextInput } from "react-native";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { flexDirection, textDirection } from "../../helpers/flexDirection";
+import { textDirection } from "../../helpers/flexDirection";
 
 export default function SearchInput({ handleTextDebounce }) {
   const textInputRef = useRef(null);
   const { t } = useTranslation();
 
   return (
-    <View
-      className={`w-[70%] ${flexDirection()} items-center justify-between mx-auto`}
-    >
+    <View className={`w-[70%] flex-row items-center justify-between mx-auto`}>
       <TextInput
         ref={textInputRef}
         onChangeText={handleTextDebounce}

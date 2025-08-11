@@ -9,7 +9,7 @@ import {
   removeBookmark,
 } from "../../helpers/bookmarkHandlers";
 import getName from "../../helpers/getName";
-import { flexDirection } from "../../helpers/flexDirection";
+
 import {
   isPlayerPlaying,
   togglePlayback,
@@ -140,16 +140,16 @@ const SurahCardDetails = ({ surah, surahIndex, reciter, recitation }) => {
   return (
     <Pressable className="w-full">
       <View
-        className={`${flexDirection()} w-[95%] mx-auto relative items-center justify-between py-4 px-2 mt-2.5 border border-gray-600 rounded-lg bg-gray-700`}
+        className={`flex-row w-[95%] mx-auto relative items-center justify-between py-4 px-2 mt-2.5 border border-gray-600 rounded-lg bg-gray-700`}
       >
         <TouchableOpacity
-          className={`${flexDirection()} items-center flex-1`}
+          className={`flex-row items-center flex-1`}
           onPress={togglePlayPause}
           disabled={playerState.playLoading}
         >
           <View
             style={{ transform: [{ rotate: "45deg" }] }}
-            className={`${flexDirection()} items-center justify-center mx-2.5 w-9 h-9 bg-green-600`}
+            className={`flex-row items-center justify-center mx-2.5 w-9 h-9 bg-green-600`}
           >
             <CustomText
               style={{ transform: [{ rotate: "-45deg" }] }}
@@ -164,7 +164,7 @@ const SurahCardDetails = ({ surah, surahIndex, reciter, recitation }) => {
         </TouchableOpacity>
         <View
           style={{ gap: 9 }}
-          className={`${flexDirection()} items-center justify-center`}
+          className={`flex-row items-center justify-center`}
         >
           {/* Audio Play Button */}
           <TouchableOpacity

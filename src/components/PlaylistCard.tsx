@@ -9,7 +9,7 @@ import {
 import getName from "../helpers/getName";
 import { useAudioPlayer } from "../contexts/AudioPlayerContext";
 import { IAudioFile } from "../types/types";
-import { flexDirection, isRTL } from "../helpers/flexDirection";
+import { isRTL } from "../helpers/flexDirection";
 import { Ionicons } from "@expo/vector-icons";
 import CustomText from "./CustomText";
 
@@ -52,9 +52,7 @@ const PlaylistCard = ({
     <Pressable className="w-full">
       <TouchableOpacity onPress={onToggleSurahs} className="mt-3">
         <View className="w-[95%] border border-gray-500 rounded-xl mx-auto">
-          <View
-            className={`${flexDirection()} items-center justify-between p-4`}
-          >
+          <View className={`flex-row items-center justify-between p-4`}>
             <Image
               source={{ uri: data.reciter.photo }}
               className="w-20 h-20 border border-gray-600 rounded-full"
@@ -71,9 +69,7 @@ const PlaylistCard = ({
                 {getName(data.recitation)}
               </CustomText>
             </View>
-            <View
-              className={`${flexDirection()} items-center justify-between gap-3`}
-            >
+            <View className={`flex-row items-center justify-between gap-3`}>
               <TouchableOpacity
                 disabled={playerState.playLoading}
                 onPress={() => onPlay(data)}

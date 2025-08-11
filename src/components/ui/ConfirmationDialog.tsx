@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { useTranslation } from "react-i18next";
-import { flexDirection } from "../../helpers/flexDirection";
+
 import CustomText from "../CustomText";
 
 const ConfirmationDialog = ({ isVisible, onConfirm, onCancel, message }) => {
@@ -18,7 +18,7 @@ const ConfirmationDialog = ({ isVisible, onConfirm, onCancel, message }) => {
         <CustomText className="mb-5 text-base text-center text-gray-200">
           {message}
         </CustomText>
-        <View className={`${flexDirection()} } justify-between`}>
+        <View className={`flex-row } justify-between`}>
           <TouchableOpacity
             className="py-2.5 px-5 rounded bg-gray-600"
             onPress={onCancel}

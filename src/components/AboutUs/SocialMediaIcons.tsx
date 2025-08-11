@@ -1,6 +1,6 @@
 import React from "react";
 import { Linking, Pressable, TouchableOpacity, View } from "react-native";
-import { flexDirection } from "../../helpers/flexDirection";
+
 import {
   FontAwesome5,
   FontAwesome6,
@@ -16,7 +16,7 @@ const SocialMediaIcons = ({ data }) => {
   return data.map((chunk: ISocialMedia[], index: string) => (
     <Pressable key={index} className="w-full">
       <View
-        className={`${flexDirection()} mb-2 justify-between items-center p-4 w-[90%] mx-auto bg-gray-700 border border-gray-600`}
+        className={`flex-row mb-2 justify-between items-center p-4 w-[90%] mx-auto bg-gray-700 border border-gray-600`}
       >
         {chunk.map((item: ISocialMedia) => {
           const IconComponent =

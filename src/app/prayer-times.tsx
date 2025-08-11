@@ -4,7 +4,7 @@ import * as Location from "expo-location";
 import LoadingSpinner from "./../components/States/LoadingSpinner";
 import Error from "./../components/States/Error";
 import { useTranslate } from "./../helpers/i18nHelper";
-import { flexDirection } from "../helpers/flexDirection";
+
 import GoBackButton from "../components/ui/GoBackButton";
 import {
   calculateRemainingTime,
@@ -120,7 +120,7 @@ const PrayerTimes = () => {
     return (
       <Pressable className="w-full">
         <View
-          className={`${flexDirection()} w-[90%] mx-auto items-center justify-between border border-gray-500 p-3 my-2 rounded
+          className={`flex-row w-[90%] mx-auto items-center justify-between border border-gray-500 p-3 my-2 rounded
           ${isCurrentPrayer ? "bg-green-500 border-none" : "bg-gray-700"}`}
         >
           <View>

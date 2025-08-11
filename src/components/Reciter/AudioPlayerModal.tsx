@@ -5,7 +5,7 @@ import Slider from "@react-native-community/slider";
 import { useAudioPlayer } from "../../contexts/AudioPlayerContext";
 import { formatDuration } from "../../helpers/formatTime";
 import getName from "../../helpers/getName";
-import { flexDirection, isRTL } from "../../helpers/flexDirection";
+import { isRTL } from "../../helpers/flexDirection";
 import TrackPlayer, { State, useProgress } from "react-native-track-player";
 import { setupTrackPlayback } from "../../helpers/setupTrackPlayback";
 import { useRouter } from "expo-router";
@@ -193,8 +193,8 @@ const AudioPlayerModal = () => {
       {playerState.isModalExpanded && (
         <>
           {/* Audio Details */}
-          <View className={`${flexDirection()} items-center justify-end mx-2`}>
-            <View className={`${flexDirection()} items-center flex-1 `}>
+          <View className={`flex-row items-center justify-end mx-2`}>
+            <View className={`flex-row items-center flex-1 `}>
               <View className="flex-1">
                 <TouchableOpacity
                   className="mx-3"
@@ -213,9 +213,7 @@ const AudioPlayerModal = () => {
               </View>
             </View>
           </View>
-          <View
-            className={`${flexDirection()} items-center justify-between w-full`}
-          >
+          <View className={`flex-row items-center justify-between w-full`}>
             <CustomText className="text-sm font-notoKufi text-white w-[48px] text-center">
               {formatDuration(position)}
             </CustomText>
@@ -244,9 +242,7 @@ const AudioPlayerModal = () => {
       <>
         {/* Playback Controls */}
         <View className={`${!playerState.isModalExpanded && "px-7 mt-7"}`}>
-          <View
-            className={`${flexDirection()} items-center justify-between w-full`}
-          >
+          <View className={`flex-row items-center justify-between w-full`}>
             <View className="flex-row items-center justify-between flex-1">
               <PlayerIcon
                 iconName={IconNameOptions.REPEAT}

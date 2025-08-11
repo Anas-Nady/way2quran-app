@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { useTranslate } from "../../helpers/i18nHelper";
-import { flexDirection, isRTL } from "../../helpers/flexDirection";
+import { isRTL } from "../../helpers/flexDirection";
 import { chunkArray } from "../../helpers/chunkArray";
 import { useRouter } from "expo-router";
 import CustomText from "../CustomText";
@@ -46,10 +46,7 @@ export default function TopBarMenu({ closeMenu }) {
   return (
     <View className="flex-wrap">
       {menuChunks.map((chunk, rowIndex) => (
-        <View
-          key={rowIndex}
-          className={`${flexDirection()} justify-between my-2.5 p-1`}
-        >
+        <View key={rowIndex} className={`flex-row justify-between my-2.5 p-1`}>
           {chunk.map((link, linkIndex) => (
             <TouchableOpacity
               key={linkIndex}

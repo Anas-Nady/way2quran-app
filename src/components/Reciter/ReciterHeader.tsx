@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, TouchableOpacity } from "react-native";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
-import { flexDirection } from "../../helpers/flexDirection";
+
 import ReciterImg from "./ReciterImg";
 import getName from "../../helpers/getName";
 import SelectOptions from "./SelectOptions";
@@ -90,7 +90,7 @@ const ReciterHeader = ({
           onClose={() => setAlert(null)}
         />
       )}
-      <View className={`${flexDirection()} items-center justify-between`}>
+      <View className={`flex-row items-center justify-between`}>
         <GoBackButton />
         <TouchableOpacity
           disabled={favouriteState.loading}

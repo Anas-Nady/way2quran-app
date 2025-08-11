@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useTranslate } from "../helpers/i18nHelper";
-import { flexDirection } from "./../helpers/flexDirection";
+
 import { Href, useRouter } from "expo-router";
 import CustomText from "../components/CustomText";
 const bgImage = require("./../assets/images/home-background.png");
@@ -48,7 +48,7 @@ export default function App() {
             resizeMode="contain"
           />
         </View>
-        <View className={`${flexDirection()}`}>
+        <View className={`flex-row`}>
           {links.map((link) => (
             <TouchableOpacity
               key={link.href}

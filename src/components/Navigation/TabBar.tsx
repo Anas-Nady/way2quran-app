@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useTranslate } from "../../helpers/i18nHelper";
-import { flexDirection } from "../../helpers/flexDirection";
+
 import { Href, useRouter } from "expo-router";
 import { ITabLink } from "../../types/types";
 import CustomText from "../CustomText";
@@ -35,7 +35,7 @@ export default function TabBar({ closeMenu }) {
 
   return (
     <View className="w-[97%] bg-gray-700 rounded-full mx-auto py-1 px-4">
-      <View className={`${flexDirection()} items-center justify-between`}>
+      <View className={`flex-row items-center justify-between`}>
         {tabsLinks.map((tab, i) => (
           <TouchableOpacity
             key={i}
