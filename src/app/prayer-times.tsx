@@ -95,13 +95,13 @@ const PrayerTimes = () => {
         <View>
           <HeadingScreen
             headingTxt={translate("title")}
-            extraStyles="text-4xl font-bold text-center text-white"
+            extraStyles="text-4xl font-bold text-center"
           />
           <CustomText className="text-lg font-bold text-center text-gray-400">
             {address}
           </CustomText>
           {remainingTime && (
-            <CustomText className="px-2 py-1 mb-2 text-lg text-center text-white">
+            <CustomText className="px-2 py-1 mb-2 text-lg text-center text-slate-200">
               {translate("remainingTime")}{" "}
               {translate(nextPrayer.name.toLowerCase())}: {remainingTime.hours}:
               {String(remainingTime.minutes).padStart(2, "0")}:

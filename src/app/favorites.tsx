@@ -77,7 +77,7 @@ export default function Favorites() {
                 dimensions={100}
               />
               <CustomText
-                className={`text-center mt-2 text-lg font-semibold text-white`}
+                className={`text-center mt-2 text-lg font-semibold text-slate-200`}
               >
                 {getName(bookmark)}
               </CustomText>

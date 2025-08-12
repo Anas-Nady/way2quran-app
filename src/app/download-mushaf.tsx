@@ -5,13 +5,9 @@ import HeadingScreen from "../components/HeadingScreen";
 import { useTranslation } from "react-i18next";
 import MushafCard from "../components/MushafCard";
 import listMushaf from "../constants/listMushaf";
-import { ScreenDimensionsContext } from "../contexts/ScreenDimensionsProvider";
-import { useContext } from "react";
 
 export default function DownloadMushaf() {
   const { t } = useTranslation();
-  const { screenWidth } = useContext(ScreenDimensionsContext);
-  const cardWidth = screenWidth / 2;
 
   const renderHeader = () => {
     return (
@@ -29,9 +25,7 @@ export default function DownloadMushaf() {
         ListHeaderComponent={renderHeader}
         showsVerticalScrollIndicator={false}
         keyExtractor={(item) => item.slug}
-        renderItem={({ item }) => (
-          <MushafCard mushaf={item} width={cardWidth} />
-        )}
+        renderItem={({ item }) => <MushafCard mushaf={item} />}
         contentContainerStyle={{
           backgroundColor: "#1f2937",
         }}

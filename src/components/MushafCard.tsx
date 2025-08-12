@@ -5,7 +5,7 @@ import { incrementDownloadCount } from "../services/api";
 import CustomText from "./ui/CustomText";
 import { Image } from "expo-image";
 
-export default function MushafCard({ mushaf, width }) {
+export default function MushafCard({ mushaf }) {
   const [loading, setLoading] = useState(false);
 
   const handleDownloadMushaf = async () => {
@@ -27,7 +27,7 @@ export default function MushafCard({ mushaf, width }) {
     <Pressable disabled={loading}>
       <View className="w-full">
         <TouchableOpacity
-          className="p-2 my-3 w-[85%] mx-auto border border-gray-600"
+          className="p-2 my-3 w-[80%] mx-auto border border-gray-600"
           onPress={handleDownloadMushaf}
         >
           <View className="items-center justify-center">
@@ -38,7 +38,7 @@ export default function MushafCard({ mushaf, width }) {
               style={{ width: "100%", height: 250 }}
             />
           </View>
-          <CustomText className="py-1 mt-1 text-lg font-semibold text-center bg-gray-700 text-slate-100">
+          <CustomText className="py-1 mt-1 text-lg font-semibold text-center bg-gray-700 text-slate-200">
             {mushafName}
           </CustomText>
         </TouchableOpacity>
