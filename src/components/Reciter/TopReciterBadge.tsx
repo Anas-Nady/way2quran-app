@@ -3,7 +3,7 @@ import { View, Text } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useTranslate } from "./../../helpers/i18nHelper";
 
-import CustomText from "../CustomText";
+import CustomText from "../ui/CustomText";
 
 export default function TopReciterBadge() {
   const translate = useTranslate("ReciterScreen");

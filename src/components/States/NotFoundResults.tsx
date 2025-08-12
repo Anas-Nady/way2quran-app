@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
-import CustomText from "../CustomText";
+import CustomText from "../ui/CustomText";
 
 const NotFoundResults = () => {
   const { t } = useTranslation();

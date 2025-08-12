@@ -11,7 +11,8 @@ import { useAudioPlayer } from "../contexts/AudioPlayerContext";
 import { IAudioFile } from "../types/types";
 import { isRTL } from "../helpers/flexDirection";
 import { Ionicons } from "@expo/vector-icons";
-import CustomText from "./CustomText";
+import CustomText from "./ui/CustomText";
+import CustomImage from "./ui/CustomImage";
 
 const PlaylistCard = ({
   data,
@@ -25,7 +26,9 @@ const PlaylistCard = ({
   const { playerState } = useAudioPlayer();
 
   const renderSurah = ({ item }: { item: IAudioFile }) => {
-    const isPlaying = String(playerState.currentAudio?.url) === item.url;
+    const isPlaying =
+      String(playerState.currentAudio?.url) === item.url &&
+      playerState.isPlaylist;
 
     return (
       <View
@@ -48,14 +51,16 @@ const PlaylistCard = ({
   };
 
   const numColumns = 4;
+  const reciterName = getName(data.reciter);
   return (
     <Pressable className="w-full">
       <TouchableOpacity onPress={onToggleSurahs} className="mt-3">
         <View className="w-[95%] border border-gray-500 rounded-xl mx-auto">
           <View className={`flex-row items-center justify-between p-4`}>
-            <Image
-              source={{ uri: data.reciter.photo }}
-              className="w-20 h-20 border border-gray-600 rounded-full"
+            <CustomImage
+              dimensions={80}
+              uri={data.reciter.photo}
+              alt={reciterName}
             />
             <View className={`flex-1 flex-col justify-start mx-2`}>
               <CustomText
@@ -63,7 +68,7 @@ const PlaylistCard = ({
                   isRTL ? "text-xl" : "text-[16px]"
                 } text-center text-gray-200`}
               >
-                {getName(data.reciter)}
+                {reciterName}
               </CustomText>
               <CustomText className={`text-sm text-center text-gray-200`}>
                 {getName(data.recitation)}

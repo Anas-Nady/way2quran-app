@@ -1,7 +1,7 @@
 import React from "react";
 import { View, TextInput } from "react-native";
 import { textDirection } from "../../helpers/flexDirection";
-import CustomText from "../CustomText";
+import CustomText from "./CustomText";
 
 const TextAreaInput = ({ id, value, onChangeText, label }) => {
   return (

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, Linking, Pressable } from "react-native";
+import { View, TouchableOpacity, Linking, Pressable } from "react-native";
 import { Feather, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { useAudioPlayer } from "../../contexts/AudioPlayerContext";
 import {
@@ -15,7 +15,7 @@ import {
   togglePlayback,
 } from "../../helpers/setupTrackPlayback";
 import { IAudioFile, IPlaylistBookmark } from "../../types/types";
-import CustomText from "../CustomText";
+import CustomText from "../ui/CustomText";
 
 const SurahCardDetails = ({ surah, surahIndex, reciter, recitation }) => {
   const [isBookmarked, setIsBookmarked] = useState(false);

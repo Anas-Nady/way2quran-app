@@ -92,57 +92,59 @@ export default function ContactUsForm() {
     setState({ ...state, error: "", success: "" });
   };
 
+  if (state.success) {
+    return (
+      <Alert
+        type="success"
+        onClose={handleToastMessageClose}
+        message={state.success}
+      />
+    );
+  }
+
+  if (state.error) {
+    return (
+      <Alert
+        type="error"
+        onClose={handleToastMessageClose}
+        message={state.error}
+      />
+    );
+  }
+
   return (
-    <>
-      {state.error && (
-        <Alert
-          type="error"
-          onClose={handleToastMessageClose}
-          message={state.error}
+    <View className="relative px-5">
+      <View className="w-full mx-auto">
+        <Input
+          labelText={translate("name")}
+          id="senderName"
+          type="text"
+          value={senderName}
+          onChangeText={setSenderName}
         />
-      )}
-      {state.success && (
-        <Alert
-          type="success"
-          onClose={handleToastMessageClose}
-          message={state.success}
+        <Input
+          labelText={translate("email")}
+          id="senderEmail"
+          type="email"
+          value={senderEmail}
+          onChangeText={setSenderEmail}
         />
-      )}
-      <View className="relative px-5">
-        <View className="w-full mx-auto">
-          <Input
-            labelText={translate("name")}
-            id="senderName"
-            type="text"
-            value={senderName}
-            onChangeText={setSenderName}
+        <TextAreaInput
+          id="message"
+          value={content}
+          label={translate("textarea")}
+          onChangeText={setContent}
+        />
+        <View className="items-center justify-center">
+          <Button
+            disabled={state.loading}
+            onPress={handleSendMessage}
+            text={
+              state.loading ? translate("sending") : translate("sendMessageBtn")
+            }
           />
-          <Input
-            labelText={translate("email")}
-            id="senderEmail"
-            type="email"
-            value={senderEmail}
-            onChangeText={setSenderEmail}
-          />
-          <TextAreaInput
-            id="message"
-            value={content}
-            label={translate("textarea")}
-            onChangeText={setContent}
-          />
-          <View className="items-center justify-center">
-            <Button
-              disabled={state.loading}
-              onPress={handleSendMessage}
-              text={
-                state.loading
-                  ? translate("sending")
-                  : translate("sendMessageBtn")
-              }
-            />
-          </View>
         </View>
       </View>
-    </>
+    </View>
   );
 }

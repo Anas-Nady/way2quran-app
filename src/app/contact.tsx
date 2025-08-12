@@ -5,7 +5,7 @@ import HeadingScreen from "../components/HeadingScreen";
 import GoBackButton from "../components/ui/GoBackButton";
 import { useTranslate } from "../helpers/i18nHelper";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import CustomText from "../components/CustomText";
+import CustomText from "../components/ui/CustomText";
 
 export default function ContactUs() {
   const translate = useTranslate("ContactUsScreen");

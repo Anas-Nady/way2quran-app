@@ -1,6 +1,6 @@
 import React from "react";
 import { TouchableOpacity } from "react-native";
-import CustomText from "../CustomText";
+import CustomText from "./CustomText";
 
 const Button = ({ onPress, text, disabled }) => {
   return (

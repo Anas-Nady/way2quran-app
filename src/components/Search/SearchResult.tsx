@@ -7,7 +7,7 @@ import { useTranslate } from "../../helpers/i18nHelper";
 import getName from "../../helpers/getName";
 import { useRouter } from "expo-router";
 import { IDynamicSearchParams } from "../../types/types";
-import CustomText from "../CustomText";
+import CustomText from "../ui/CustomText";
 
 export default function SearchResult({ results, loading, error }) {
   const translate = useTranslate("SearchScreen");

@@ -1,11 +1,11 @@
 import React from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { View, Image, TouchableOpacity } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useTranslate } from "../../helpers/i18nHelper";
 
 import { Href, useRouter } from "expo-router";
 import { ITabLink } from "../../types/types";
-import CustomText from "../CustomText";
+import CustomText from "../ui/CustomText";
 
 export default function TabBar({ closeMenu }) {
   const translate = useTranslate("TabBar");

@@ -12,9 +12,10 @@ import {
   isBookmarkExists,
   removeBookmark,
 } from "../../helpers/bookmarkHandlers";
-import CustomText from "../CustomText";
+import CustomText from "../ui/CustomText";
 import Alert from "../ui/Alert";
 import { useTranslate } from "../../helpers/i18nHelper";
+import CustomImage from "../ui/CustomImage";
 
 interface IFavouriteState {
   isFavourite: boolean;
@@ -107,7 +108,11 @@ const ReciterHeader = ({
       <View className="reciter">
         {/* Reciter Info */}
         <View className="flex-col items-center w-full">
-          <ReciterImg uri={reciter?.photo} alt={getName(reciter)} />
+          <CustomImage
+            uri={reciter.photo}
+            alt={getName(reciter)}
+            dimensions={150}
+          />
           <View className="mt-2">
             <CustomText className="px-2 pt-3 text-3xl font-semibold text-center text-slate-200">
               {getName(reciter)}

@@ -1,8 +1,8 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import { useTranslation } from "react-i18next";
 
-import CustomText from "../CustomText";
+import CustomText from "./CustomText";
 
 const ConfirmationDialog = ({ isVisible, onConfirm, onCancel, message }) => {
   const { t } = useTranslation();

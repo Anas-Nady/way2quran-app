@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View } from "react-native";
 import { isRTL } from "../helpers/flexDirection";
-import CustomText from "./CustomText";
+import CustomText from "./ui/CustomText";
 
 const HeadingScreen = ({ headingTxt, extraStyles = "" }) => {
   return (

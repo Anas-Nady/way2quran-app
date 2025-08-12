@@ -1,10 +1,10 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import { useTranslate } from "../../helpers/i18nHelper";
 import { isRTL } from "../../helpers/flexDirection";
 import { chunkArray } from "../../helpers/chunkArray";
 import { useRouter } from "expo-router";
-import CustomText from "../CustomText";
+import CustomText from "../ui/CustomText";
 
 export default function TopBarMenu({ closeMenu }) {
   const translate = useTranslate("TopBarMenu");

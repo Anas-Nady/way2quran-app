@@ -3,7 +3,7 @@ import { View, TouchableOpacity, Animated } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 import { ScreenDimensionsContext } from "../../contexts/ScreenDimensionsProvider";
-import CustomText from "../CustomText";
+import CustomText from "./CustomText";
 
 const Alert = ({ message, type = "success", duration = 2500, onClose }) => {
   const [fadeAnim] = useState(new Animated.Value(0));

@@ -2,7 +2,7 @@ import React from "react";
 import { View } from "react-native";
 import { useContext } from "react";
 import { ScreenDimensionsContext } from "../../contexts/ScreenDimensionsProvider";
-import CustomText from "../CustomText";
+import CustomText from "../ui/CustomText";
 
 export default function Error({ message }) {
   const { screenWidth: width } = useContext(ScreenDimensionsContext);

@@ -120,33 +120,31 @@ const ReciterScreen = () => {
       style={{ position: "relative" }}
       className="flex-1 w-full mx-auto bg-slate-800"
     >
-      <>
-        {isChangingRecitation ? (
-          <View className="flex items-center justify-center py-10">
-            <ActivityIndicator size="large" color="#22c55e" />
-          </View>
-        ) : (
-          <FlatList
-            ListHeaderComponent={() => (
-              <ReciterHeader
-                reciter={state.reciter}
-                currentRecitation={currentRecitation}
-                selectedRecitationSlug={selectedRecitationSlug}
-                downloadRecitation={downloadRecitation}
-                handleRecitationChange={handleRecitationChange}
-                downloadTranslate={translate("downloadAll")}
-              />
-            )}
-            data={currentRecitation?.audioFiles}
-            keyExtractor={(item) => item?.surahInfo?.slug}
-            renderItem={renderSurahItem}
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={{
-              backgroundColor: "#1e293b",
-            }}
-          />
-        )}
-      </>
+      {isChangingRecitation ? (
+        <View className="flex items-center justify-center py-10">
+          <ActivityIndicator size="large" color="#22c55e" />
+        </View>
+      ) : (
+        <FlatList
+          ListHeaderComponent={() => (
+            <ReciterHeader
+              reciter={state.reciter}
+              currentRecitation={currentRecitation}
+              selectedRecitationSlug={selectedRecitationSlug}
+              downloadRecitation={downloadRecitation}
+              handleRecitationChange={handleRecitationChange}
+              downloadTranslate={translate("downloadAll")}
+            />
+          )}
+          data={currentRecitation?.audioFiles}
+          keyExtractor={(item) => item?.surahInfo?.slug}
+          renderItem={renderSurahItem}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            backgroundColor: "#1e293b",
+          }}
+        />
+      )}
     </View>
   );
 };

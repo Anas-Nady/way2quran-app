@@ -2,7 +2,7 @@ import React from "react";
 import { Pressable, View } from "react-native";
 import { isRTL } from "../../helpers/flexDirection";
 import { useTranslate } from "../../helpers/i18nHelper";
-import CustomText from "../CustomText";
+import CustomText from "../ui/CustomText";
 
 const DescriptionCard = ({ index }) => {
   const translate = useTranslate("AboutScreen");

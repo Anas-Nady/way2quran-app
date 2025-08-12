@@ -2,7 +2,7 @@ import React from "react";
 import { View, TouchableOpacity } from "react-native";
 import getName from "../helpers/getName";
 import { useRouter } from "expo-router";
-import CustomText from "./CustomText";
+import CustomText from "./ui/CustomText";
 
 const RecitationCard = ({ recitation }) => {
   const router = useRouter();

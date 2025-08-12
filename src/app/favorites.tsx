@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  FlatList,
-  Image,
-  TouchableOpacity,
-  Pressable,
-} from "react-native";
+import { View, FlatList, TouchableOpacity, Pressable } from "react-native";
 import GoBackButton from "../components/ui/GoBackButton";
 import HeadingScreen from "../components/HeadingScreen";
 import { AntDesign } from "@expo/vector-icons";
@@ -17,7 +11,8 @@ import { useTranslate } from "../helpers/i18nHelper";
 import getName from "../helpers/getName";
 import { useRouter } from "expo-router";
 import { IFavouriteBookmark } from "../types/types";
-import CustomText from "../components/CustomText";
+import CustomText from "../components/ui/CustomText";
+import CustomImage from "../components/ui/CustomImage";
 
 export default function Favorites() {
   const TYPE = "Favorites";
@@ -76,13 +71,10 @@ export default function Favorites() {
         <View className={`justify-center flex-1`}>
           <TouchableOpacity onPress={() => navigateToReciterScreen(bookmark)}>
             <View style={{ alignItems: "center" }}>
-              <Image
-                className="border border-gray-600 rounded-full"
-                style={{ width: 110, height: 110 }}
-                source={{
-                  uri: bookmark.photo,
-                }}
+              <CustomImage
+                uri={bookmark.photo}
                 alt={getName(bookmark)}
+                dimensions={100}
               />
               <CustomText
                 className={`text-center mt-2 text-lg font-semibold text-white`}

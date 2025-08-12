@@ -9,7 +9,7 @@ import {
 import { useTranslate } from "../helpers/i18nHelper";
 
 import { Href, useRouter } from "expo-router";
-import CustomText from "../components/CustomText";
+import CustomText from "../components/ui/CustomText";
 const bgImage = require("./../assets/images/home-background.png");
 const fullLogo = require("./../assets/images/full-logo.png");
 

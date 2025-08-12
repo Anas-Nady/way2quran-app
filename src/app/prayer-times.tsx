@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, FlatList, Pressable } from "react-native";
+import { View, FlatList, Pressable } from "react-native";
 import * as Location from "expo-location";
 import LoadingSpinner from "./../components/States/LoadingSpinner";
 import Error from "./../components/States/Error";
@@ -13,7 +13,7 @@ import {
 } from "../services/prayerTimes";
 import { formatPrayerTime } from "../helpers/formatTime";
 import { INextPrayer, IPrayerTimes, IRemainingTime } from "../types/types";
-import CustomText from "../components/CustomText";
+import CustomText from "../components/ui/CustomText";
 import HeadingScreen from "../components/HeadingScreen";
 
 const PrayerTimes = () => {

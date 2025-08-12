@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Image } from "react-native";
 import Constants from "expo-constants";
-import CustomText from "./CustomText";
+import CustomText from "./ui/CustomText";
 
 const SplashScreen = () => {
   const appVersion = Constants.expoConfig.version;

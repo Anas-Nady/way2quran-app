@@ -2,7 +2,7 @@ import React from "react";
 import { View } from "react-native";
 import { useTranslate } from "../../helpers/i18nHelper";
 import { Ionicons } from "@expo/vector-icons";
-import CustomText from "../CustomText";
+import CustomText from "../ui/CustomText";
 
 export default function EmptyState({ message }) {
   const translate = useTranslate("EmptyState");

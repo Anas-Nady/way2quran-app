@@ -1,9 +1,9 @@
-import { View, Text, TouchableOpacity, Pressable } from "react-native";
+import { View, TouchableOpacity, Pressable } from "react-native";
 import getName from "../../helpers/getName";
 
 import React from "react";
 import { useRouter } from "expo-router";
-import CustomText from "../CustomText";
+import CustomText from "../ui/CustomText";
 const SurahCard = ({ surah }) => {
   const router = useRouter();
 
@@ -32,7 +32,7 @@ const SurahCard = ({ surah }) => {
               style={{
                 transform: [{ rotate: "-45deg" }],
               }}
-              className="block font-medium text-center text-white"
+              className="block font-medium text-center text-white font-english"
             >
               {surah.number}
             </CustomText>

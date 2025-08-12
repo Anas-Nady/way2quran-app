@@ -1,6 +1,6 @@
 import React from "react";
 import { Text } from "react-native";
-import { isRTL } from "../helpers/flexDirection";
+import { isRTL } from "../../helpers/flexDirection";
 
 const CustomText = ({ children, className, ...props }) => {
   return (

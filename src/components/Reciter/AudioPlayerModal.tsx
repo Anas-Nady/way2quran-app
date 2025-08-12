@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import Slider from "@react-native-community/slider";
 import { useAudioPlayer } from "../../contexts/AudioPlayerContext";
@@ -11,7 +11,7 @@ import { setupTrackPlayback } from "../../helpers/setupTrackPlayback";
 import { useRouter } from "expo-router";
 import PlayerIcon, { IconNameOptions } from "./PlayerIcon";
 import { IPlayerState, RepeatModeOptions } from "../../types/types";
-import CustomText from "../CustomText";
+import CustomText from "../ui/CustomText";
 
 const AudioPlayerModal = () => {
   const { playerState, setPlayerState, toggleModalExpansion } =
@@ -239,71 +239,68 @@ const AudioPlayerModal = () => {
           </View>
         </>
       )}
-      <>
-        {/* Playback Controls */}
-        <View className={`${!playerState.isModalExpanded && "px-7 mt-7"}`}>
-          <View className={`flex-row items-center justify-between w-full`}>
-            <View className="flex-row items-center justify-between flex-1">
-              <PlayerIcon
-                iconName={IconNameOptions.REPEAT}
-                size={27}
-                isActive={playerState.repeatMode === RepeatModeOptions.ONE}
-                onPress={() => handleRepeatMode(RepeatModeOptions.ONE)}
-              />
+      {/* Playback Controls */}
+      <View className={`${!playerState.isModalExpanded && "px-7 mt-7"}`}>
+        <View className={`flex-row items-center justify-between w-full`}>
+          <View className="flex-row items-center justify-between flex-1">
+            <PlayerIcon
+              iconName={IconNameOptions.REPEAT}
+              size={27}
+              isActive={playerState.repeatMode === RepeatModeOptions.ONE}
+              onPress={() => handleRepeatMode(RepeatModeOptions.ONE)}
+            />
 
-              <PlayerIcon
-                iconName={
-                  !isRTL
-                    ? IconNameOptions.PLAY_SKIP_BACK
-                    : IconNameOptions.PLAY_SKIP_FORWARD
-                }
-                size={30}
-                isActive={playerState.surahIndex !== 0}
-                onPress={handlePrevSurah}
-                disabled={
-                  playerState.surahIndex === 0 || playerState.loadingNextPrev
-                }
-              />
+            <PlayerIcon
+              iconName={
+                !isRTL
+                  ? IconNameOptions.PLAY_SKIP_BACK
+                  : IconNameOptions.PLAY_SKIP_FORWARD
+              }
+              size={30}
+              isActive={playerState.surahIndex !== 0}
+              onPress={handlePrevSurah}
+              disabled={
+                playerState.surahIndex === 0 || playerState.loadingNextPrev
+              }
+            />
 
-              <PlayerIcon
-                iconName={
-                  playerState.isPlaying
-                    ? IconNameOptions.PAUSE_CIRCLE
-                    : IconNameOptions.PLAY_CIRCLE
-                }
-                size={33}
-                isActive={playerState.isPlaying}
-                onPress={togglePlayPause}
-              />
+            <PlayerIcon
+              iconName={
+                playerState.isPlaying
+                  ? IconNameOptions.PAUSE_CIRCLE
+                  : IconNameOptions.PLAY_CIRCLE
+              }
+              size={33}
+              isActive={playerState.isPlaying}
+              onPress={togglePlayPause}
+            />
 
-              <PlayerIcon
-                iconName={
-                  !isRTL
-                    ? IconNameOptions.PLAY_SKIP_FORWARD
-                    : IconNameOptions.PLAY_SKIP_BACK
-                }
-                size={30}
-                isActive={
-                  playerState.surahIndex !== playerState?.audioFiles.length - 1
-                }
-                onPress={handleNextSurah}
-                disabled={
-                  playerState.surahIndex ===
-                    playerState?.audioFiles.length - 1 ||
-                  playerState.loadingNextPrev
-                }
-              />
+            <PlayerIcon
+              iconName={
+                !isRTL
+                  ? IconNameOptions.PLAY_SKIP_FORWARD
+                  : IconNameOptions.PLAY_SKIP_BACK
+              }
+              size={30}
+              isActive={
+                playerState.surahIndex !== playerState?.audioFiles.length - 1
+              }
+              onPress={handleNextSurah}
+              disabled={
+                playerState.surahIndex === playerState?.audioFiles.length - 1 ||
+                playerState.loadingNextPrev
+              }
+            />
 
-              <PlayerIcon
-                iconName={IconNameOptions.SHUFFLE_SHARP}
-                size={27}
-                isActive={playerState.repeatMode === RepeatModeOptions.ALL}
-                onPress={() => handleRepeatMode(RepeatModeOptions.ALL)}
-              />
-            </View>
+            <PlayerIcon
+              iconName={IconNameOptions.SHUFFLE_SHARP}
+              size={27}
+              isActive={playerState.repeatMode === RepeatModeOptions.ALL}
+              onPress={() => handleRepeatMode(RepeatModeOptions.ALL)}
+            />
           </View>
         </View>
-      </>
+      </View>
     </View>
   );
 };
