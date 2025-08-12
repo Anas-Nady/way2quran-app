@@ -84,7 +84,10 @@ export default function Favorites() {
             </View>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={() => handleDelete(bookmark)}>
+        <TouchableOpacity
+          onPress={() => handleDelete(bookmark)}
+          className="absolute right-3 top-3"
+        >
           <AntDesign name="delete" size={25} color="#ef4444" />
         </TouchableOpacity>
       </View>

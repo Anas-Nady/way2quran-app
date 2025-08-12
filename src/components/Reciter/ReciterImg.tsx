@@ -13,5 +13,5 @@ export default function ReciterImg({
 }: ReciterImgProps) {
   const imageUrl = uri || defaultReciterPhoto;
 
-  return <CustomImage uri={imageUrl} alt={alt} dimensions={140} />;
+  return <CustomImage uri={imageUrl} alt={alt} dimensions={150} />;
 }

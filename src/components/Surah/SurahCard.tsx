@@ -26,13 +26,13 @@ const SurahCard = ({ surah }) => {
             style={{
               transform: [{ rotate: "45deg" }],
             }}
-            className="flex-row items-center justify-center bg-green-600 w-9 h-9 "
+            className="flex-row items-center justify-center bg-green-600 rounded w-9 h-9"
           >
             <CustomText
               style={{
                 transform: [{ rotate: "-45deg" }],
               }}
-              className="block font-medium text-center text-white font-english"
+              className="block font-medium text-center text-white rounded font-english"
             >
               {surah.number}
             </CustomText>

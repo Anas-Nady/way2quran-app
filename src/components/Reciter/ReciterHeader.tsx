@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity, Pressable } from "react-native";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 
 import ReciterImg from "./ReciterImg";
@@ -83,7 +83,7 @@ const ReciterHeader = ({
     checkIsFavourite();
   }, []);
   return (
-    <View>
+    <Pressable>
       {alert && (
         <Alert
           message={alert.message}
@@ -152,7 +152,7 @@ const ReciterHeader = ({
           </CustomText>
         </TouchableOpacity>
       </View>
-    </View>
+    </Pressable>
   );
 };
 

@@ -149,11 +149,11 @@ const SurahCardDetails = ({ surah, surahIndex, reciter, recitation }) => {
         >
           <View
             style={{ transform: [{ rotate: "45deg" }] }}
-            className={`flex-row items-center justify-center mx-2.5 w-9 h-9 bg-green-600`}
+            className={`flex-row rounded items-center justify-center mx-2.5 w-9 h-9 bg-green-600`}
           >
             <CustomText
               style={{ transform: [{ rotate: "-45deg" }] }}
-              className="font-semibold text-center text-white text-md"
+              className="font-semibold text-center text-white rounded font-english text-md"
             >
               {surah?.surahNumber}
             </CustomText>

@@ -200,7 +200,10 @@ const AudioPlayerModal = () => {
                   className="mx-3"
                   onPress={navigateToReciterScreen}
                 >
-                  <CustomText className={`text-lg text-center text-gray-100`}>
+                  <CustomText
+                    numberOfLines={1}
+                    className={`text-lg text-center text-gray-100`}
+                  >
                     {getName(playerState.reciter)}
                   </CustomText>
                 </TouchableOpacity>

@@ -1,11 +1,12 @@
 import React from "react";
-import { View, Image, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useTranslate } from "../../helpers/i18nHelper";
 
 import { Href, useRouter } from "expo-router";
 import { ITabLink } from "../../types/types";
 import CustomText from "../ui/CustomText";
+import { Image } from "expo-image";
 
 export default function TabBar({ closeMenu }) {
   const translate = useTranslate("TabBar");
@@ -53,7 +54,7 @@ export default function TabBar({ closeMenu }) {
           <View className="flex-col items-center justify-center">
             <Image
               source={require("../../assets/images/mosqueIcon.png")}
-              width={24}
+              style={{ width: 24, height: 24 }}
             />
             <CustomText className="font-semibold text-green-500 text-md">
               {translate("prayerTimes")}
