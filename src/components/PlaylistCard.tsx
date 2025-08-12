@@ -70,7 +70,7 @@ const PlaylistCard = ({
               >
                 {reciterName}
               </CustomText>
-              <CustomText className={`text-sm text-center text-gray-200`}>
+              <CustomText className={`text-sm text-center text-gray-300`}>
                 {getName(data.recitation)}
               </CustomText>
             </View>
