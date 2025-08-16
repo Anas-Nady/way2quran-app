@@ -1,22 +1,12 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { View, FlatList } from "react-native";
-import HeadingScreen from "../components/HeadingScreen";
 import { useTranslation } from "react-i18next";
-import GoBackButton from "../components/ui/GoBackButton";
 import SurahsList from "../constants/surahsList";
 import SurahCard from "../components/Surah/SurahCard";
+import HeadingWithBackButton from "../components/ui/HeadingWithBackButton";
 
 export default function Mushaf() {
   const { t } = useTranslation();
-
-  const renderHeader = useMemo(() => {
-    return (
-      <View>
-        <GoBackButton />
-        <HeadingScreen headingTxt={t("mushaf")} />
-      </View>
-    );
-  }, []);
 
   return (
     <View className="flex-1 w-full bg-gray-800">
@@ -24,7 +14,9 @@ export default function Mushaf() {
         data={SurahsList}
         keyExtractor={(item) => item.slug}
         renderItem={({ item }) => <SurahCard surah={item} />}
-        ListHeaderComponent={renderHeader}
+        ListHeaderComponent={
+          <HeadingWithBackButton headingText={t("mushaf")} />
+        }
         contentContainerStyle={{
           backgroundColor: "#1f2937",
           width: "100%",

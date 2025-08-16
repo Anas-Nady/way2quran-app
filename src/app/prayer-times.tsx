@@ -5,7 +5,6 @@ import LoadingSpinner from "./../components/States/LoadingSpinner";
 import Error from "./../components/States/Error";
 import { useTranslate } from "./../helpers/i18nHelper";
 
-import GoBackButton from "../components/ui/GoBackButton";
 import {
   calculateRemainingTime,
   getNextPrayer,
@@ -14,7 +13,7 @@ import {
 import { formatPrayerTime } from "../helpers/formatTime";
 import { INextPrayer, IPrayerTimes, IRemainingTime } from "../types/types";
 import CustomText from "../components/ui/CustomText";
-import HeadingScreen from "../components/HeadingScreen";
+import HeadingWithBackButton from "../components/ui/HeadingWithBackButton";
 
 const PrayerTimes = () => {
   const translate = useTranslate("PrayerTimes");
@@ -91,24 +90,18 @@ const PrayerTimes = () => {
   const renderHeader = () => {
     return (
       <View>
-        <GoBackButton />
-        <View>
-          <HeadingScreen
-            headingTxt={translate("title")}
-            extraStyles="text-4xl font-bold text-center"
-          />
-          <CustomText className="text-lg font-bold text-center text-gray-400">
-            {address}
+        <HeadingWithBackButton headingText={translate("title")} />
+        <CustomText className="text-lg font-bold text-center text-gray-400">
+          {address}
+        </CustomText>
+        {remainingTime && (
+          <CustomText className="px-2 py-1 mb-2 text-lg text-center text-slate-200">
+            {translate("remainingTime")}{" "}
+            {translate(nextPrayer.name.toLowerCase())}: {remainingTime.hours}:
+            {String(remainingTime.minutes).padStart(2, "0")}:
+            {String(remainingTime.seconds).padStart(2, "0")}
           </CustomText>
-          {remainingTime && (
-            <CustomText className="px-2 py-1 mb-2 text-lg text-center text-slate-200">
-              {translate("remainingTime")}{" "}
-              {translate(nextPrayer.name.toLowerCase())}: {remainingTime.hours}:
-              {String(remainingTime.minutes).padStart(2, "0")}:
-              {String(remainingTime.seconds).padStart(2, "0")}
-            </CustomText>
-          )}
-        </View>
+        )}
       </View>
     );
   };

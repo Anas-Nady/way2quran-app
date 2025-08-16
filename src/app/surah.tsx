@@ -2,14 +2,13 @@ import React, { useState, useEffect } from "react";
 import { FlatList, Pressable, Text, View } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { getSurah } from "../services/api";
-import GoBackButton from "../components/ui/GoBackButton";
-import HeadingScreen from "../components/HeadingScreen";
 import getName from "../helpers/getName";
 import LoadingSpinner from "../components/States/LoadingSpinner";
 import Error from "../components/States/Error";
 import NotFoundResults from "../components/States/NotFoundResults";
 import { appLanguage } from "../services/i18next";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import HeadingWithBackButton from "../components/ui/HeadingWithBackButton";
 
 export default function Surah() {
   const { surahSlug } = useLocalSearchParams();
@@ -48,13 +47,6 @@ export default function Surah() {
     fetchSurahContent();
   }, []);
 
-  const ListHeaderComponent = () => (
-    <View>
-      <GoBackButton />
-      <HeadingScreen headingTxt={getName(surahInfo?.surah)} />
-    </View>
-  );
-
   const renderSurahCard = ({ item }) => {
     return (
       <Pressable className="flex-row w-full">
@@ -79,8 +71,6 @@ export default function Surah() {
     );
   };
 
-  const ListEmptyComponent = () => <NotFoundResults />;
-
   return (
     <View className="flex-1 w-full bg-gray-800">
       {state.loading ? (
@@ -92,8 +82,10 @@ export default function Surah() {
           data={surahInfo?.surah?.verses}
           renderItem={renderSurahCard}
           keyExtractor={(item, index) => `${item.id}-${index}`}
-          ListHeaderComponent={ListHeaderComponent}
-          ListEmptyComponent={ListEmptyComponent}
+          ListHeaderComponent={
+            <HeadingWithBackButton headingText={getName(surahInfo?.surah)} />
+          }
+          ListEmptyComponent={<NotFoundResults />}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
             backgroundColor: "#1f2937", // bg-gray-800

@@ -1,12 +1,11 @@
 import React from "react";
-import { View, Pressable, FlatList } from "react-native";
-import HeadingScreen from "./../components/HeadingScreen";
-import GoBackButton from "../components/ui/GoBackButton";
+import { View, FlatList } from "react-native";
 import { useTranslate } from "../helpers/i18nHelper";
 import { socialMedia } from "../constants/socialMedia";
 import SocialMediaIcons from "../components/AboutUs/SocialMediaIcons";
 import { chunkArray } from "../helpers/chunkArray";
 import DescriptionCard from "../components/AboutUs/DescriptionCard";
+import HeadingWithBackButton from "../components/ui/HeadingWithBackButton";
 
 const AboutUsList = () => {
   const translate = useTranslate("AboutScreen");
@@ -16,17 +15,13 @@ const AboutUsList = () => {
     text: translate(`about_${index + 1}`),
   }));
 
-  const ListHeaderComponent = () => (
-    <View>
-      <GoBackButton />
-      <HeadingScreen headingTxt={translate("aboutTitle")} />
-    </View>
-  );
   return (
     <View style={{ flex: 1 }} className="w-full bg-gray-800">
       <FlatList
         data={descriptionList}
-        ListHeaderComponent={ListHeaderComponent}
+        ListHeaderComponent={
+          <HeadingWithBackButton headingText={translate("aboutTitle")} />
+        }
         showsVerticalScrollIndicator={false}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <DescriptionCard index={item.id} />}

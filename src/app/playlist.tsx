@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { View, FlatList } from "react-native";
-import HeadingScreen from "./../components/HeadingScreen";
-import GoBackButton from "../components/ui/GoBackButton";
 import { getAllBookmarks, removeBookmark } from "../helpers/bookmarkHandlers";
 import EmptyState from "../components/States/EmptyState";
 import { useAudioPlayer } from "../contexts/AudioPlayerContext";
@@ -10,6 +8,7 @@ import { useTranslate } from "../helpers/i18nHelper";
 import { isPlayerPlaying, togglePlayback } from "../helpers/setupTrackPlayback";
 import { IPlaylistBookmark } from "../types/types";
 import PlaylistCard from "../components/PlaylistCard";
+import HeadingWithBackButton from "../components/ui/HeadingWithBackButton";
 
 export default function Playlist() {
   const TYPE = "Playlist";
@@ -94,22 +93,15 @@ export default function Playlist() {
     <EmptyState message={translate("emptyState")} />
   );
 
-  const renderHeader = () => {
-    return (
-      <View>
-        <GoBackButton />
-        <HeadingScreen headingTxt={translate("playlists")} />
-      </View>
-    );
-  };
-
   return (
     <View className="flex-1 w-full h-full mx-auto bg-gray-800">
       <FlatList
         data={playlists}
         renderItem={renderItem}
         showsVerticalScrollIndicator={false}
-        ListHeaderComponent={renderHeader}
+        ListHeaderComponent={
+          <HeadingWithBackButton headingText={translate("playlists")} />
+        }
         style={{ flex: 1 }}
         keyExtractor={(item) => item.key}
         contentContainerStyle={{ backgroundColor: "#1f2937" }}

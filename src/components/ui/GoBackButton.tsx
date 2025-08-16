@@ -10,9 +10,9 @@ export default function GoBackButton() {
     <Pressable
       style={{
         flexDirection: "row",
-        justifyContent: isRTL ? "flex-start" : "flex-end",
+        alignSelf: isRTL ? "flex-start" : "flex-end",
       }}
-      className="px-3 pt-3"
+      className="p-1 m-1"
       onPress={() => router.back()}
     >
       <View className="p-1 bg-green-500 w-[30px] rounded-full">

@@ -1,10 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { View, FlatList } from "react-native";
 import recitations from "../constants/recitations";
-import HeadingScreen from "../components/HeadingScreen";
 import ReciterCard from "../components/Reciter/ReciterCard";
 import LoadingSpinner from "../components/States/LoadingSpinner";
-import GoBackButton from "../components/ui/GoBackButton";
 import Pagination from "../components/ui/Pagination";
 import NotFoundResults from "../components/States/NotFoundResults";
 import { getReciters } from "../services/api";
@@ -13,6 +11,7 @@ import getRecitationType from "./../helpers/getRecitationType";
 import getName from "../helpers/getName";
 import { ScreenDimensionsContext } from "../contexts/ScreenDimensionsProvider";
 import { useLocalSearchParams, useRouter } from "expo-router";
+import HeadingWithBackButton from "../components/ui/HeadingWithBackButton";
 
 export default function Reciters() {
   const { screenWidth: width } = useContext(ScreenDimensionsContext);
@@ -82,15 +81,6 @@ export default function Reciters() {
     />
   );
 
-  const ListEmptyComponent = () => <NotFoundResults />;
-
-  const ListHeaderComponent = () => (
-    <View>
-      <GoBackButton />
-      <HeadingScreen headingTxt={getName(recitation)} />
-    </View>
-  );
-
   const ListFooterComponent = () =>
     totalPages > 1 && (
       <Pagination
@@ -114,9 +104,11 @@ export default function Reciters() {
         data={state.reciters}
         renderItem={renderReciter}
         keyExtractor={(item) => item.slug}
-        ListHeaderComponent={ListHeaderComponent}
+        ListHeaderComponent={
+          <HeadingWithBackButton headingText={getName(recitation)} />
+        }
         ListFooterComponent={ListFooterComponent}
-        ListEmptyComponent={ListEmptyComponent}
+        ListEmptyComponent={<NotFoundResults />}
         columnWrapperStyle={{
           flex: 1,
           justifyContent: "space-around",

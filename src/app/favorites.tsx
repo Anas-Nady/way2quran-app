@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { View, FlatList, TouchableOpacity, Pressable } from "react-native";
-import GoBackButton from "../components/ui/GoBackButton";
-import HeadingScreen from "../components/HeadingScreen";
 import { AntDesign } from "@expo/vector-icons";
 import { getAllBookmarks, removeBookmark } from "../helpers/bookmarkHandlers";
 import EmptyState from "../components/States/EmptyState";
@@ -13,6 +11,7 @@ import { useRouter } from "expo-router";
 import { IFavouriteBookmark } from "../types/types";
 import CustomText from "../components/ui/CustomText";
 import CustomImage from "../components/ui/CustomImage";
+import HeadingWithBackButton from "../components/ui/HeadingWithBackButton";
 
 export default function Favorites() {
   const TYPE = "Favorites";
@@ -94,15 +93,6 @@ export default function Favorites() {
     </Pressable>
   );
 
-  const renderHeader = () => {
-    return (
-      <View>
-        <GoBackButton />
-        <HeadingScreen headingTxt={translate("favorites")} />
-      </View>
-    );
-  };
-
   return (
     <View className="flex-1 w-full h-full mx-auto bg-gray-800">
       <FlatList
@@ -111,7 +101,9 @@ export default function Favorites() {
         style={{ flex: 1 }}
         keyExtractor={(item) => item.reciterSlug}
         contentContainerStyle={{ backgroundColor: "#1f2937" }}
-        ListHeaderComponent={renderHeader}
+        ListHeaderComponent={
+          <HeadingWithBackButton headingText={translate("favorites")} />
+        }
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={<EmptyState message={translate("emptyState")} />}
       />
