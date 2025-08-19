@@ -34,8 +34,8 @@ export default function MushafCard({ mushaf }) {
             <Image
               source={{ uri: mushaf.imageURL }}
               alt={mushafName}
-              contentFit="contain"
-              style={{ width: "100%", height: 250 }}
+              contentFit="fill"
+              style={{ width: "100%", height: 350 }}
             />
           </View>
           <CustomText className="py-1 mt-1 text-lg font-semibold text-center bg-gray-700 text-slate-200">

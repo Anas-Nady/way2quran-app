@@ -17,7 +17,7 @@
     "aboutTitle": "About Us",
     "contactTitle": "Contact Us"
   },
-
+  "fetchError": "Failed to fetch results",
   "SearchScreen": {
     "fetchError": "Failed to fetch results",
     "emptyState": "No results found."

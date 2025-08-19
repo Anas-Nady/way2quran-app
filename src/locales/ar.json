@@ -17,7 +17,7 @@
     "contactTitle": "تواصل معنا",
     "aboutTitle": "من نحن"
   },
-
+  "fetchError": "فشل في جلب النتائج",
   "SearchScreen": {
     "fetchError": "فشل في جلب النتائج",
     "emptyState": "لا يوجد نتائج حتي الأن"

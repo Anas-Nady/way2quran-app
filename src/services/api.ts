@@ -90,3 +90,8 @@ export const getSurah = async (surahSlug: string) => {
   );
   return res;
 };
+
+export const getMushafs = async () => {
+  const res = await fetch(`${BASE_END_POINT}/mushaf`);
+  return res;
+};
