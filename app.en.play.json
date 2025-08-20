@@ -16,7 +16,7 @@
         "usesNonExemptEncryption": false
       }
     },
-    "version": "1.4.4",
+    "version": "1.4.5",
     "orientation": "default",
     "sdkVersion": "52.0.0",
     "icon": "./src/assets/images/ios-icon.png",
