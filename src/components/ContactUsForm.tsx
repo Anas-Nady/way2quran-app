@@ -92,29 +92,23 @@ export default function ContactUsForm() {
     setState({ ...state, error: "", success: "" });
   };
 
-  if (state.success) {
-    return (
-      <Alert
-        type="success"
-        onClose={handleToastMessageClose}
-        message={state.success}
-      />
-    );
-  }
-
-  if (state.error) {
-    return (
-      <Alert
-        type="error"
-        onClose={handleToastMessageClose}
-        message={state.error}
-      />
-    );
-  }
-
   return (
     <View className="relative px-5">
       <View className="w-full mx-auto">
+        {state.success && (
+          <Alert
+            type="success"
+            onClose={handleToastMessageClose}
+            message={state.success}
+          />
+        )}
+        {state.error && (
+          <Alert
+            type="error"
+            onClose={handleToastMessageClose}
+            message={state.error}
+          />
+        )}
         <Input
           labelText={translate("name")}
           id="senderName"
