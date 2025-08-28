@@ -30,8 +30,10 @@ const Alert = ({ message, type = "success", duration = 2500, onClose }) => {
   const getIconName = () => {
     switch (type) {
       case "added":
+      case "success":
         return "checkmark-circle";
       case "removed":
+      case "error":
         return "alert-circle";
       default:
         return "information-circle";
