@@ -6,7 +6,7 @@
     "scheme": "way2quran-app",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.way2quran",
+      "bundleIdentifier": "com.way2quran.app",
       "infoPlist": {
         "UIBackgroundModes": ["audio"],
         "NSLocationWhenInUseUsageDescription": "We use your location to determine the city and country to accurately display prayer times for you.",
@@ -27,7 +27,7 @@
     },
     "assetBundlePatterns": ["**/*"],
     "android": {
-      "package": "com.way2quran",
+      "package": "com.way2quran.app",
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/images/android-icon.png",
         "backgroundColor": "#374151"
@@ -58,9 +58,8 @@
       "router": {
         "origin": false
       },
-      "appLanguage": "en",
       "eas": {
-        "projectId": "fbabaf36-837e-4103-9302-526761d5e9fc"
+        "projectId": "82283bb2-52f7-41b6-913e-bb88a808ae00"
       }
     }
   }
