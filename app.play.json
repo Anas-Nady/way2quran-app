@@ -16,7 +16,7 @@
         "usesNonExemptEncryption": false
       }
     },
-    "version": "1.4.5",
+    "version": "1.4.9",
     "orientation": "default",
     "sdkVersion": "52.0.0",
     "icon": "./src/assets/images/ios-icon.png",
@@ -32,15 +32,7 @@
         "foregroundImage": "./src/assets/images/android-icon.png",
         "backgroundColor": "#374151"
       },
-      "permissions": [
-        "ACCESS_FINE_LOCATION",
-        "FOREGROUND_SERVICE",
-        "WAKE_LOCK",
-        "android.permission.ACCESS_COARSE_LOCATION",
-        "android.permission.ACCESS_FINE_LOCATION",
-        "READ_EXTERNAL_STORAGE",
-        "WRITE_EXTERNAL_STORAGE"
-      ]
+      "permissions": ["ACCESS_FINE_LOCATION", "FOREGROUND_SERVICE", "WAKE_LOCK"]
     },
     "plugins": [
       "expo-router",
@@ -48,6 +40,19 @@
         "expo-location",
         {
           "locationAlwaysAndWhenInUsePermission": "Allow this app to use your location to display prayer times."
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 35,
+            "targetSdkVersion": 35,
+            "buildToolsVersion": "35.0.0"
+          },
+          "ios": {
+            "deploymentTarget": "15.1"
+          }
         }
       ]
     ],
